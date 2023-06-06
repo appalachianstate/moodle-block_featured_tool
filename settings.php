@@ -30,19 +30,13 @@ if ($hassiteconfig) {
 
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
-        //$settings->add(new admin_setting_confightmleditor('block_featured_module/featuredmedia',
-        //        new lang_string('featuredmediatext', 'block_featured_module'),
-        //        new lang_string('featuredmediatext_desc', 'block_featured_module'), '', PARAM_RAW)
-        //);
-        $mform->addElement(
-                'filepicker',
-                'userfile',
-                get_string('file'),
-                null,
-                [
-                        'maxbytes' => $maxbytes,
-                        'accepted_types' => '*',
-                ]
+        $settings->add(new admin_setting_confightmleditor('block_featured_module/featuredmedia',
+                new get_string('featuredmediatext', 'block_featured_module'),
+                new get_string('featuredmediatext_desc', 'block_featured_module'), '', PARAM_RAW)
+        );
+        $settings->add(new admin_setting_configfile('block_featured_module/featuredmediafiles',
+                        new get_string('featuredmediatext', 'block_featured_module'),
+                        new get_string('featuredmediatext_desc', 'block_featured_module'), '.')
         );
     }
 }

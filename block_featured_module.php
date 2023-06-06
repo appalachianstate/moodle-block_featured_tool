@@ -55,7 +55,7 @@ class block_featured_module extends block_base {
         if (!empty($this->config->text)) {
             $this->content->text = $this->config->text;
         } else {
-            $text = 'Please define the content text in /blocks/featured_module/block_featured_module.php.';
+            $text = 'This is where featured posts will go.';
             $this->content->text = $text;
         }
 

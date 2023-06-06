@@ -54,7 +54,7 @@ class block_featured_module extends block_base {
 
         if (get_config('block_featured_module', 'featuredmedia')) {
             echo get_config('block_featured_module', 'featuredmedia');
-            $this->content->text .= html_writer::img(get_config('block_featured_module', 'featuredmedia'), get_config('block_featured_module', 'featuredmedia'));
+            $this->content->text .= get_config('block_featured_module', 'featuredmedia');
         } else {
             $text = 'This is where featured posts will go.';
             $this->content->text = $text;

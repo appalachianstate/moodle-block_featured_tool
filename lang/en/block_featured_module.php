@@ -29,3 +29,5 @@ $string['editingblock'] = 'Editing featured';
 $string['featured_module:addinstance'] = 'Add and edit a new featured block';
 $string['featured_module:viewinstance'] = 'View the feature block';
 $string['pluginname'] = 'Featured';
+$string['featuredmediatext'] = 'Featured module media';
+$string['featuredmediatext_desc'] = 'This is where you can upload media to be displayed in the featured block.';

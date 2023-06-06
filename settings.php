@@ -30,6 +30,9 @@ if ($hassiteconfig) {
 
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
-        // TODO: Define actual plugin settings page and add it to the tree - {@link https://docs.moodle.org/dev/Admin_settings}.
+        $settings->add(new admin_setting_confightmleditor('block_featured_module/featuredmedia',
+                new lang_string('featuredmediatext', 'block_featured_module'),
+                new lang_string('featuredmediatext_desc', 'block_featured_module'), '', PARAM_RAW)
+        );
     }
 }

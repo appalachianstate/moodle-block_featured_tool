@@ -58,7 +58,7 @@ class block_featured_module extends block_base {
      * @return stdClass The block contents.
      */
     public function get_content() {
-        global $CFG;
+        global $CFG, $USER, $OUTPUT;
 
         if ($this->content !== null) {
             return $this->content;
@@ -69,35 +69,22 @@ class block_featured_module extends block_base {
             return $this->content;
         }
 
-        $filteropt = new stdClass;
-        $filteropt->overflowdiv = true;
-        if ($this->content_is_trusted()) {
-            // fancy html allowed only on course, category and system blocks.
-            $filteropt->noclean = true;
+        // Retrieve the file manager setting
+        $featuredMediaSetting = $this->config->get('featuredmedia');
+
+        // Retrieve the uploaded files
+        $fileArea = 'block_featured_module_featuredmedia';
+        $context = context_system::instance();
+        $files = $featuredMediaSetting->get_file_storage()->get_area_files($this->context->id, 'block_featured_module', $fileArea);
+
+        // Process the retrieved files
+        foreach ($files as $file) {
+            $fileUrl = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
+                    $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+
+            // Append file information to the block content
+            $this->content->text .= '<a href="' . $fileUrl . '">' . $file->get_filename() . '</a><br>';
         }
-
-        $this->content = new stdClass();
-        $this->content->items = array();
-        $this->content->icons = array();
-        $this->content->footer = '';
-
-        if (get_config('block_featured_module', 'featuredmedia')) {
-            // rewrite url
-            $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_html', 'content', NULL);
-            // Default to FORMAT_HTML which is what will have been used before the
-            // editor was properly implemented for the block.
-            $format = FORMAT_HTML;
-            // Check to see if the format has been properly set on the config
-            if (isset($this->config->format)) {
-                $format = $this->config->format;
-            }
-            $this->content->text = format_text($this->config->text, $format, $filteropt);
-        } else {
-            $text = 'This is where featured posts will go.';
-            $this->content->text = $text;
-        }
-
-        unset($filteropt); // memory footprint
 
         return $this->content;
     }

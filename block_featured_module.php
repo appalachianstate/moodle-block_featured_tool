@@ -53,7 +53,7 @@ class block_featured_module extends block_base {
         $this->content->footer = '';
 
         if (get_config('block_featured_module', 'featuredmedia')) {
-            $termspdf = $PAGE->theme->setting_file_url('featuredmedia', 'featuredmedia');
+            $termspdf = $this->theme->setting_file_url('featuredmedia', 'featuredmedia');
             $this->content->text .= html_writer::tag('a', '', array('href'=>$termspdf));;
         } else {
             $text = 'This is where featured posts will go.';

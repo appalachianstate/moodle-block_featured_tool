@@ -27,11 +27,12 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
     $settings = new admin_settingpage('block_featured_module_settings', new lang_string('pluginname', 'block_featured_module'));
+    require_once('./myform.php');
 
+    //Instantiate simplehtml_form
+    $mform = new myform();
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
-        // Instantiate the myform form from within the plugin.
-        $mform = new block_featured_module\myform;
         $maxbytes = 0;
         $maxfiles = 20;
         $mform->addElement('header', 'featuredmediaheader', get_string('featuredmedia', 'block_featured_module'));

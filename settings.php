@@ -30,16 +30,17 @@ if ($hassiteconfig) {
 
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
-        $settings->add(new admin_setting_confightmleditor('block_featured_module/featuredmedia',
-                new lang_string('featuredmedia', 'block_featured_module'),
-                new lang_string('featuredmedia_desc', 'block_featured_module'), '', PARAM_RAW)
-        );
+        $mform = new \block_featured_module\settings_form();
+        $settings->add($mform);
 
-        //$settings->add(new admin_setting_configstoredfile('block_featured_module/featuredmedia',
-        //        new lang_string('featuredmedia', 'block_featured_module'),
-        //        new lang_string('featuredmedia_desc', 'block_featured_module'),
-        //        'featuredmedia',
-        //        0,
-        //        array('maxfiles' => 20)));
+        class settings_form extends \block_featured_module\block_form {
+            protected function specific_definition($mform) {
+                $maxbytes = 0;
+                $maxfiles = 20;
+                $mform->addElement('header', 'featuredmediaheader', get_string('featuredmedia', 'block_featured_module'));
+                $mform->addElement('filemanager', 'featuredmedia', get_string('featuredmedia', 'block_featured_module'), null, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => $maxfiles));
+                $mform->addHelpButton('featuredmedia', 'featuredmedia', 'block_featured_module');
+            }
+        }
     }
 }

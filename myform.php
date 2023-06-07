@@ -11,14 +11,12 @@ class my_form extends moodleform {
     public function definition() {
         $mform = $this->_form;
 
-        // Add elements to your form.
-        $mform->addElement('text', 'email', get_string('email'));
+        $maxbytes = 0;
+        $maxfiles = 20;
 
-        // Set type of element.
-        $mform->setType('email', PARAM_NOTAGS);
-
-        // Default value.
-        $mform->setDefault('email', 'Please enter email');
+        $mform->addElement('header', 'featuredmediaheader', get_string('featuredmedia', 'block_featured_module'));
+        $mform->addElement('filemanager', 'featuredmedia', get_string('featuredmedia', 'block_featured_module'), null, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => $maxfiles));
+        $mform->addHelpButton('featuredmedia', 'featuredmedia', 'block_featured_module');
     }
 
     // Custom validation should be added here.

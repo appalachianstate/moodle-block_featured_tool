@@ -32,13 +32,6 @@ if ($hassiteconfig) {
         require_once('myform.php');
         //Instantiate simplehtml_form
         $mform = new my_form();
-        $maxbytes = 0;
-        $maxfiles = 20;
-        //$mform->addElement('header', 'featuredmediaheader', get_string('featuredmedia', 'block_featured_module'));
-        //$mform->addElement('filemanager', 'featuredmedia', get_string('featuredmedia', 'block_featured_module'), null, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => $maxfiles));
-        //$mform->addHelpButton('featuredmedia', 'featuredmedia', 'block_featured_module');
         $settings->add($mform);
-
-
     }
 }

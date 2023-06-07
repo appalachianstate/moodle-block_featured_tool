@@ -31,7 +31,7 @@ if ($hassiteconfig) {
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
         // Instantiate the myform form from within the plugin.
-        $mform = new myform();
+        $mform = new block_featured_module\myform;
         $maxbytes = 0;
         $maxfiles = 20;
         $mform->addElement('header', 'featuredmediaheader', get_string('featuredmedia', 'block_featured_module'));

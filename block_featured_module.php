@@ -77,13 +77,13 @@ class block_featured_module extends block_base {
         // Retrieve the file manager setting
         $featuredMediaSetting = $blockConfig->featuredmedia;
 
-        // Retrieve the file manager setting
-        //$featuredMediaSetting = $this->config->get('featuredmedia');
+        // Retrieve the file storage
+        $fileStorage = $CFG->get_file_storage();
 
         // Retrieve the uploaded files
         $fileArea = 'block_featured_module_featuredmedia';
         $context = context_system::instance();
-        $files = $featuredMediaSetting->get_file_storage()->get_area_files($this->context->id, 'block_featured_module', $fileArea);
+        $files = $fileStorage->get_area_files($context->id, 'block_featured_module', $fileArea);
 
         // Process the retrieved files
         foreach ($files as $file) {

@@ -30,6 +30,8 @@ if ($hassiteconfig) {
 
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
+        // Include the form class file.
+        require_once(__DIR__ . '/classes/form/myform.php');
         // Instantiate the myform form from within the plugin.
         $mform = new \block_featured_module\classes\form\myform();
         $maxbytes = 0;

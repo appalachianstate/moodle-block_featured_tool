@@ -37,6 +37,7 @@ class block_featured_module extends block_base {
      * @return stdClass The block contents.
      */
     public function get_content() {
+        global $CFG;
 
         if ($this->content !== null) {
             return $this->content;
@@ -47,17 +48,35 @@ class block_featured_module extends block_base {
             return $this->content;
         }
 
+        $filteropt = new stdClass;
+        $filteropt->overflowdiv = true;
+        if ($this->content_is_trusted()) {
+            // fancy html allowed only on course, category and system blocks.
+            $filteropt->noclean = true;
+        }
+
         $this->content = new stdClass();
         $this->content->items = array();
         $this->content->icons = array();
         $this->content->footer = '';
 
         if (get_config('block_featured_module', 'featuredmedia')) {
-            $this->content->text .= get_config('block_featured_module', 'featuredmedia');
+            // rewrite url
+            $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_html', 'content', NULL);
+            // Default to FORMAT_HTML which is what will have been used before the
+            // editor was properly implemented for the block.
+            $format = FORMAT_HTML;
+            // Check to see if the format has been properly set on the config
+            if (isset($this->config->format)) {
+                $format = $this->config->format;
+            }
+            $this->content->text = format_text($this->config->text, $format, $filteropt);
         } else {
             $text = 'This is where featured posts will go.';
             $this->content->text = $text;
         }
+
+        unset($filteropt); // memory footprint
 
         return $this->content;
     }

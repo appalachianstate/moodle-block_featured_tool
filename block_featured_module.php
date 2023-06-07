@@ -33,33 +33,13 @@ class block_featured_module extends block_base {
         $this->config = get_config('block_featured_module');
     }
 
-    function content_is_trusted() {
-        global $SCRIPT;
-
-        if (!$context = context::instance_by_id($this->instance->parentcontextid, IGNORE_MISSING)) {
-            return false;
-        }
-        //find out if this block is on the profile page
-        if ($context->contextlevel == CONTEXT_USER) {
-            if ($SCRIPT === '/my/index.php') {
-                // this is exception - page is completely private, nobody else may see content there
-                // that is why we allow JS here
-                return true;
-            } else {
-                // no JS on public personal pages, it would be a big security issue
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     /**
      * Returns the block contents.
      *
      * @return stdClass The block contents.
      */
     public function get_content() {
+
         if ($this->content !== null) {
             return $this->content;
         }
@@ -69,72 +49,19 @@ class block_featured_module extends block_base {
             return $this->content;
         }
 
-        // Retrieve the block configuration settings
-        $blockConfig = get_config('block_featured_module');
+        $this->content = new stdClass();
+        $this->content->items = array();
+        $this->content->icons = array();
+        $this->content->footer = '';
 
-        // Retrieve the file manager setting
-        $featuredMediaSetting = $blockConfig->featuredmedia;
-
-        // Get the context instance
-        $context = $this->page->context;
-
-        // Retrieve the uploaded files
-        $fileArea = 'featuredmedia';
-        $component = 'block_featured_module';
-        $itemid = $this->instance->id;
-
-        // Create or update the files in the file area
-        $this->update_files($context, $featuredMediaSetting, $fileArea, $component, $itemid);
-
-        // Retrieve the files in the file area
-        $fs = get_file_storage();
-        $files = $fs->get_area_files($context->id, $component, $fileArea, $itemid);
-
-        // Process the retrieved files
-        foreach ($files as $file) {
-            $fileUrl = moodle_url::make_pluginfile_url(
-                    $file->get_contextid(),
-                    $file->get_component(),
-                    $file->get_filearea(),
-                    $file->get_itemid(),
-                    $file->get_filepath(),
-                    $file->get_filename()
-            );
-
-            // Append file information to the block content
-            $this->content->text .= '<a href="' . $fileUrl . '">' . $file->get_filename() . '</a><br>';
+        if (!empty($this->config->text)) {
+            $this->content->text = $this->config->text;
+        } else {
+            $text = 'This is where featured posts will go.';
+            $this->content->text = $text;
         }
 
         return $this->content;
-    }
-
-    /**
-     * Updates the files in the file area.
-     *
-     * @param context $context The context object.
-     * @param stdClass $featuredMediaSetting The featured media setting.
-     * @param string $fileArea The file area name.
-     * @param string $component The component name.
-     * @param int $itemid The item ID.
-     */
-    private function update_files($context, $featuredMediaSetting, $fileArea, $component, $itemid) {
-        $fs = get_file_storage();
-
-        // Delete the existing files in the file area
-        $fs->delete_area_files($context->id, $component, $fileArea, $itemid);
-
-        // Create or update the files in the file area
-        if (!empty($featuredMediaSetting)) {
-            $fs->create_file_from_storedfile(
-                    [
-                            'contextid' => $context->id,
-                            'component' => $component,
-                            'filearea' => $fileArea,
-                            'itemid' => $itemid,
-                    ],
-                    $featuredMediaSetting
-            );
-        }
     }
 
     /**

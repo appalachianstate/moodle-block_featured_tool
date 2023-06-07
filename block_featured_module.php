@@ -79,18 +79,15 @@ class block_featured_module extends block_base {
 
         // Retrieve the uploaded files
         $fileArea = 'block_featured_module_featuredmedia';
-        $context = context_system::instance();
+        $contextInstance = context_system::instance();
         $component = 'block_featured_module';
         $itemid = 0;
 
         // Retrieve the file storage
         $fs = get_file_storage();
 
-        // Get the context instance for file storage
-        $contextFile = context_file::instance($context->id, $component, $fileArea, $itemid);
-
         // Retrieve the files in the file area
-        $files = $fs->get_area_files($contextFile->id, $component, $fileArea, $itemid);
+        $files = $fs->get_area_files($contextInstance->id, $component, $fileArea, $itemid);
 
         // Process the retrieved files
         foreach ($files as $file) {

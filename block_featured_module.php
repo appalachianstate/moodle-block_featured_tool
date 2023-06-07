@@ -81,7 +81,7 @@ class block_featured_module extends block_base {
         $context = $this->page->context;
 
         // Retrieve the uploaded files
-        $fileArea = 'block_featured_module_featuredmedia';
+        $fileArea = 'block_featured_module/featuredmedia';
         $component = 'block_featured_module';
         $itemid = $this->instance->id;
 

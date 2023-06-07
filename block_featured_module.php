@@ -77,16 +77,20 @@ class block_featured_module extends block_base {
         // Retrieve the file manager setting
         $featuredMediaSetting = $blockConfig->featuredmedia;
 
-        // Retrieve the file storage
-        $fileStorage = $CFG->get_file_storage();
-
         // Retrieve the uploaded files
         $fileArea = 'block_featured_module_featuredmedia';
         $context = context_system::instance();
         $component = 'block_featured_module';
         $itemid = 0;
-        $fileStorage = $DB->get_file_storage();
-        $files = $fileStorage->get_area_files($context->id, $component, $fileArea, $itemid);
+
+        // Retrieve the file storage
+        $fs = get_file_storage();
+
+        // Get the context instance for file storage
+        $contextFile = context_file::instance($context->id, $component, $fileArea, $itemid);
+
+        // Retrieve the files in the file area
+        $files = $fs->get_area_files($contextFile->id, $component, $fileArea, $itemid);
 
         // Process the retrieved files
         foreach ($files as $file) {

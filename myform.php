@@ -4,9 +4,9 @@
 // Class definition for the myform form.
 
 // moodleform is defined in formslib.php
-require_once($CFG->libdir . '/formslib.php');
+require_once("$CFG->libdir/formslib.php");
 
-class myform extends moodleform {
+class my_form extends moodleform {
     // Add elements to form.
     public function definition() {
         $mform = $this->_form;

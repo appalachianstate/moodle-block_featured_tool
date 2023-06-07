@@ -53,6 +53,7 @@ class block_featured_module extends block_base {
         $this->content->footer = '';
 
         if (get_config('block_featured_module', 'featuredmedia')) {
+            echo get_config('block_featured_module', 'featuredmedia');
             $this->content->text .= get_config('block_featured_module', 'featuredmedia');
         } else {
             $text = 'This is where featured posts will go.';

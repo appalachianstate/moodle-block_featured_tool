@@ -60,7 +60,7 @@ class block_featured_module extends block_base {
      * @return stdClass The block contents.
      */
     public function get_content() {
-        global $CFG, $USER, $OUTPUT;
+        global $CFG, $DB;
 
         if ($this->content !== null) {
             return $this->content;
@@ -83,12 +83,21 @@ class block_featured_module extends block_base {
         // Retrieve the uploaded files
         $fileArea = 'block_featured_module_featuredmedia';
         $context = context_system::instance();
-        $files = $fileStorage->get_area_files($context->id, 'block_featured_module', $fileArea);
+        $component = 'block_featured_module';
+        $itemid = 0;
+        $fileStorage = $DB->get_file_storage();
+        $files = $fileStorage->get_area_files($context->id, $component, $fileArea, $itemid);
 
         // Process the retrieved files
         foreach ($files as $file) {
-            $fileUrl = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
-                    $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+            $fileUrl = moodle_url::make_pluginfile_url(
+                    $file->get_contextid(),
+                    $file->get_component(),
+                    $file->get_filearea(),
+                    $file->get_itemid(),
+                    $file->get_filepath(),
+                    $file->get_filename()
+            );
 
             // Append file information to the block content
             $this->content->text .= '<a href="' . $fileUrl . '">' . $file->get_filename() . '</a><br>';

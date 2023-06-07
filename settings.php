@@ -30,10 +30,10 @@ if ($hassiteconfig) {
 
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
-        $settings->add(new admin_setting_confightmleditor('block_featured_module/featuredmedia',
-                new lang_string('featuredmedia', 'block_featured_module'),
-                new lang_string('featuredmedia_desc', 'block_featured_module'), '', PARAM_RAW)
-        );
+        //$settings->add(new admin_setting_confightmleditor('block_featured_module/featuredmedia',
+        //        new lang_string('featuredmedia', 'block_featured_module'),
+        //        new lang_string('featuredmedia_desc', 'block_featured_module'), '', PARAM_RAW)
+        //);
 
         $settings->add(new admin_setting_configstoredfile('block_featured_module/featuredmedia',
                 new lang_string('featuredmedia', 'block_featured_module'),

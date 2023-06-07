@@ -31,6 +31,27 @@ class block_featured_module extends block_base {
         $this->title = get_string('pluginname', 'block_featured_module');
     }
 
+    function content_is_trusted() {
+        global $SCRIPT;
+
+        if (!$context = context::instance_by_id($this->instance->parentcontextid, IGNORE_MISSING)) {
+            return false;
+        }
+        //find out if this block is on the profile page
+        if ($context->contextlevel == CONTEXT_USER) {
+            if ($SCRIPT === '/my/index.php') {
+                // this is exception - page is completely private, nobody else may see content there
+                // that is why we allow JS here
+                return true;
+            } else {
+                // no JS on public personal pages, it would be a big security issue
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * Returns the block contents.
      *

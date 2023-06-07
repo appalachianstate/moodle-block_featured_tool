@@ -30,9 +30,7 @@ class block_featured_module extends block_base {
         // Needed by Moodle to differentiate between blocks.
         $this->title = get_string('pluginname', 'block_featured_module');
         // Initialize the configuration
-        //$this->config = get_config('block_featured_module');
-        // Initialize the configuration
-        $this->config = \core\config::instance();
+        $this->config = get_config('block_featured_module');
     }
 
     function content_is_trusted() {
@@ -73,8 +71,14 @@ class block_featured_module extends block_base {
             return $this->content;
         }
 
+        // Retrieve the block configuration settings
+        $blockConfig = get_config('block_featured_module');
+
         // Retrieve the file manager setting
-        $featuredMediaSetting = $this->config->get('featuredmedia');
+        $featuredMediaSetting = $blockConfig->featuredmedia;
+
+        // Retrieve the file manager setting
+        //$featuredMediaSetting = $this->config->get('featuredmedia');
 
         // Retrieve the uploaded files
         $fileArea = 'block_featured_module_featuredmedia';

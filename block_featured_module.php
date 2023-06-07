@@ -60,7 +60,7 @@ class block_featured_module extends block_base {
      * @return stdClass The block contents.
      */
     public function get_content() {
-        global $CFG, $DB;
+        global $CFG;
 
         if ($this->content !== null) {
             return $this->content;
@@ -77,17 +77,29 @@ class block_featured_module extends block_base {
         // Retrieve the file manager setting
         $featuredMediaSetting = $blockConfig->featuredmedia;
 
+        // Get the context instance
+        $context = $this->page->context;
+
         // Retrieve the uploaded files
         $fileArea = 'block_featured_module_featuredmedia';
-        $contextInstance = context_system::instance();
         $component = 'block_featured_module';
-        $itemid = 0;
+        $itemid = $this->instance->id;
 
-        // Retrieve the file storage
+        // Save the uploaded files to the file area
         $fs = get_file_storage();
+        $fs->delete_area_files($context->id, $component, $fileArea, $itemid);
+        $fs->create_file_from_storedfile(
+                [
+                        'contextid' => $context->id,
+                        'component' => $component,
+                        'filearea' => $fileArea,
+                        'itemid' => $itemid,
+                ],
+                $featuredMediaSetting
+        );
 
         // Retrieve the files in the file area
-        $files = $fs->get_area_files($contextInstance->id, $component, $fileArea, $itemid);
+        $files = $fs->get_area_files($context->id, $component, $fileArea, $itemid);
 
         // Process the retrieved files
         foreach ($files as $file) {

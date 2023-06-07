@@ -38,6 +38,8 @@ if ($hassiteconfig) {
         $settings->add(new admin_setting_configstoredfile('block_featured_module/featuredmedia',
                 new lang_string('featuredmedia', 'block_featured_module'),
                 new lang_string('featuredmedia_desc', 'block_featured_module'),
-                'featuredmedia'));
+                'featuredmedia',
+                0,
+                array('maxfiles' => 20)));
     }
 }

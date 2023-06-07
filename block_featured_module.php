@@ -30,7 +30,9 @@ class block_featured_module extends block_base {
         // Needed by Moodle to differentiate between blocks.
         $this->title = get_string('pluginname', 'block_featured_module');
         // Initialize the configuration
-        $this->config = get_config('block_featured_module');
+        //$this->config = get_config('block_featured_module');
+        // Initialize the configuration
+        $this->config = \core\config::instance();
     }
 
     function content_is_trusted() {

@@ -60,8 +60,6 @@ class block_featured_module extends block_base {
      * @return stdClass The block contents.
      */
     public function get_content() {
-        global $CFG;
-
         if ($this->content !== null) {
             return $this->content;
         }
@@ -85,20 +83,11 @@ class block_featured_module extends block_base {
         $component = 'block_featured_module';
         $itemid = $this->instance->id;
 
-        // Save the uploaded files to the file area
-        $fs = get_file_storage();
-        $fs->delete_area_files($context->id, $component, $fileArea, $itemid);
-        $fs->create_file_from_storedfile(
-                [
-                        'contextid' => $context->id,
-                        'component' => $component,
-                        'filearea' => $fileArea,
-                        'itemid' => $itemid,
-                ],
-                $featuredMediaSetting
-        );
+        // Create or update the files in the file area
+        $this->update_files($context, $featuredMediaSetting, $fileArea, $component, $itemid);
 
         // Retrieve the files in the file area
+        $fs = get_file_storage();
         $files = $fs->get_area_files($context->id, $component, $fileArea, $itemid);
 
         // Process the retrieved files
@@ -117,6 +106,35 @@ class block_featured_module extends block_base {
         }
 
         return $this->content;
+    }
+
+    /**
+     * Updates the files in the file area.
+     *
+     * @param context $context The context object.
+     * @param stdClass $featuredMediaSetting The featured media setting.
+     * @param string $fileArea The file area name.
+     * @param string $component The component name.
+     * @param int $itemid The item ID.
+     */
+    private function update_files($context, $featuredMediaSetting, $fileArea, $component, $itemid) {
+        $fs = get_file_storage();
+
+        // Delete the existing files in the file area
+        $fs->delete_area_files($context->id, $component, $fileArea, $itemid);
+
+        // Create or update the files in the file area
+        if (!empty($featuredMediaSetting)) {
+            $fs->create_file_from_storedfile(
+                    [
+                            'contextid' => $context->id,
+                            'component' => $component,
+                            'filearea' => $fileArea,
+                            'itemid' => $itemid,
+                    ],
+                    $featuredMediaSetting
+            );
+        }
     }
 
     /**

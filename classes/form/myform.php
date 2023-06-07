@@ -1,6 +1,4 @@
 <?php
-namespace block_featured_module\classes\form;
-
 // This file is part of the block_featured_module plugin.
 //
 // Class definition for the myform form.
@@ -8,7 +6,7 @@ namespace block_featured_module\classes\form;
 // moodleform is defined in formslib.php
 require_once($CFG->libdir . '/formslib.php');
 
-class myform extends \moodleform {
+class myform extends moodleform {
     // Add elements to form.
     public function definition() {
         $mform = $this->_form;

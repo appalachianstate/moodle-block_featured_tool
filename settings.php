@@ -27,11 +27,12 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
     $settings = new admin_settingpage('block_featured_module_settings', new lang_string('pluginname', 'block_featured_module'));
+
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
-        require_once('myform.php');
-        //Instantiate simplehtml_form
-        $mform = new my_form();
-        $settings->add($mform);
+        $settings->add(new admin_setting_confightmleditor('block_featured_module/featuredmedia',
+                new lang_string('featuredmedia', 'block_featured_module'),
+                new lang_string('featuredmedia_desc', 'block_featured_module'), '', PARAM_RAW)
+        );
     }
 }

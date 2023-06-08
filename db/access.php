@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
 
-    'block/featured_module:addinstance' => [
+    'block/featured_tool:addinstance' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => [
@@ -37,7 +37,7 @@ $capabilities = [
         'clonepermissionsfrom' => 'moodle/site:manageblocks',
     ],
 
-    'block/featured_module:viewinstance' => [
+    'block/featured_tool:viewinstance' => [
         'captype' => 'view',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => [

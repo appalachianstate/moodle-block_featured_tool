@@ -17,7 +17,7 @@
 /**
  * Plugin strings are defined here.
  *
- * @package     block_featured_module
+ * @package     block_featured_tool
  * @category    string
  * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,8 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['editingblock'] = 'Editing featured tool block';
-$string['featured_module:addinstance'] = 'Add and edit a new featured tool block';
-$string['featured_module:viewinstance'] = 'View the featured tool block';
+$string['featured_tool:addinstance'] = 'Add and edit a new featured tool block';
+$string['featured_tool:viewinstance'] = 'View the featured tool block';
 $string['pluginname'] = 'Featured Tool';
 $string['featuredtool'] = 'Featured tool media';
 $string['featuredtool_desc'] = 'This is where you can upload media to be displayed in the featured block.';

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Block featured_module is defined here.
+ * Block featured_tool is defined here.
  *
  * @package     block_featured_tool
  * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>

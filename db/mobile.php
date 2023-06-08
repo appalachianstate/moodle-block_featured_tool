@@ -17,7 +17,7 @@
 /**
  * Mobile addons are declared here.
  *
- * @package     block_featured_module
+ * @package     block_featured_tool
  * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,5 +26,5 @@ defined('MOODLE_INTERNAL') || die();
 
 $addons = array(
 
-    'featured_module' => array(),
+    'featured_tool' => array(),
 );

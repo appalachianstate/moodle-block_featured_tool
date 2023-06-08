@@ -17,7 +17,7 @@
 /**
  * Plugin administration pages are defined here.
  *
- * @package     block_featured_module
+ * @package     block_featured_tool
  * @category    admin
  * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,13 +26,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-    $settings = new admin_settingpage('block_featured_module_settings', new lang_string('pluginname', 'block_featured_module'));
+    $settings = new admin_settingpage('block_featured_tool_settings', new lang_string('pluginname', 'block_featured_tool'));
 
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
-        $settings->add(new admin_setting_confightmleditor('block_featured_module/featuredmedia',
-                new lang_string('featuredmedia', 'block_featured_module'),
-                new lang_string('featuredmedia_desc', 'block_featured_module'), '', PARAM_RAW)
+        $settings->add(new admin_setting_confightmleditor('block_featured_tool/featuredtool',
+                new lang_string('featuredtool', 'block_featured_tool'),
+                new lang_string('featuredtool_desc', 'block_featured_tool'), '', PARAM_RAW)
         );
     }
 }

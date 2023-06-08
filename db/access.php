@@ -17,7 +17,7 @@
 /**
  * Plugin capabilities are defined here.
  *
- * @package     block_featured_module
+ * @package     block_featured_tool
  * @category    access
  * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

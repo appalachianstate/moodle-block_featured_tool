@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['editingblock'] = 'Editing featured';
-$string['featured_module:addinstance'] = 'Add and edit a new featured block';
-$string['featured_module:viewinstance'] = 'View the feature block';
-$string['pluginname'] = 'Featured';
-$string['featuredmedia'] = 'Featured module media';
-$string['featuredmedia_desc'] = 'This is where you can upload media to be displayed in the featured block.';
+$string['editingblock'] = 'Editing featured tool block';
+$string['featured_module:addinstance'] = 'Add and edit a new featured tool block';
+$string['featured_module:viewinstance'] = 'View the featured tool block';
+$string['pluginname'] = 'Featured Tool';
+$string['featuredtool'] = 'Featured tool media';
+$string['featuredtool_desc'] = 'This is where you can upload media to be displayed in the featured block.';

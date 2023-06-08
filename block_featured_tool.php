@@ -17,20 +17,20 @@
 /**
  * Block featured_module is defined here.
  *
- * @package     block_featured_module
+ * @package     block_featured_tool
  * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_featured_module extends block_base {
+class block_featured_tool extends block_base {
 
     /**
      * Initializes class member variables.
      */
     public function init() {
         // Needed by Moodle to differentiate between blocks.
-        $this->title = get_string('pluginname', 'block_featured_module');
+        $this->title = get_string('pluginname', 'block_featured_tool');
         // Initialize the configuration
-        $this->config = get_config('block_featured_module');
+        $this->config = get_config('block_featured_tool');
     }
 
     /**
@@ -39,6 +39,13 @@ class block_featured_module extends block_base {
      * @return stdClass The block contents.
      */
     public function get_content() {
+
+        # Check if user is enrolled in a course as a teacher before doing rendering the block
+        # 1. Global user ($USER), grab ID
+        # 2. Get_enrollments for the userID
+        # 3. Get a list of course IDs that the user has enrollment in
+        # 4. Loop through course ids and has_capability check with course ID (manageactivities)
+        # 5. If true for any course, break and continue with displaying the block. Otherwise, just don't show the block (return "")
 
         if ($this->content !== null) {
             return $this->content;
@@ -54,8 +61,8 @@ class block_featured_module extends block_base {
         $this->content->icons = array();
         $this->content->footer = '';
 
-        if (get_config('block_featured_module', 'featuredmedia')) {
-            $this->content->text = get_config('block_featured_module', 'featuredmedia');
+        if (get_config('block_featured_tool', 'featuredtool')) {
+            $this->content->text = get_config('block_featured_tool', 'featuredtool');
         } else {
             $text = 'This is where featured posts will go.';
             $this->content->text = $text;
@@ -73,7 +80,7 @@ class block_featured_module extends block_base {
 
         // Load user defined title and make sure it's never empty.
         if (empty($this->config->title)) {
-            $this->title = get_string('pluginname', 'block_featured_module');
+            $this->title = get_string('pluginname', 'block_featured_tool');
         } else {
             $this->title = $this->config->title;
         }

@@ -46,6 +46,7 @@ class block_featured_tool extends block_base {
         # 3. Get a list of course IDs that the user has enrollment in
         # 4. Loop through course ids and has_capability check with course ID (manageactivities)
         # 5. If true for any course, break and continue with displaying the block. Otherwise, just don't show the block (return "")
+        # profit
 
         if ($this->content !== null) {
             return $this->content;

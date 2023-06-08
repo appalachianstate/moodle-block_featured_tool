@@ -48,7 +48,12 @@ class block_featured_tool extends block_base {
         # 4. Loop through course ids and has_capability check with course ID (manageactivities)
         # 5. If true for any course, break and continue with displaying the block. Otherwise, just don't show the block (return "")
 
+        $courses = enrol_get_all_users_courses($USER->id, true);
+        foreach ($courses as $course) {
+            $context = context_course::instance($course->id);
+            print_object($context);
 
+        }
         if ($this->content !== null) {
             return $this->content;
         }
@@ -64,11 +69,7 @@ class block_featured_tool extends block_base {
         $this->content->footer = '';
 
         if (get_config('block_featured_tool', 'featuredtool')) {
-            #$this->content->text = get_config('block_featured_tool', 'featuredtool');
-            $courses = enrol_get_all_users_courses($USER->id, true);
-            $this->content->text .= implode($courses);
-            foreach ($courses as $course) {
-            }
+            $this->content->text = get_config('block_featured_tool', 'featuredtool');
         } else {
             // Grabs all the courses for the current user that are currently active
             $text = "Insert media in the Featured Tool for it to show up here.";

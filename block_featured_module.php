@@ -54,7 +54,7 @@ class block_featured_module extends block_base {
         $this->content->icons = array();
         $this->content->footer = '';
 
-        require_once('myform.php');
+        include('myform.php');
         //Instantiate simplehtml_form
         $mform = new \my_form();
         if ($mform->is_cancelled()) {

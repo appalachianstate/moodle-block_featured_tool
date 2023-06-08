@@ -56,7 +56,7 @@ class block_featured_module extends block_base {
 
         require_once('myform.php');
         //Instantiate simplehtml_form
-        $mform = new my_form();
+        $mform = new \my_form();
         //if ($mform->is_cancelled()) {
         //    // If there is a cancel element on the form, and it was pressed,
         //    // then the `is_cancelled()` function will return true.

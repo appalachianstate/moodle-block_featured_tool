@@ -15,8 +15,8 @@ class my_form extends moodleform {
         $maxfiles = 20;
 
         $mform->addElement('header', 'featuredmediaheader', get_string('featuredmedia', 'block_featured_module'));
-        $mform->addElement('filemanager', 'featuredmedia', get_string('featuredmedia', 'block_featured_module'), null, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => $maxfiles));
-        $mform->addHelpButton('featuredmedia', 'featuredmedia', 'block_featured_module');
+        #$mform->addElement('filemanager', 'featuredmedia', get_string('featuredmedia', 'block_featured_module'), null, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => $maxfiles));
+        #$mform->addHelpButton('featuredmedia', 'featuredmedia', 'block_featured_module');
     }
 
     // Custom validation should be added here.

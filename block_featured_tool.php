@@ -48,37 +48,41 @@ class block_featured_tool extends block_base {
         # 4. Loop through course ids and has_capability check with course ID (manageactivities)
         # 5. If true for any course, break and continue with displaying the block. Otherwise, just don't show the block (return "")
 
+        $isallowed = false;
         $courses = enrol_get_all_users_courses($USER->id, true);
         foreach ($courses as $course) {
             $context = context_course::instance($course->id);
             if (has_capability('moodle/course:manageactivities', $context)) {
-                if ($this->content !== null) {
-                    return $this->content;
-                }
-
-                if (empty($this->instance)) {
-                    $this->content = '';
-                    return $this->content;
-                }
-
-                $this->content = new stdClass();
-                $this->content->items = array();
-                $this->content->icons = array();
-                $this->content->footer = '';
-
-                if (get_config('block_featured_tool', 'featuredtool')) {
-                    print_object($USER);
-                    $this->content->text = get_config('block_featured_tool', 'featuredtool');
-                } else {
-                    // Grabs all the courses for the current user that are currently active
-                    $text = 'Insert media in the Featured Tool for it to show up here.';
-                    $this->content->text = $text;
-                }
-
-                return $this->content;
+                $isallowed = true;
+                break;
             }
         }
-        return '';
+
+        if ($this->content !== null) {
+            return $this->content;
+        }
+
+        if (empty($this->instance)) {
+            $this->content = '';
+            return $this->content;
+        }
+
+        $this->content = new stdClass();
+        $this->content->items = array();
+        $this->content->icons = array();
+        $this->content->footer = '';
+
+        if ($isallowed) {
+            if (get_config('block_featured_tool', 'featuredtool')) {
+                print_object($USER);
+                $this->content->text = get_config('block_featured_tool', 'featuredtool');
+            } else {
+                // Grabs all the courses for the current user that are currently active
+                $text = 'Insert media in the Featured Tool for it to show up here.';
+                $this->content->text = $text;
+            }
+        }
+        return $this->content;
     }
 
     /**

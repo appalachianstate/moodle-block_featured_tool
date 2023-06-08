@@ -67,6 +67,7 @@ class block_featured_tool extends block_base {
             #$this->content->text = get_config('block_featured_tool', 'featuredtool');
             $courses = enrol_get_all_users_courses($USER->id, true);
             foreach ($courses as $course) {
+                # new comment
                 $this->content->text .= $course;
             }
         } else {

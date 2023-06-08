@@ -67,8 +67,8 @@ class block_featured_tool extends block_base {
                 $this->content->footer = '';
 
                 if (get_config('block_featured_tool', 'featuredtool')) {
-                    #$this->content->text = get_config('block_featured_tool', 'featuredtool');
-                    $this->content->text = $USER;
+                    print_object($USER);
+                    $this->content->text = get_config('block_featured_tool', 'featuredtool');
                 } else {
                     // Grabs all the courses for the current user that are currently active
                     $text = 'Insert media in the Featured Tool for it to show up here.';

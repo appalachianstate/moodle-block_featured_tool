@@ -66,8 +66,8 @@ class block_featured_tool extends block_base {
         if (get_config('block_featured_tool', 'featuredtool')) {
             #$this->content->text = get_config('block_featured_tool', 'featuredtool');
             $courses = enrol_get_all_users_courses($USER->id, true);
+            $this->content->text .= implode($courses);
             foreach ($courses as $course) {
-                $this->content->text .= implode($course);
             }
         } else {
             // Grabs all the courses for the current user that are currently active

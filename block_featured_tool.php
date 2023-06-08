@@ -74,7 +74,6 @@ class block_featured_tool extends block_base {
 
         if ($isallowed) {
             if (get_config('block_featured_tool', 'featuredtool')) {
-                print_object($USER);
                 $this->content->text = get_config('block_featured_tool', 'featuredtool');
             } else {
                 // Grabs all the courses for the current user that are currently active

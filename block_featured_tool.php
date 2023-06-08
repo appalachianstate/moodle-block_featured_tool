@@ -82,6 +82,9 @@ class block_featured_tool extends block_base {
                 $this->content->text = $text;
             }
         }
+        else {
+            $this->content = NULL;
+        }
         return $this->content;
     }
 

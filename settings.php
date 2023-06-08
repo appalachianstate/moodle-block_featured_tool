@@ -29,9 +29,9 @@ if ($hassiteconfig) {
     $settings = new admin_settingpage('block_featured_module_settings', new lang_string('pluginname', 'block_featured_module'));
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
-        require_once('myform.php');
-        //Instantiate simplehtml_form
-        $mform = new my_form();
-        $settings->add($mform);
+        //require_once('myform.php');
+        ////Instantiate simplehtml_form
+        //$mform = new my_form();
+        //$settings->add($mform);
     }
 }

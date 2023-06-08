@@ -64,10 +64,11 @@ class block_featured_tool extends block_base {
         $this->content->footer = '';
 
         if (get_config('block_featured_tool', 'featuredtool')) {
-            $this->content->text = get_config('block_featured_tool', 'featuredtool');
+            #$this->content->text = get_config('block_featured_tool', 'featuredtool');
+            $this->content->text = enrol_get_all_users_courses($USER->id, true);
         } else {
             // Grabs all the courses for the current user that are currently active
-            $text = enrol_get_all_users_courses($USER->id, true);
+            $text = "Insert media in the Featured Tool for it to show up here.";
             $this->content->text = $text;
         }
 

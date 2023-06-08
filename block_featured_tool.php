@@ -83,7 +83,7 @@ class block_featured_tool extends block_base {
             }
         }
         else {
-            $this->content = NULL;
+            $this->content = '';
         }
         return $this->content;
     }

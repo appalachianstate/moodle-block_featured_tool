@@ -54,7 +54,7 @@ class block_featured_module extends block_base {
         $this->content->icons = array();
         $this->content->footer = '';
 
-        if (!empty($this->config->text)) {
+        if (get_config('block_featured_module', 'featuredmedia')) {
             $this->content->text = get_config('block_featured_module', 'featuredmedia');
         } else {
             $text = 'This is where featured posts will go.';

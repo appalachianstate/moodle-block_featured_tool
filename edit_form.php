@@ -53,7 +53,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                     'trusttext' => 0
             );
 
-            $mform->addElement('editor', 'block_featured_tool', get_string('featuredtool', 'block_featured_tool'), get_string('featuredtool_desc', 'block_featured_tool'), $editoroptions);
+            $mform->addElement('editor', 'featuredtool', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
+            $mform->addElement('text', 'desc', get_string('featuredtool_desc', 'block_featured_tool'));
             $mform->setType('featuredtool', PARAM_RAW);
         }
     }

@@ -56,6 +56,40 @@ class block_featured_tool_edit_form extends block_edit_form {
             $mform->addElement('editor', 'featuredtool', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
             $mform->addElement('text', 'desc', get_string('featuredtool_desc', 'block_featured_tool'));
             $mform->setType('featuredtool', PARAM_RAW);
+
+            require_once("$CFG->libdir/resourcelib.php");
+
+            if ($mform) {
+                $editoroptions = array(
+                        'subdirs' => 0,
+                        'maxbytes' => $CFG->maxbytes,
+                        'maxfiles' => -1,
+                        'changeformat' => 1,
+                        'context' => $CFG->context,
+                        'noclean' => 1,
+                        'trusttext' => 0
+                );
+                $formattedtypes = array('featuredtool');
+                foreach ($formattedtypes as $type) {
+                    ${'temp_' . $type} = $data->$type;
+                    $data->$type = ${'temp_' . $type}['text'];
+                    $data->{$type . 'format'} = ${'temp_' . $type}['format'];
+                }
+            }
+
+            #$data->id = $DB->insert_record('syllabus', $data);
+
+            // We need to use context now, so we need to make sure all needed info is already in db.
+            #$DB->set_field('course_modules', 'instance', $data->id, array('id' => $data->coursemodule));
+
+            if ($mform) {
+                foreach ($formattedtypes as $type) {
+                    if (!empty(${'temp_' . $type}['itemid'])) {
+                        $draftitemid = ${'temp_' . $type}['itemid'];
+                        $data->$type = file_save_draft_area_files($draftitemid, $context->id, 'block_featured_tool', $type, 0, $editoroptions, $data->$type);
+                    }
+                }
+            }
         }
     }
 }

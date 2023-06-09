@@ -69,5 +69,50 @@ function featured_tool_add_instance($data, $mform = null) {
         }
     }
 
+    $DB->update_record('featuredtool', $data);
+
     return $data->id;
+}
+
+/**
+ * Update featured_tool instance.
+ *
+ * @param object $data
+ * @param object $mform
+ * @return bool true
+ */
+function featured_tool_update_instance($data, $mform) {
+    global $CFG, $DB;
+    require_once("$CFG->libdir/resourcelib.php");
+
+    $data->timemodified = time();
+    $data->id = $data->instance;
+    $data->revision++;
+
+    $editoroptions = array(
+            'subdirs' => 0,
+            'maxbytes' => $CFG->maxbytes,
+            'maxfiles' => -1,
+            'changeformat' => 1,
+            'context' => $CFG->context,
+            'noclean' => 1,
+            'trusttext' => 0
+    );
+
+    $formattedtypes = array('featuredtool');
+    foreach ($formattedtypes as $type) {
+        ${'temp_' . $type} = $data->$type;
+        $data->$type = ${'temp_' . $type}['text'];
+        $data->{$type . 'format'} = ${'temp_' . $type}['format'];
+
+        $draftitemid = ${'temp_' . $type}['itemid'];
+
+        if ($draftitemid) {
+            $data->$type = file_save_draft_area_files($draftitemid, $context->id, 'mod_syllabus', $type, 0, $editoroptions, $data->$type);
+        }
+    }
+
+    $DB->update_record('featuredtool', $data);
+
+    return true;
 }

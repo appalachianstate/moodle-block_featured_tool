@@ -54,7 +54,6 @@ class block_featured_tool_edit_form extends block_edit_form {
             );
 
             $mform->addElement('editor', 'featuredtool', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
-            $mform->addRule('featuredtool', null, 'required', null, 'client');
             $mform->setType('featuredtool', PARAM_RAW);
         }
     }

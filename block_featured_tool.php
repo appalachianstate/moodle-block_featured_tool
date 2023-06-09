@@ -134,8 +134,29 @@ class block_featured_tool extends block_base {
     function instance_config_save($data, $nolongerused = false) {
         $config = clone($data);
         // Move embedded files into a proper filearea and adjust HTML links to match
-        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'featuredmedia', 0, array('subdirs'=>true), $data->text['text']);
-        $config->format = $data->text['format'];
+        #$config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'featuredmedia', 0, array('subdirs'=>true), $data->text['text']);
+        #$config->format = $data->text['format'];
+        $editoroptions = array(
+                'subdirs' => 0,
+                'maxbytes' => $this->maxbytes,
+                'maxfiles' => EDITOR_UNLIMITED_FILES,
+                'changeformat' => 1,
+                'context' => $this->block->context,
+                'noclean' => 1,
+                'trusttext' => 0
+        );
+        $formattedtypes = array('featuredmedia');
+        foreach ($formattedtypes as $type) {
+            ${'temp_' . $type} = $config->$type;
+            $config->$type = ${'temp_' . $type}['text'];
+            $config->{$type . 'format'} = ${'temp_' . $type}['format'];
+
+            $draftitemid = ${'temp_' . $type}['itemid'];
+
+            if ($draftitemid) {
+                $config->$type = file_save_draft_area_files($draftitemid, $context->id, 'block_featured_tool', $type, 0, $editoroptions, $config->$type);
+            }
+        }
 
         parent::instance_config_save($config, $nolongerused);
     }

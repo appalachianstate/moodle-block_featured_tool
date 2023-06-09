@@ -35,18 +35,17 @@ class block_featured_tool extends block_base {
 
     /**
      * Returns the block contents.
-     *
+     * Checks if user is enrolled in a course as a teacher before doing rendering the block.
+     * 1. Global user ($USER), grab ID
+     * 2. Get courses for the userID
+     * 3. Get a list of course IDs that the user has enrollment in
+     * 4. Loop through course ids and has_capability check with course ID (manageactivities)
+     * 5. If true for any course, break and continue with displaying the block. Otherwise, just don't show the block (return "")
      * @return stdClass The block contents.
      */
     public function get_content() {
 
         global $USER;
-        # Check if user is enrolled in a course as a teacher before doing rendering the block
-        # 1. Global user ($USER), grab ID
-        # 2. Get_enrollments for the userID
-        # 3. Get a list of course IDs that the user has enrollment in
-        # 4. Loop through course ids and has_capability check with course ID (manageactivities)
-        # 5. If true for any course, break and continue with displaying the block. Otherwise, just don't show the block (return "")
 
         $isallowed = false;
         $courses = enrol_get_all_users_courses($USER->id, true);
@@ -58,21 +57,21 @@ class block_featured_tool extends block_base {
             }
         }
 
-        if ($this->content !== null) {
-            return $this->content;
-        }
-
-        if (empty($this->instance)) {
-            $this->content = '';
-            return $this->content;
-        }
-
-        $this->content = new stdClass();
-        $this->content->items = array();
-        $this->content->icons = array();
-        $this->content->footer = '';
-
         if ($isallowed) {
+            if ($this->content !== null) {
+                return $this->content;
+            }
+
+            if (empty($this->instance)) {
+                $this->content = '';
+                return $this->content;
+            }
+
+            $this->content = new stdClass();
+            $this->content->items = array();
+            $this->content->icons = array();
+            $this->content->footer = '';
+
             if (get_config('block_featured_tool', 'featuredtool')) {
                 $this->content->text = get_config('block_featured_tool', 'featuredtool');
             } else {
@@ -80,11 +79,10 @@ class block_featured_tool extends block_base {
                 $text = 'Insert media in the Featured Tool for it to show up here.';
                 $this->content->text = $text;
             }
+            return $this->content;
         }
-        else {
-            $this->content = '';
-        }
-        return $this->content;
+
+        return '';
     }
 
     /**

@@ -29,8 +29,6 @@ class block_featured_tool extends block_base {
     public function init() {
         // Needed by Moodle to differentiate between blocks.
         $this->title = get_string('pluginname', 'block_featured_tool');
-        // Initialize the configuration
-        $this->config = get_config('block_featured_tool');
     }
 
     /**
@@ -79,15 +77,6 @@ class block_featured_tool extends block_base {
             $filteropt->noclean = false;
 
             if (true) {
-                //$formatoptions = new stdClass();
-                //$formatoptions->noclean = false;
-                //$formatoptions->context = $this->context;
-                //
-                //$this->content->text .= html_writer::tag('h3', get_string('pluginname', 'block_featured_tool'));
-                //$text = file_rewrite_pluginfile_urls($media->featuredmedia, 'pluginfile.php',
-                //        $context->id, 'block_featured_tool', 'featuredmedia', 0);
-                //$text = format_text($text, $media->featuredmediaformat, $formatoptions);
-                //$this->content->text .= html_writer::tag('div', $text);
                 // rewrite url
                 $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'featuredmedia', NULL);
                 // Default to FORMAT_HTML which is what will have been used before the
@@ -129,11 +118,19 @@ class block_featured_tool extends block_base {
      * Serialize and store config data
      */
     function instance_config_save($data, $nolongerused = false) {
-        global $DB;
-
         $config = clone($data);
+
+        $editoroptions = array(
+                'subdirs' => 0,
+                'maxbytes' => $this->maxbytes,
+                'maxfiles' => EDITOR_UNLIMITED_FILES,
+                'changeformat' => 1,
+                'context' => $this->block->context,
+                'noclean' => 1,
+                'trusttext' => 0
+        );
         // Move embedded files into a proper filearea and adjust HTML links to match
-        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_html', 'content', 0, array('subdirs'=>true), $data->text['text']);
+        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_html', 'content', 0, $editoroptions, $data->text['text']);
         $config->format = $data->text['format'];
 
         parent::instance_config_save($config, $nolongerused);

@@ -76,12 +76,7 @@ class block_featured_tool extends block_base {
 
             $filteropt = new stdClass;
             $filteropt->overflowdiv = true;
-            $filteropt->noclean = true;
-
-            $id = optional_param('id', 0, PARAM_INT);
-            if (!$media = $DB->get_record('featuredtool', array('id' => $id))) {
-                throw new moodle_exception('Requested media does not exist.');
-            }
+            $filteropt->noclean = false;
 
             if (true) {
                 //$formatoptions = new stdClass();

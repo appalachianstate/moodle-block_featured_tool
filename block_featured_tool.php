@@ -78,11 +78,7 @@ class block_featured_tool extends block_base {
 
             print_object($this->config->text);
 
-            if (isset($this->config->text)) {
-                $fs = get_file_storage();
-                // Returns an array of `stored_file` instances.
-                $files = $fs->get_area_files($this->context->id, 'block_featured_tool', 'featuredmedia', NULL);
-
+            if (true) {
                 // rewrite url
                 $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'featuredmedia', NULL);
                 // Default to FORMAT_HTML which is what will have been used before the

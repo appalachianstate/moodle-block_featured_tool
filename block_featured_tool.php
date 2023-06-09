@@ -45,7 +45,7 @@ class block_featured_tool extends block_base {
      */
     public function get_content() {
 
-        global $USER;
+        global $USER, $DB;
 
         $isallowed = false;
         $courses = enrol_get_all_users_courses($USER->id, true);
@@ -72,8 +72,23 @@ class block_featured_tool extends block_base {
             $this->content->icons = array();
             $this->content->footer = '';
 
+            $id = optional_param('id', 0, PARAM_INT);
+            if (!$media = $DB->get_record('featuredtool', $id)) {
+                throw new moodle_exception('Requested media does not exist.');
+            }
+
             if (get_config('block_featured_tool', 'featuredtool')) {
-                $this->content->text = get_config('block_featured_tool', 'featuredtool');
+                $formatoptions = new stdClass();
+                $formatoptions->noclean = false;
+                $formatoptions->context = $this->context;
+
+                if (!empty($media->featuredmedia)) {
+                    echo html_writer::tag('h3', get_string('pluginname', 'block_featured_tool'));
+                    $text = file_rewrite_pluginfile_urls($media->featuredmedia, 'pluginfile.php',
+                            $context->id, 'block_featured_tool', 'featuredmedia', 0);
+                    $text = format_text($text, $media->featuredmediaformat, $formatoptions);
+                    $this->content->text = html_writer::tag('div', $text);
+                }
             } else {
                 // Grabs all the courses for the current user that are currently active
                 $text = 'Insert media in the Featured Tool for it to show up here.';

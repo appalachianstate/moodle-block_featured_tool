@@ -47,7 +47,7 @@ function featured_tool_add_instance($data, $mform = null) {
                 'noclean' => 1,
                 'trusttext' => 0
         );
-        $formattedtypes = array('featuredtool');
+        $formattedtypes = array('featuredmedia');
         foreach ($formattedtypes as $type) {
             ${'temp_' . $type} = $data->$type;
             $data->$type = ${'temp_' . $type}['text'];
@@ -55,7 +55,7 @@ function featured_tool_add_instance($data, $mform = null) {
         }
     }
 
-    #$data->id = $DB->insert_record('syllabus', $data);
+    $data->id = $DB->insert_record('featuredtool', $data);
 
     // We need to use context now, so we need to make sure all needed info is already in db.
     #$DB->set_field('course_modules', 'instance', $data->id, array('id' => $data->coursemodule));
@@ -99,7 +99,7 @@ function featured_tool_update_instance($data, $mform) {
             'trusttext' => 0
     );
 
-    $formattedtypes = array('featuredtool');
+    $formattedtypes = array('featuredmedia');
     foreach ($formattedtypes as $type) {
         ${'temp_' . $type} = $data->$type;
         $data->$type = ${'temp_' . $type}['text'];
@@ -108,7 +108,7 @@ function featured_tool_update_instance($data, $mform) {
         $draftitemid = ${'temp_' . $type}['itemid'];
 
         if ($draftitemid) {
-            $data->$type = file_save_draft_area_files($draftitemid, $context->id, 'mod_syllabus', $type, 0, $editoroptions, $data->$type);
+            $data->$type = file_save_draft_area_files($draftitemid, $context->id, 'block_featured_tool', $type, 0, $editoroptions, $data->$type);
         }
     }
 

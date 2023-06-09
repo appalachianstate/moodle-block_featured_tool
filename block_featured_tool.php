@@ -133,7 +133,6 @@ class block_featured_tool extends block_base {
 
         $editoroptions = array(
                 'subdirs' => true,
-                'maxfiles' => EDITOR_UNLIMITED_FILES,
         );
         // Move embedded files into a proper filearea and adjust HTML links to match
         $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'featuredmedia', 0, $editoroptions, $data->text['text']);

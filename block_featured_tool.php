@@ -131,7 +131,7 @@ class block_featured_tool extends block_base {
                 'maxbytes' => $this->maxbytes,
                 'maxfiles' => EDITOR_UNLIMITED_FILES,
                 'changeformat' => 1,
-                'context' => $this->block->context,
+                'context' => $this->context,
                 'noclean' => 1,
                 'trusttext' => 0
         );

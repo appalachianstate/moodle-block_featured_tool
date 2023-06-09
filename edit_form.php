@@ -46,15 +46,15 @@ class block_featured_tool_edit_form extends block_edit_form {
             $editoroptions = array(
                     'subdirs' => 0,
                     'maxbytes' => $this->maxbytes,
-                    'maxfiles' => -1,
+                    'maxfiles' => EDITOR_UNLIMITED_FILES,
                     'changeformat' => 1,
-                    'context' => $this->context,
+                    'context' => $this->block->context,
                     'noclean' => 1,
                     'trusttext' => 0
             );
 
             $mform->addElement('editor', 'featuredtool', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
-            $mform->addElement('static', 'desc', get_string('featuredtool_desc', 'block_featured_tool'));
+            $mform->addRule('featuredtool', null, 'required', null, 'client');
             $mform->setType('featuredtool', PARAM_RAW);
         }
     }

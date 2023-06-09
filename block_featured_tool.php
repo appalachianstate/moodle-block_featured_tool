@@ -72,21 +72,35 @@ class block_featured_tool extends block_base {
             $this->content->icons = array();
             $this->content->footer = '';
 
+            $filteropt = new stdClass;
+            $filteropt->overflowdiv = true;
+            $filteropt->noclean = true;
+
             $id = optional_param('id', 0, PARAM_INT);
             //if (!$media = $DB->get_record('featuredtool', array('id' => $id))) {
             //    throw new moodle_exception('Requested media does not exist.');
             //}
 
-            if (!empty($media->featuredmedia)) {
-                $formatoptions = new stdClass();
-                $formatoptions->noclean = false;
-                $formatoptions->context = $this->context;
-
-                $this->content->text .= html_writer::tag('h3', get_string('pluginname', 'block_featured_tool'));
-                $text = file_rewrite_pluginfile_urls($media->featuredmedia, 'pluginfile.php',
-                        $context->id, 'block_featured_tool', 'featuredmedia', 0);
-                $text = format_text($text, $media->featuredmediaformat, $formatoptions);
-                $this->content->text .= html_writer::tag('div', $text);
+            if (true) {
+                //$formatoptions = new stdClass();
+                //$formatoptions->noclean = false;
+                //$formatoptions->context = $this->context;
+                //
+                //$this->content->text .= html_writer::tag('h3', get_string('pluginname', 'block_featured_tool'));
+                //$text = file_rewrite_pluginfile_urls($media->featuredmedia, 'pluginfile.php',
+                //        $context->id, 'block_featured_tool', 'featuredmedia', 0);
+                //$text = format_text($text, $media->featuredmediaformat, $formatoptions);
+                //$this->content->text .= html_writer::tag('div', $text);
+                // rewrite url
+                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'featuredmedia', NULL);
+                // Default to FORMAT_HTML which is what will have been used before the
+                // editor was properly implemented for the block.
+                $format = FORMAT_HTML;
+                // Check to see if the format has been properly set on the config
+                if (isset($this->config->format)) {
+                    $format = $this->config->format;
+                }
+                $this->content->text = format_text($this->config->text, $format, $filteropt);
             } else {
                 // Grabs all the courses for the current user that are currently active
                 $text = 'Insert media in the Featured Tool for it to show up here.';
@@ -112,6 +126,18 @@ class block_featured_tool extends block_base {
         } else {
             $this->title = $this->config->title;
         }
+    }
+
+    /**
+     * Serialize and store config data
+     */
+    function instance_config_save($data, $nolongerused = false) {
+        $config = clone($data);
+        // Move embedded files into a proper filearea and adjust HTML links to match
+        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'featuredmedia', 0, array('subdirs'=>true), $data->text['text']);
+        $config->format = $data->text['format'];
+
+        parent::instance_config_save($config, $nolongerused);
     }
 
     /**

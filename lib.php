@@ -31,7 +31,7 @@ require_once($CFG->dirroot . '/repository/lib.php');
  *
  * @param stdClass $data
  * @param block_featured_tool_edit_form $mform
- * @return int new syllabus instance id
+ * @return int new featured_tool instance id
  */
 function featured_tool_add_instance($data, $mform = null) {
     global $CFG, $DB;

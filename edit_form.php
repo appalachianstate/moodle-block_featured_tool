@@ -55,6 +55,59 @@ class block_featured_tool_edit_form extends block_edit_form {
 
             $mform->addElement('editor', 'featuredmedia', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
             $mform->setType('featuredmedia', PARAM_RAW);
+
+            if (!empty($CFG->block_html_allowcssclasses)) {
+                $mform->addElement('text', 'config_classes', get_string('configclasses', 'block_featured_tool'));
+                $mform->setType('config_classes', PARAM_TEXT);
+                $mform->addHelpButton('config_classes', 'configclasses', 'block_featured_tool');
+            }
+        }
+    }
+    function set_data($defaults) {
+        if (!empty($this->block->config) && !empty($this->block->config->text)) {
+            $text = $this->block->config->text;
+            $draftid_editor = file_get_submitted_draft_itemid('featuredmedia');
+            if (empty($text)) {
+                $currenttext = '';
+            } else {
+                $currenttext = $text;
+            }
+            $editoroptions = array(
+                    'subdirs' => 0,
+                    'maxbytes' => $this->maxbytes,
+                    'maxfiles' => EDITOR_UNLIMITED_FILES,
+                    'changeformat' => 1,
+                    'context' => $this->block->context,
+                    'noclean' => 1,
+                    'trusttext' => 0
+            );
+            $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, $this->block->context->id, 'block_featured_tool', 'featuredmedia', 0, $editoroptions, $currenttext);
+            $defaults->config_text['itemid'] = $draftid_editor;
+            $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
+        } else {
+            $text = '';
+        }
+
+        if (!$this->block->user_can_edit() && !empty($this->block->config->title)) {
+            // If a title has been set but the user cannot edit it format it nicely
+            $title = $this->block->config->title;
+            $defaults->config_title = format_string($title, true, $this->page->context);
+            // Remove the title from the config so that parent::set_data doesn't set it.
+            unset($this->block->config->title);
+        }
+
+        // have to delete text here, otherwise parent::set_data will empty content
+        // of editor
+        unset($this->block->config->text);
+        parent::set_data($defaults);
+        // restore $text
+        if (!isset($this->block->config)) {
+            $this->block->config = new stdClass();
+        }
+        $this->block->config->text = $text;
+        if (isset($title)) {
+            // Reset the preserved title
+            $this->block->config->title = $title;
         }
     }
 }

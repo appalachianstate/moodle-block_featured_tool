@@ -30,4 +30,5 @@ $string['featured_tool:addinstance'] = 'Add and edit a new featured tool block';
 $string['featured_tool:viewinstance'] = 'View the featured tool block';
 $string['pluginname'] = 'Featured Tool';
 $string['featuredtool'] = 'Featured tool media';
+$string['featuredtool_help'] = 'The purpose of this configuration is to aid with theming by helping distinguish text blocks from each other. Any CSS classes entered here (space delimited) will be appended to the block\'s default classes.';
 $string['featuredtool_desc'] = 'This is where you can upload media to be displayed in the featured block.';

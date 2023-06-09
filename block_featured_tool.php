@@ -45,7 +45,9 @@ class block_featured_tool extends block_base {
      */
     public function get_content() {
 
-        global $USER, $DB;
+        global $USER, $DB, $CFG;
+
+        require_once($CFG->libdir . '/filelib.php');
 
         $isallowed = false;
         $courses = enrol_get_all_users_courses($USER->id, true);
@@ -77,9 +79,9 @@ class block_featured_tool extends block_base {
             $filteropt->noclean = true;
 
             $id = optional_param('id', 0, PARAM_INT);
-            //if (!$media = $DB->get_record('featuredtool', array('id' => $id))) {
-            //    throw new moodle_exception('Requested media does not exist.');
-            //}
+            if (!$media = $DB->get_record('featuredtool', array('id' => $id))) {
+                throw new moodle_exception('Requested media does not exist.');
+            }
 
             if (true) {
                 //$formatoptions = new stdClass();
@@ -102,7 +104,7 @@ class block_featured_tool extends block_base {
                 }
                 $this->content->text = format_text($this->config->text, $format, $filteropt);
             } else {
-                // Grabs all the courses for the current user that are currently active
+                // Shows up if there is no media to show.
                 $text = 'Insert media in the Featured Tool for it to show up here.';
                 $this->content->text = $text;
             }
@@ -145,17 +147,16 @@ class block_featured_tool extends block_base {
                 'noclean' => 1,
                 'trusttext' => 0
         );
-        $formattedtypes = array('featuredmedia');
-        foreach ($formattedtypes as $type) {
-            ${'temp_' . $type} = $config->$type;
-            $config->$type = ${'temp_' . $type}['text'];
-            $config->{$type . 'format'} = ${'temp_' . $type}['format'];
+        $type = 'featuredmedia';
 
-            $draftitemid = ${'temp_' . $type}['itemid'];
+        ${'temp_' . $type} = $config->$type;
+        $config->$type = ${'temp_' . $type}['text'];
+        $config->{$type . 'format'} = ${'temp_' . $type}['format'];
 
-            if ($draftitemid) {
-                $config->$type = file_save_draft_area_files($draftitemid, $context->id, 'block_featured_tool', $type, 0, $editoroptions, $config->$type);
-            }
+        $draftitemid = ${'temp_' . $type}['itemid'];
+
+        if ($draftitemid) {
+            $config->text = file_save_draft_area_files($draftitemid, $context->id, 'block_featured_tool', $type, 0, $editoroptions, $config->$type);
         }
 
         parent::instance_config_save($config, $nolongerused);

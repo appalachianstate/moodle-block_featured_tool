@@ -73,7 +73,7 @@ class block_featured_tool extends block_base {
             $this->content->footer = '';
 
             $id = optional_param('id', 0, PARAM_INT);
-            if (!$media = $DB->get_record('featuredtool', $id)) {
+            if (!$media = $DB->get_record('featuredtool', array('id' => $id))) {
                 throw new moodle_exception('Requested media does not exist.');
             }
 

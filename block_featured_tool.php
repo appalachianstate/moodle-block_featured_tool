@@ -129,15 +129,11 @@ class block_featured_tool extends block_base {
      * Serialize and store config data
      */
     function instance_config_save($data, $nolongerused = false) {
+        global $DB;
+
         $config = clone($data);
-        // For whatever reason, using this instead of defining the array in the function doesn't work
-        $editoroptions = array(
-                'subdirs' => true,
-                'noclean' => 1,
-                'trusttext' => 0
-        );
         // Move embedded files into a proper filearea and adjust HTML links to match
-        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'featuredmedia', 0, array('subdirs'=>true), $data->text['text']);
+        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_html', 'content', 0, array('subdirs'=>true), $data->text['text']);
         $config->format = $data->text['format'];
 
         parent::instance_config_save($config, $nolongerused);

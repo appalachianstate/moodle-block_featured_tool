@@ -137,6 +137,7 @@ class block_featured_tool extends block_base {
         );
         // Move embedded files into a proper filearea and adjust HTML links to match
         $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_html', 'content', 0, $editoroptions, $data->text['text']);
+        $this->config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_html', 'content', 0, $editoroptions, $data->text['text']);
         $config->format = $data->text['format'];
 
         parent::instance_config_save($config, $nolongerused);

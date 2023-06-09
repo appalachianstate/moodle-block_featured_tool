@@ -43,7 +43,7 @@ class block_featured_tool extends block_base {
      */
     public function get_content() {
 
-        global $USER, $DB, $CFG;
+        global $USER, $CFG;
 
         require_once($CFG->libdir . '/filelib.php');
 
@@ -76,11 +76,12 @@ class block_featured_tool extends block_base {
             $filteropt->overflowdiv = true;
             $filteropt->noclean = false;
 
-            if (true) {
+            if (isset($this->config->text)) {
                 $fs = get_file_storage();
                 // Returns an array of `stored_file` instances.
                 $files = $fs->get_area_files($this->context->id, 'block_featured_tool', 'featuredmedia', NULL);
-                print_object($files);
+
+                print_object($this->config->text);
 
                 // rewrite url
                 $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'featuredmedia', NULL);

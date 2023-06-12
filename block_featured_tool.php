@@ -76,7 +76,7 @@ class block_featured_tool extends block_base {
             $filteropt->overflowdiv = true;
             $filteropt->noclean = false;
 
-            print_object($this->config);
+            print_object($this->config->text);
 
             if (true) {
                 // rewrite url
@@ -89,7 +89,7 @@ class block_featured_tool extends block_base {
                     $format = $this->config->format;
                 }
                 #$this->content->text = format_text($this->config->text, $format, $filteropt);
-                $this->content->text = print_r($this->config);
+                $this->content->text = print_r($this->config->text);
             } else {
                 // Shows up if there is no media to show.
                 $text = 'Insert media in the Featured Tool for it to show up here.';

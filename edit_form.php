@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for editing featured block instances.
+ * Form for editing featured tool block instances.
  *
  * @package   block_featured_tool
  * @copyright 2023 Derek Wilson
@@ -23,7 +23,7 @@
  */
 
 /**
- * Form for editing featured block instances.
+ * Form for editing featured tool block instances.
  *
  * @copyright 2023 Derek Wilson
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -42,12 +42,6 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->addElement('editor', 'config_text', get_string('configcontent', 'block_featured_tool'), null, $editoroptions);
         $mform->addRule('config_text', null, 'required', null, 'client');
         $mform->setType('config_text', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
-
-        if (!empty($CFG->block_featured_tool_allowcssclasses)) {
-            $mform->addElement('text', 'config_classes', get_string('configclasses', 'block_featured_tool'));
-            $mform->setType('config_classes', PARAM_TEXT);
-            $mform->addHelpButton('config_classes', 'configclasses', 'block_featured_tool');
-        }
     }
 
     function set_data($defaults) {

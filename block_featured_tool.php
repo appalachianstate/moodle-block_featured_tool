@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for editing featured block instances.
+ * Form for editing featured tool block instances.
  *
  * @package   block_featured_tool
  * @copyright 2023 Derek Wilson
@@ -29,7 +29,7 @@ class block_featured_tool extends block_base {
     }
 
     function has_config() {
-        return true;
+        return false;
     }
 
     function applicable_formats() {
@@ -40,7 +40,7 @@ class block_featured_tool extends block_base {
         if (isset($this->config->title)) {
             $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
         } else {
-            $this->title = get_string('newhtmlblock', 'block_featured_tool');
+            $this->title = get_string('newfeaturedtoolblock', 'block_featured_tool');
         }
     }
 
@@ -152,23 +152,6 @@ class block_featured_tool extends block_base {
         global $DB;
         $fs = get_file_storage();
         $fs->delete_area_files($this->context->id, 'block_featured_tool');
-        return true;
-    }
-
-    /**
-     * Copy any block-specific data when copying to a new block instance.
-     * @param int $fromid the id number of the block instance to copy from
-     * @return boolean
-     */
-    public function instance_copy($fromid) {
-        $fromcontext = context_block::instance($fromid);
-        $fs = get_file_storage();
-        // Do not use draft files hacks outside of forms.
-        $files = $fs->get_area_files($fromcontext->id, 'block_featured_tool', 'content', 0, 'id ASC', false);
-        foreach ($files as $file) {
-            $filerecord = ['contextid' => $this->context->id];
-            $fs->create_file_from_storedfile($filerecord, $file);
-        }
         return true;
     }
 

@@ -33,7 +33,7 @@ $capabilities = [
                 'archetypes' => [
                         'user' => CAP_ALLOW,
                 ],
-                'clonepermissionsfrom' => 'moodle/my:manageblocks',
+                'clonepermissionsfrom' => 'moodle/site:manageblocks',
         ],
 
         'block/featured_tool:addinstance' => array(

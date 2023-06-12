@@ -30,7 +30,7 @@ class block_featured_tool_edit_form extends block_edit_form {
      */
     protected function specific_definition($mform): void {
 
-        global $USER;
+        global $CFG, $USER;
 
         $isallowed = false;
         $courses = enrol_get_all_users_courses($USER->id, true);
@@ -45,7 +45,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         if ($isallowed) {
             $editoroptions = array(
                     'subdirs' => 0,
-                    'maxbytes' => $this->maxbytes,
+                    'maxbytes' => $CFG->maxbytes,
                     'maxfiles' => EDITOR_UNLIMITED_FILES,
                     'changeformat' => 1,
                     'context' => $this->block->context,

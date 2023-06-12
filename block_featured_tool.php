@@ -134,10 +134,10 @@ class block_featured_tool extends block_base {
                 'trusttext' => 0
         );
 
-        $type = 'featuredtool';
+        $type = 'featuredmedia';
         $draftitemid = $data;
 
-        $data->$type = $type;
+        #$data->$type = $type;
         #$data->{$type . 'format'} = ${'temp_' . $type}['format'];
 
         if ($draftitemid) {

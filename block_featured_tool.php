@@ -137,7 +137,7 @@ class block_featured_tool extends block_base {
      * @return bool True if the global configuration is enabled.
      */
     public function has_config() {
-        return true;
+        return false;
     }
 
     /**

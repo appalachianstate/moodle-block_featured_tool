@@ -102,33 +102,48 @@ class block_featured_tool extends block_base {
         global $CFG;
         require_once($CFG->libdir . '/externallib.php');
 
-        $bc = new stdClass;
-        $bc->title = null;
-        $bc->content = '';
-        $bc->contenformat = FORMAT_MOODLE;
-        $bc->footer = '';
-        $bc->files = [];
-
-        if (!$this->hide_header()) {
-            $bc->title = $this->title;
+        $isallowed = false;
+        $courses = enrol_get_all_users_courses($USER->id, true);
+        foreach ($courses as $course) {
+            $context = context_course::instance($course->id);
+            if (has_capability('moodle/course:manageactivities', $context)) {
+                $isallowed = true;
+                break;
+            }
         }
 
-        if (isset($this->config->text)) {
-            $filteropt = new stdClass;
-            if ($this->content_is_trusted()) {
-                // Fancy html allowed only on course, category and system blocks.
-                $filteropt->noclean = true;
+        $bc = '';
+
+        if ($isallowed) {
+            $bc = new stdClass;
+            $bc->title = null;
+            $bc->content = '';
+            $bc->contenformat = FORMAT_MOODLE;
+            $bc->footer = '';
+            $bc->files = [];
+
+            if (!$this->hide_header()) {
+                $bc->title = $this->title;
             }
 
-            $format = FORMAT_HTML;
-            // Check to see if the format has been properly set on the config.
-            if (isset($this->config->format)) {
-                $format = $this->config->format;
-            }
-            list($bc->content, $bc->contentformat) =
-                    external_format_text($this->config->text, $format, $this->context, 'block_featured_tool', 'content', null, $filteropt);
-            $bc->files = external_util::get_area_files($this->context->id, 'block_featured_tool', 'content', false, false);
+            if (isset($this->config->text)) {
+                $filteropt = new stdClass;
+                if ($this->content_is_trusted()) {
+                    // Fancy html allowed only on course, category and system blocks.
+                    $filteropt->noclean = true;
+                }
 
+                $format = FORMAT_HTML;
+                // Check to see if the format has been properly set on the config.
+                if (isset($this->config->format)) {
+                    $format = $this->config->format;
+                }
+                list($bc->content, $bc->contentformat) =
+                        external_format_text($this->config->text, $format, $this->context, 'block_featured_tool', 'content', null,
+                                $filteropt);
+                $bc->files = external_util::get_area_files($this->context->id, 'block_featured_tool', 'content', false, false);
+
+            }
         }
         return $bc;
     }

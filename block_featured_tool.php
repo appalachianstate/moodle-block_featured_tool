@@ -134,7 +134,8 @@ class block_featured_tool extends block_base {
                 'trusttext' => 0
         );
 
-        chat_print_error("Warning", $data);
+        var_dump($data);
+        print_r($data);
 
         $type = 'featuredmedia';
         ${'temp_' . $type} = $data->$type;

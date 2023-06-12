@@ -30,6 +30,7 @@ $string['featured_tool:addinstance'] = 'Add and edit a new featured tool block';
 $string['featured_tool:myaddinstance'] = 'Add a new featured tool block to Dashboard';
 $string['featured_tool:viewinstance'] = 'View the featured tool block';
 $string['pluginname'] = 'Featured Tool';
+$string['featuredtoolconfigtitle'] = 'Featured tool block title';
 $string['featuredtool'] = 'Featured tool media';
 $string['featuredtool_desc'] = 'This is where you can upload media to be displayed in the featured block.';
 $string['newfeaturedtoolblock'] = '(new text block)';

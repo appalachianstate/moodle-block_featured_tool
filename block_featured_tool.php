@@ -44,10 +44,6 @@ class block_featured_tool extends block_base {
         }
     }
 
-    function instance_allow_multiple() {
-        return true;
-    }
-
     function get_content() {
         global $CFG;
 

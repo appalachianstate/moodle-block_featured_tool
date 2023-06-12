@@ -45,36 +45,52 @@ class block_featured_tool extends block_base {
     }
 
     function get_content() {
-        global $CFG;
+        global $CFG, $USER;
 
         require_once($CFG->libdir . '/filelib.php');
 
-        if ($this->content !== NULL) {
-            return $this->content;
-        }
-
-        $filteropt = new stdClass;
-        $filteropt->overflowdiv = true;
-        if ($this->content_is_trusted()) {
-            // fancy html allowed only on course, category and system blocks.
-            $filteropt->noclean = true;
-        }
-
-        $this->content = new stdClass;
-        $this->content->footer = '';
-        if (isset($this->config->text)) {
-            // rewrite url
-            $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'content', NULL);
-            // Default to FORMAT_HTML which is what will have been used before the
-            // editor was properly implemented for the block.
-            $format = FORMAT_HTML;
-            // Check to see if the format has been properly set on the config
-            if (isset($this->config->format)) {
-                $format = $this->config->format;
+        $isallowed = false;
+        $courses = enrol_get_all_users_courses($USER->id, true);
+        foreach ($courses as $course) {
+            $context = context_course::instance($course->id);
+            if (has_capability('moodle/course:manageactivities', $context)) {
+                $isallowed = true;
+                break;
             }
-            $this->content->text = format_text($this->config->text, $format, $filteropt);
-        } else {
-            $this->content->text = '';
+        }
+
+        if ($isallowed) {
+            if ($this->content !== null) {
+                return $this->content;
+            }
+
+            $filteropt = new stdClass;
+            $filteropt->overflowdiv = true;
+            if ($this->content_is_trusted()) {
+                // fancy html allowed only on course, category and system blocks.
+                $filteropt->noclean = true;
+            }
+
+            $this->content = new stdClass;
+            $this->content->footer = '';
+            if (isset($this->config->text)) {
+                // rewrite url
+                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id,
+                        'block_featured_tool', 'content', null);
+                // Default to FORMAT_HTML which is what will have been used before the
+                // editor was properly implemented for the block.
+                $format = FORMAT_HTML;
+                // Check to see if the format has been properly set on the config
+                if (isset($this->config->format)) {
+                    $format = $this->config->format;
+                }
+                $this->content->text = format_text($this->config->text, $format, $filteropt);
+            } else {
+                $this->content->text = '';
+            }
+        }
+        else {
+            return '';
         }
 
         unset($filteropt); // memory footprint

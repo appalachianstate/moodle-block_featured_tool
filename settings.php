@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Settings for the HTML block
+ * Settings for the featured block
  *
  * @copyright 2012 Aaron Barnes
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

@@ -15,17 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for editing HTML block instances.
+ * Form for editing featured block instances.
  *
  * @package   block_featured_tool
- * @copyright 2009 Tim Hunt
+ * @copyright 2023 Derek Wilson
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
- * Form for editing HTML block instances.
+ * Form for editing featured block instances.
  *
- * @copyright 2009 Tim Hunt
+ * @copyright 2023 Derek Wilson
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_featured_tool_edit_form extends block_edit_form {

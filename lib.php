@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for editing HTML block instances.
+ * Form for editing featured block instances.
  *
- * @copyright 2010 Petr Skoda (http://skodak.org)
+ * @copyright 2023 Derek Wilson
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   block_featured_tool
  * @category  files

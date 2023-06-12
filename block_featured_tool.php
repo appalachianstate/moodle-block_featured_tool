@@ -123,7 +123,7 @@ class block_featured_tool extends block_base {
     function instance_config_save($data, $nolongerused = false) {
         global $CFG;
 
-        $config = clone($data);
+        $config = $data;
 
         $editoroptions = array(
                 'subdirs' => 0,

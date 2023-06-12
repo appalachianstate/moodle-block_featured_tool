@@ -81,7 +81,6 @@ class block_featured_tool extends block_base {
             if (true) {
                 // rewrite url
                 #$this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'featuredmedia', NULL);
-                $this->config->text = $this->config;
                 // Default to FORMAT_HTML which is what will have been used before the
                 // editor was properly implemented for the block.
                 $format = FORMAT_HTML;
@@ -90,7 +89,7 @@ class block_featured_tool extends block_base {
                     $format = $this->config->format;
                 }
                 #$this->content->text = format_text($this->config->text, $format, $filteropt);
-                $this->content->text = print_r($this->config->text);
+                $this->content->text = print_r($this->config);
             } else {
                 // Shows up if there is no media to show.
                 $text = 'Insert media in the Featured Tool for it to show up here.';

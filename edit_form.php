@@ -64,6 +64,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         }
     }
     function set_data($defaults) {
+        global $CFG;
+
         if (!empty($this->block->config) && !empty($this->block->config->text)) {
             $text = $this->block->config->text;
             $draftid_editor = file_get_submitted_draft_itemid('featuredmedia');
@@ -74,7 +76,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             }
             $editoroptions = array(
                     'subdirs' => 0,
-                    'maxbytes' => $this->maxbytes,
+                    'maxbytes' => $CFG->maxbytes,
                     'maxfiles' => EDITOR_UNLIMITED_FILES,
                     'changeformat' => 1,
                     'context' => $this->block->context,

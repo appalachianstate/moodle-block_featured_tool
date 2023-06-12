@@ -120,19 +120,32 @@ class block_featured_tool extends block_base {
      * Serialize and store config data
      */
     function instance_config_save($data, $nolongerused = false) {
+        global $CFG;
+
         $config = clone($data);
 
         $editoroptions = array(
                 'subdirs' => 0,
-                'maxbytes' => $this->maxbytes,
+                'maxbytes' => $CFG->maxbytes,
                 'maxfiles' => EDITOR_UNLIMITED_FILES,
                 'changeformat' => 1,
                 'context' => $this->context,
                 'noclean' => 1,
                 'trusttext' => 0
         );
+
+        $type = 'featuredmedia';
+        ${'temp_' . $type} = $data->$type;
+        $data->$type = ${'temp_' . $type}['text'];
+        $data->{$type . 'format'} = ${'temp_' . $type}['format'];
+
+        $draftitemid = ${'temp_' . $type}['itemid'];
+
+        if ($draftitemid) {
+            $config->text = file_save_draft_area_files($draftitemid, $context->id, 'block_featured_tool', $type, 0, $editoroptions, $data->$type);
+        }
         // Move embedded files into a proper filearea and adjust HTML links to match
-        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'featuredmedia', 0, $editoroptions, $data->text['text']);
+        #$config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'featuredmedia', 0, $editoroptions, $data->text['text']);
         $config->format = $data->text['format'];
 
         parent::instance_config_save($config, $nolongerused);

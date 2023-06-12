@@ -134,6 +134,8 @@ class block_featured_tool extends block_base {
                 'trusttext' => 0
         );
 
+        print_object($data);
+
         $type = 'featuredmedia';
         ${'temp_' . $type} = $data->$type;
         $data->$type = ${'temp_' . $type}['text'];

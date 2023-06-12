@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - https://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,110 +12,115 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Block featured_tool is defined here.
+ * Form for editing HTML block instances.
  *
- * @package     block_featured_tool
- * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>
- * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   block_featured_tool
+ * @copyright 1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 class block_featured_tool extends block_base {
 
-    /**
-     * Initializes class member variables.
-     */
-    public function init() {
-        // Needed by Moodle to differentiate between blocks.
+    function init() {
         $this->title = get_string('pluginname', 'block_featured_tool');
     }
 
-    /**
-     * Returns the block contents.
-     * Checks if user is enrolled in a course as a teacher before doing rendering the block.
-     * 1. Global user ($USER), grab ID
-     * 2. Get courses for the userID
-     * 3. Get a list of course IDs that the user has enrollment in
-     * 4. Loop through course ids and has_capability check with course ID (manageactivities)
-     * 5. If true for any course, break and continue with displaying the block. Otherwise, just don't show the block (return "")
-     * @return stdClass The block contents.
-     */
-    public function get_content() {
+    function has_config() {
+        return true;
+    }
 
-        global $USER, $CFG;
+    function applicable_formats() {
+        return array('all' => true);
+    }
+
+    function specialization() {
+        if (isset($this->config->title)) {
+            $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
+        } else {
+            $this->title = get_string('newhtmlblock', 'block_featured_tool');
+        }
+    }
+
+    function instance_allow_multiple() {
+        return true;
+    }
+
+    function get_content() {
+        global $CFG;
 
         require_once($CFG->libdir . '/filelib.php');
 
-        $isallowed = false;
-        $courses = enrol_get_all_users_courses($USER->id, true);
-        foreach ($courses as $course) {
-            $context = context_course::instance($course->id);
-            if (has_capability('moodle/course:manageactivities', $context)) {
-                $isallowed = true;
-                break;
-            }
-        }
-
-        if ($isallowed) {
-            if ($this->content !== null) {
-                return $this->content;
-            }
-
-            if (empty($this->instance)) {
-                $this->content = '';
-                return $this->content;
-            }
-
-            $this->content = new stdClass();
-            $this->content->items = array();
-            $this->content->icons = array();
-            $this->content->footer = '';
-
-            $filteropt = new stdClass;
-            $filteropt->overflowdiv = true;
-            $filteropt->noclean = false;
-
-            print_object($this->config->text);
-
-            if (true) {
-                // rewrite url
-                #$this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'featuredmedia', NULL);
-                // Default to FORMAT_HTML which is what will have been used before the
-                // editor was properly implemented for the block.
-                $format = FORMAT_HTML;
-                // Check to see if the format has been properly set on the config
-                if (isset($this->config->format)) {
-                    $format = $this->config->format;
-                }
-                #$this->content->text = format_text($this->config->text, $format, $filteropt);
-                $this->content->text = print_r($this->config->text);
-            } else {
-                // Shows up if there is no media to show.
-                $text = 'Insert media in the Featured Tool for it to show up here.';
-                $this->content->text = $text;
-            }
-
+        if ($this->content !== NULL) {
             return $this->content;
         }
 
-        return '';
-    }
-
-    /**
-     * Defines configuration data.
-     *
-     * The function is called immediately after init().
-     */
-    public function specialization() {
-
-        // Load user defined title and make sure it's never empty.
-        if (empty($this->config->title)) {
-            $this->title = get_string('pluginname', 'block_featured_tool');
-        } else {
-            $this->title = $this->config->title;
+        $filteropt = new stdClass;
+        $filteropt->overflowdiv = true;
+        if ($this->content_is_trusted()) {
+            // fancy html allowed only on course, category and system blocks.
+            $filteropt->noclean = true;
         }
+
+        $this->content = new stdClass;
+        $this->content->footer = '';
+        if (isset($this->config->text)) {
+            // rewrite url
+            $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'content', NULL);
+            // Default to FORMAT_HTML which is what will have been used before the
+            // editor was properly implemented for the block.
+            $format = FORMAT_HTML;
+            // Check to see if the format has been properly set on the config
+            if (isset($this->config->format)) {
+                $format = $this->config->format;
+            }
+            $this->content->text = format_text($this->config->text, $format, $filteropt);
+        } else {
+            $this->content->text = '';
+        }
+
+        unset($filteropt); // memory footprint
+
+        return $this->content;
     }
+
+    public function get_content_for_external($output) {
+        global $CFG;
+        require_once($CFG->libdir . '/externallib.php');
+
+        $bc = new stdClass;
+        $bc->title = null;
+        $bc->content = '';
+        $bc->contenformat = FORMAT_MOODLE;
+        $bc->footer = '';
+        $bc->files = [];
+
+        if (!$this->hide_header()) {
+            $bc->title = $this->title;
+        }
+
+        if (isset($this->config->text)) {
+            $filteropt = new stdClass;
+            if ($this->content_is_trusted()) {
+                // Fancy html allowed only on course, category and system blocks.
+                $filteropt->noclean = true;
+            }
+
+            $format = FORMAT_HTML;
+            // Check to see if the format has been properly set on the config.
+            if (isset($this->config->format)) {
+                $format = $this->config->format;
+            }
+            list($bc->content, $bc->contentformat) =
+                    external_format_text($this->config->text, $format, $this->context, 'block_featured_tool', 'content', null, $filteropt);
+            $bc->files = external_util::get_area_files($this->context->id, 'block_featured_tool', 'content', false, false);
+
+        }
+        return $bc;
+    }
+
 
     /**
      * Serialize and store config data
@@ -125,29 +130,102 @@ class block_featured_tool extends block_base {
 
         $config = clone($data);
         // Move embedded files into a proper filearea and adjust HTML links to match
-        #$config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_html', 'content', 0, array('subdirs'=>true), $data->text['text']);
+        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
         $config->format = $data->text['format'];
 
         parent::instance_config_save($config, $nolongerused);
     }
 
-    /**
-     * Enables global configuration of the block in settings.php.
-     *
-     * @return bool True if the global configuration is enabled.
-     */
-    public function has_config() {
-        return false;
+    function instance_delete() {
+        global $DB;
+        $fs = get_file_storage();
+        $fs->delete_area_files($this->context->id, 'block_featured_tool');
+        return true;
     }
 
     /**
-     * Sets the applicable formats for the block.
-     *
-     * @return string[] Array of pages and permissions.
+     * Copy any block-specific data when copying to a new block instance.
+     * @param int $fromid the id number of the block instance to copy from
+     * @return boolean
      */
-    public function applicable_formats() {
-        return array(
-            'my' => true,
-        );
+    public function instance_copy($fromid) {
+        $fromcontext = context_block::instance($fromid);
+        $fs = get_file_storage();
+        // Do not use draft files hacks outside of forms.
+        $files = $fs->get_area_files($fromcontext->id, 'block_featured_tool', 'content', 0, 'id ASC', false);
+        foreach ($files as $file) {
+            $filerecord = ['contextid' => $this->context->id];
+            $fs->create_file_from_storedfile($filerecord, $file);
+        }
+        return true;
+    }
+
+    function content_is_trusted() {
+        global $SCRIPT;
+
+        if (!$context = context::instance_by_id($this->instance->parentcontextid, IGNORE_MISSING)) {
+            return false;
+        }
+        //find out if this block is on the profile page
+        if ($context->contextlevel == CONTEXT_USER) {
+            if ($SCRIPT === '/my/index.php') {
+                // this is exception - page is completely private, nobody else may see content there
+                // that is why we allow JS here
+                return true;
+            } else {
+                // no JS on public personal pages, it would be a big security issue
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * The block should only be dockable when the title of the block is not empty
+     * and when parent allows docking.
+     *
+     * @return bool
+     */
+    public function instance_can_be_docked() {
+        return (!empty($this->config->title) && parent::instance_can_be_docked());
+    }
+
+    /*
+     * Add custom html attributes to aid with theming and styling
+     *
+     * @return array
+     */
+    function html_attributes() {
+        global $CFG;
+
+        $attributes = parent::html_attributes();
+
+        if (!empty($CFG->block_featured_tool_allowcssclasses)) {
+            if (!empty($this->config->classes)) {
+                $attributes['class'] .= ' '.$this->config->classes;
+            }
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Return the plugin config settings for external functions.
+     *
+     * @return stdClass the configs for both the block instance and plugin
+     * @since Moodle 3.8
+     */
+    public function get_config_for_external() {
+        global $CFG;
+
+        // Return all settings for all users since it is safe (no private keys, etc..).
+        $instanceconfigs = !empty($this->config) ? $this->config : new stdClass();
+        $pluginconfigs = (object) ['allowcssclasses' => $CFG->block_featured_tool_allowcssclasses];
+
+        return (object) [
+                'instance' => $instanceconfigs,
+                'plugin' => $pluginconfigs,
+        ];
     }
 }

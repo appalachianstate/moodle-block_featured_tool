@@ -17,7 +17,7 @@
 /**
  * Form for editing HTML block instances.
  *
- * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>
+ * @copyright 2010 Petr Skoda (http://skodak.org)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   block_featured_tool
  * @category  files
@@ -67,7 +67,7 @@ function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $fil
     $filename = array_pop($args);
     $filepath = $args ? '/'.implode('/', $args).'/' : '/';
 
-    if (!$file = $fs->get_file($context->id, 'block_html', 'content', 0, $filepath, $filename) or $file->is_directory()) {
+    if (!$file = $fs->get_file($context->id, 'block_featured_tool', 'content', 0, $filepath, $filename) or $file->is_directory()) {
         send_file_not_found();
     }
 

@@ -134,9 +134,6 @@ class block_featured_tool extends block_base {
                 'trusttext' => 0
         );
 
-        var_dump($data);
-        print_r($data);
-
         $type = 'featuredmedia';
         ${'temp_' . $type} = $data->$type;
         $data->$type = ${'temp_' . $type}['text'];
@@ -145,8 +142,9 @@ class block_featured_tool extends block_base {
         $draftitemid = ${'temp_' . $type}['itemid'];
 
         if ($draftitemid) {
-            $config->text = file_save_draft_area_files($draftitemid, $context->id, 'block_featured_tool', $type, 0, $editoroptions, $data->$type);
+            #$config->text = file_save_draft_area_files($draftitemid, $context->id, 'block_featured_tool', $type, 0, $editoroptions, $data->$type);
         }
+        $config->text = print_r($data);
         // Move embedded files into a proper filearea and adjust HTML links to match
         #$config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'featuredmedia', 0, $editoroptions, $data->text['text']);
         $config->format = $data->text['format'];

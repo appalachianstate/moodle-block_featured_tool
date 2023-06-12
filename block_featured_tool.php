@@ -192,16 +192,6 @@ class block_featured_tool extends block_base {
     }
 
     /**
-     * The block should only be dockable when the title of the block is not empty
-     * and when parent allows docking.
-     *
-     * @return bool
-     */
-    public function instance_can_be_docked() {
-        return (!empty($this->config->title) && parent::instance_can_be_docked());
-    }
-
-    /*
      * Add custom html attributes to aid with theming and styling
      *
      * @return array

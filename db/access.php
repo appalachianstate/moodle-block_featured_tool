@@ -29,7 +29,7 @@ $capabilities = [
 
         'block/featured_tool:myaddinstance' => [
                 'captype' => 'write',
-                'contextlevel' => CONTEXT_BLOCK,
+                'contextlevel' => CONTEXT_SYSTEM,
                 'archetypes' => [
                         'user' => CAP_ALLOW,
                 ],
@@ -39,7 +39,7 @@ $capabilities = [
         'block/featured_tool:addinstance' => array(
                 'riskbitmask' => RISK_SPAM | RISK_XSS,
                 'captype' => 'write',
-                'contextlevel' => CONTEXT_BLOCK,
+                'contextlevel' => CONTEXT_SYSTEM,
                 'archetypes' => array(
                         'editingteacher' => CAP_ALLOW,
                         'teacher' => CAP_ALLOW,
@@ -48,4 +48,14 @@ $capabilities = [
 
                 'clonepermissionsfrom' => 'moodle/site:manageblocks'
         ),
+
+        'block/featured_tool:viewinstance' => [
+                'captype' => 'view',
+                'contextlevel' => CONTEXT_BLOCK,
+                'archetypes' => [
+                        'teacher' => CAP_ALLOW,
+                        'user' => CAP_PROHIBIT,
+                        'manager' => CAP_ALLOW,
+                ],
+        ],
 ];

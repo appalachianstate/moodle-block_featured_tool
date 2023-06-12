@@ -38,14 +38,14 @@ class block_featured_tool_edit_form extends block_edit_form {
         global $CFG;
 
         // Fields for editing featured tool block title and contents.
-        $mform->addElement('header', 'configheader', get_string('editingblock', 'block'));
+        $mform->addElement('header', 'configheader', get_string('editingblock', 'block_featured_tool'));
 
         $mform->addElement('text', 'config_title', get_string('featuredtoolconfigtitle', 'block_featured_tool'));
         $mform->setType('config_title', PARAM_TEXT);
 
         $editoroptions = array('maxfiles' => EDITOR_UNLIMITED_FILES, 'noclean'=>true, 'context'=>$this->block->context);
-        $mform->addElement('editor', 'featured_media', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
-        $mform->setType('featured_media', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
+        $mform->addElement('editor', 'config_text', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
+        $mform->setType('config_text', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
     }
 
     /** Loads in existing data as form defaults.
@@ -57,15 +57,15 @@ class block_featured_tool_edit_form extends block_edit_form {
     function set_data($defaults) {
         if (!empty($this->block->config) && !empty($this->block->config->text)) {
             $text = $this->block->config->text;
-            $draftid_editor = file_get_submitted_draft_itemid('featured_media');
+            $draftid_editor = file_get_submitted_draft_itemid('config_text');
             if (empty($text)) {
                 $currenttext = '';
             } else {
                 $currenttext = $text;
             }
-            $defaults->featured_media['text'] = file_prepare_draft_area($draftid_editor, $this->block->context->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $currenttext);
-            $defaults->featured_media['itemid'] = $draftid_editor;
-            $defaults->featured_media['format'] = $this->block->config->format ?? FORMAT_MOODLE;
+            $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, $this->block->context->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $currenttext);
+            $defaults->config_text['itemid'] = $draftid_editor;
+            $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
         } else {
             $text = '';
         }

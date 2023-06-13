@@ -78,7 +78,7 @@ class block_featured_tool extends block_base {
             $sitecontext = context_system::instance();
 
             $fs = get_file_storage();
-            $file = $fs->get_area_files($sitecontext->id, 'block_featured_tool', 'content');
+            $file = $fs->get_area_files($sitecontext->id, 'block_featured_tool', 'content', 0);
 
             if (!empty($file)) {
                 print_object($file);

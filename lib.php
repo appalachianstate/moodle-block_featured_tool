@@ -69,6 +69,7 @@ function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $fil
 
     $sitecontext = context_system::instance();
     if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', 'content', 0, $filepath, $filename) or $file->is_directory()) {
+
         send_file_not_found();
     }
 
@@ -98,7 +99,7 @@ function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $fil
 function block_featured_tool_global_db_replace($search, $replace) {
     global $DB;
 
-    $instances = $DB->get_recordset('block_instances', array('blockname' => 'html'));
+    $instances = $DB->get_recordset('block_instances', array('blockname' => 'featured_tool'));
     foreach ($instances as $instance) {
         // TODO: intentionally hardcoded until MDL-26800 is fixed
         $config = unserialize_object(base64_decode($instance->configdata));

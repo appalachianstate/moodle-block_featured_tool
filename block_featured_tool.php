@@ -163,7 +163,7 @@ class block_featured_tool extends block_base {
         $config = clone($data);
         $sitecontext = context_system::instance();
         // Move embedded files into a proper filearea and adjust HTML links to match
-        $config->text = file_save_draft_area_files($data->text['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true, 'context' => $sitecontext), $data->text['text']);
+        $config->text = file_save_draft_area_files($data->text['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
         $config->format = $data->text['format'];
 
         parent::instance_config_save($config, $nolongerused);

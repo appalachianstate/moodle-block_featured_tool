@@ -37,8 +37,9 @@ class block_featured_tool extends block_base {
     }
 
     function specialization() {
+        $system_context = context::instance_by_id(CONTEXT_SYSTEM, IGNORE_MISSING);
         if (isset($this->config->title)) {
-            $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
+            $this->title = $this->title = format_string($this->config->title, true, ['context' => $system_context]);
         } else {
             $this->title = get_string('newfeaturedtoolblock', 'block_featured_tool');
         }
@@ -75,7 +76,7 @@ class block_featured_tool extends block_base {
             $this->content->footer = '';
             if (isset($this->config->text)) {
                 // rewrite url
-                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', CONTEXT_SYSTEM,
+                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id,
                         'block_featured_tool', 'content', null);
                 // Default to FORMAT_HTML which is what will have been used before the
                 // editor was properly implemented for the block.
@@ -99,7 +100,7 @@ class block_featured_tool extends block_base {
     }
 
     public function get_content_for_external($output) {
-        global $CFG;
+        global $CFG, $USER;
         require_once($CFG->libdir . '/externallib.php');
 
         $isallowed = false;

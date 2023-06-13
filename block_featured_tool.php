@@ -77,7 +77,14 @@ class block_featured_tool extends block_base {
 
             $sitecontext = context_system::instance();
 
-            if (isset($this->config->text)) {
+            $fs = get_file_storage();
+            $file = $fs->get_area_files($sitecontext->id, 'block_featured_tool', 'content')[0];
+
+            if (isset($file)) {
+                print_object($file);
+                $this->content->text = format_text(print_r($file));
+                #$this->content->text = format_text($file, $files->format, $filteropt);
+            } elseif (isset($this->content->text)) {
                 // rewrite url
                 $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id,
                         'block_featured_tool', 'content', null);

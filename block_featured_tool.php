@@ -75,7 +75,7 @@ class block_featured_tool extends block_base {
             $this->content->footer = '';
             if (isset($this->config->text)) {
                 // rewrite url
-                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id,
+                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', CONTEXT_SYSTEM,
                         'block_featured_tool', 'content', null);
                 // Default to FORMAT_HTML which is what will have been used before the
                 // editor was properly implemented for the block.
@@ -139,9 +139,9 @@ class block_featured_tool extends block_base {
                     $format = $this->config->format;
                 }
                 list($bc->content, $bc->contentformat) =
-                        external_format_text($this->config->text, $format, $this->context, 'block_featured_tool', 'content', null,
+                        external_format_text($this->config->text, $format, CONTEXT_SYSTEM, 'block_featured_tool', 'content', null,
                                 $filteropt);
-                $bc->files = external_util::get_area_files($this->context->id, 'block_featured_tool', 'content', false, false);
+                $bc->files = external_util::get_area_files(CONTEXT_SYSTEM, 'block_featured_tool', 'content', false, false);
 
             }
         }
@@ -157,7 +157,7 @@ class block_featured_tool extends block_base {
 
         $config = clone($data);
         // Move embedded files into a proper filearea and adjust HTML links to match
-        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
+        $config->text = file_save_draft_area_files($data->text['itemid'], CONTEXT_SYSTEM, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
         $config->format = $data->text['format'];
 
         parent::instance_config_save($config, $nolongerused);

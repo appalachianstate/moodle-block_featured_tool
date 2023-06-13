@@ -34,10 +34,6 @@
 function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
     global $DB, $CFG, $USER;
 
-    //if ($context->contextlevel != CONTEXT_BLOCK) {
-    //    send_file_not_found();
-    //}
-
     // If block is in course context, then check if user has capability to access course.
     if ($context->get_course_context(false)) {
         require_course_login($course);
@@ -71,17 +67,6 @@ function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $fil
     if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', 'content', 0, $filepath, $filename) or $file->is_directory()) {
         echo 'Made it here';
         send_file_not_found();
-    }
-
-    if ($parentcontext = context::instance_by_id($birecord_or_cm->parentcontextid, IGNORE_MISSING)) {
-        if ($parentcontext->contextlevel == CONTEXT_USER) {
-            // force download on all personal pages including /my/
-            //because we do not have reliable way to find out from where this is used
-            $forcedownload = true;
-        }
-    } else {
-        // weird, there should be parent context, better force dowload then
-        $forcedownload = true;
     }
 
     // NOTE: it woudl be nice to have file revisions here, for now rely on standard file lifetime,

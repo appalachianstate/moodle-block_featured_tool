@@ -54,8 +54,8 @@ class block_featured_tool_edit_form extends block_edit_form {
             $mform->addElement('text', 'config_title', get_string('featuredtoolconfigtitle', 'block_featured_tool'));
             $mform->setType('config_title', PARAM_TEXT);
 
-            $system_context = context::instance_by_id(CONTEXT_SYSTEM, IGNORE_MISSING);
-            $editoroptions = array('maxfiles' => EDITOR_UNLIMITED_FILES, 'noclean' => true, 'context' => $system_context);
+            $sitecontext = context_system::instance();
+            $editoroptions = array('maxfiles' => EDITOR_UNLIMITED_FILES, 'noclean' => true, 'context' => $sitecontext);
             $mform->addElement('editor', 'config_text', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
             $mform->setType('config_text', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
         }
@@ -76,7 +76,8 @@ class block_featured_tool_edit_form extends block_edit_form {
             } else {
                 $currenttext = $text;
             }
-            $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, CONTEXT_SYSTEM, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $currenttext);
+            $sitecontext = context_system::instance();
+            $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $currenttext);
             $defaults->config_text['itemid'] = $draftid_editor;
             $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
         } else {

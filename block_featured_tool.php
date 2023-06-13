@@ -37,9 +37,9 @@ class block_featured_tool extends block_base {
     }
 
     function specialization() {
-        $system_context = context::instance_by_id(CONTEXT_SYSTEM, IGNORE_MISSING);
+        $sitecontext = context_system::instance();
         if (isset($this->config->title)) {
-            $this->title = $this->title = format_string($this->config->title, true, ['context' => $system_context]);
+            $this->title = $this->title = format_string($this->config->title, true, ['context' => $sitecontext]);
         } else {
             $this->title = get_string('newfeaturedtoolblock', 'block_featured_tool');
         }
@@ -74,9 +74,12 @@ class block_featured_tool extends block_base {
 
             $this->content = new stdClass;
             $this->content->footer = '';
+
+            $sitecontext = context_system::instance();
+
             if (isset($this->config->text)) {
                 // rewrite url
-                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id,
+                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id,
                         'block_featured_tool', 'content', null);
                 // Default to FORMAT_HTML which is what will have been used before the
                 // editor was properly implemented for the block.
@@ -139,10 +142,11 @@ class block_featured_tool extends block_base {
                 if (isset($this->config->format)) {
                     $format = $this->config->format;
                 }
+                $sitecontext = context_system::instance();
                 list($bc->content, $bc->contentformat) =
-                        external_format_text($this->config->text, $format, CONTEXT_SYSTEM, 'block_featured_tool', 'content', null,
+                        external_format_text($this->config->text, $format, $sitecontext->id, 'block_featured_tool', 'content', null,
                                 $filteropt);
-                $bc->files = external_util::get_area_files(CONTEXT_SYSTEM, 'block_featured_tool', 'content', false, false);
+                $bc->files = external_util::get_area_files($sitecontext->id, 'block_featured_tool', 'content', false, false);
 
             }
         }
@@ -157,8 +161,9 @@ class block_featured_tool extends block_base {
         global $DB;
 
         $config = clone($data);
+        $sitecontext = context_system::instance();
         // Move embedded files into a proper filearea and adjust HTML links to match
-        $config->text = file_save_draft_area_files($data->text['itemid'], CONTEXT_SYSTEM, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
+        $config->text = file_save_draft_area_files($data->text['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
         $config->format = $data->text['format'];
 
         parent::instance_config_save($config, $nolongerused);

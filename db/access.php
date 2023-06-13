@@ -27,24 +27,22 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
 
-        'block/featured_tool:myaddinstance' => [
-                'captype' => 'write',
-                'contextlevel' => CONTEXT_SYSTEM,
-                'archetypes' => [
-                        'user' => CAP_ALLOW,
-                ],
-                'clonepermissionsfrom' => 'moodle/my:manageblocks',
-        ],
+        //'block/featured_tool:myaddinstance' => [
+        //        'captype' => 'write',
+        //        'contextlevel' => CONTEXT_BLOCK,
+        //        'archetypes' => [
+        //                'user' => CAP_ALLOW,
+        //        ],
+        //],
 
         'block/featured_tool:addinstance' => [
-                'riskbitmask' => RISK_SPAM | RISK_XSS,
                 'captype' => 'write',
-                'contextlevel' => CONTEXT_SYSTEM,
+                'contextlevel' => CONTEXT_BLOCK,
                 'archetypes' => [
                         'editingteacher' => CAP_ALLOW,
                         'teacher' => CAP_ALLOW,
                         'manager' => CAP_ALLOW,
-                        'user' => CAP_ALLOW,
+                        'user' => CAP_PROHIBIT,
                 ],
 
                 'clonepermissionsfrom' => 'moodle/site:manageblocks'
@@ -54,7 +52,9 @@ $capabilities = [
                 'captype' => 'view',
                 'contextlevel' => CONTEXT_BLOCK,
                 'archetypes' => [
-                        'user' => CAP_ALLOW,
+                        'teacher' => CAP_ALLOW,
+                        'manager' => CAP_ALLOW,
+                        'user' => CAP_PROHIBIT,
                 ],
         ],
 ];

@@ -55,6 +55,7 @@ class block_featured_tool extends block_base {
             $context = context_course::instance($course->id);
             if (has_capability('moodle/course:manageactivities', $context)) {
                 $isallowed = true;
+                print_object($USER);
                 break;
             }
         }

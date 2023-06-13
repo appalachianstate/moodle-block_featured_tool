@@ -34,26 +34,6 @@
 function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
     global $DB, $CFG, $USER;
 
-    // If block is in course context, then check if user has capability to access course.
-    if ($context->get_course_context(false)) {
-        require_course_login($course);
-    } else if ($CFG->forcelogin) {
-        require_login();
-    } else {
-        // Get parent context and see if user have proper permission.
-        $parentcontext = $context->get_parent_context();
-        if ($parentcontext->contextlevel === CONTEXT_COURSECAT) {
-            // Check if category is visible and user can view this category.
-            if (!core_course_category::get($parentcontext->instanceid, IGNORE_MISSING)) {
-                send_file_not_found();
-            }
-        } else if ($parentcontext->contextlevel === CONTEXT_USER && $parentcontext->instanceid != $USER->id) {
-            // The block is in the context of a user, it is only visible to the user who it belongs to.
-            send_file_not_found();
-        }
-        // At this point there is no way to check SYSTEM context, so ignoring it.
-    }
-
     if ($filearea !== 'content') {
         send_file_not_found();
     }
@@ -65,12 +45,11 @@ function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $fil
 
     $sitecontext = context_system::instance();
     if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', 'content', 0, $filepath, $filename) or $file->is_directory()) {
-        echo 'Made it here';
         send_file_not_found();
     }
 
-    // NOTE: it woudl be nice to have file revisions here, for now rely on standard file lifetime,
-    //       do not lower it because the files are dispalyed very often.
+    // NOTE: it would be nice to have file revisions here, for now rely on standard file lifetime,
+    //       do not lower it because the files are displayed very often.
     \core\session\manager::write_close();
     send_stored_file($file, null, 0, $forcedownload, $options);
 }

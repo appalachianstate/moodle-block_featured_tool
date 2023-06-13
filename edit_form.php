@@ -41,7 +41,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $courses = enrol_get_all_users_courses($USER->id, true);
         foreach ($courses as $course) {
             $context = context_course::instance($course->id);
-            if (has_capability('moodle/course:manageactivities', $context)) {
+            if (has_capability('moodle/site:configview', $context)) {
                 $isallowed = true;
                 break;
             }

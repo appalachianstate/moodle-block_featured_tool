@@ -72,21 +72,25 @@ class block_featured_tool_edit_form extends block_edit_form {
      * @return void
      */
     function set_data($defaults) {
+        $draftid_editor = file_get_submitted_draft_itemid('config_text');
+
+        // If a name for the block already exists, use it
         if (!empty($this->block->config) && !empty($this->block->config->text)) {
             $text = $this->block->config->text;
-            $draftid_editor = file_get_submitted_draft_itemid('config_text');
             if (empty($text)) {
                 $currenttext = '';
             } else {
                 $currenttext = $text;
             }
-            $sitecontext = context_system::instance();
-            $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $currenttext);
-            $defaults->config_text['itemid'] = $draftid_editor;
-            $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
         } else {
             $text = '';
         }
+        // Need to check if there are any files in the block_featured_tool component, and if so run the below
+        // Loads any already added files to the feature tool block's draft editor
+        $sitecontext = context_system::instance();
+        $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $currenttext);
+        $defaults->config_text['itemid'] = $draftid_editor;
+        $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
 
         if (!$this->block->user_can_edit() && !empty($this->block->config->title)) {
             // If a title has been set but the user cannot edit it format it nicely

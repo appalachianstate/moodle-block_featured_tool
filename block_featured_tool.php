@@ -82,7 +82,7 @@ class block_featured_tool extends block_base {
 
             if (!empty($file)) {
                 print_object($file);
-                $this->content->text = format_text(print_r($file));
+                $this->content->text = format_text(print_r($file->file_record->stored_file->private));
                 #$this->content->text = format_text($file, $files->format, $filteropt);
             } elseif (isset($this->content->text)) {
                 // rewrite url

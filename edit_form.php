@@ -77,7 +77,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $currenttext = $text;
             }
             $sitecontext = context_system::instance();
-            $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $currenttext);
+            $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true, 'context' => $sitecontext), $currenttext);
             $defaults->config_text['itemid'] = $draftid_editor;
             $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
         } else {

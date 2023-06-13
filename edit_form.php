@@ -43,7 +43,6 @@ class block_featured_tool_edit_form extends block_edit_form {
             $context = context_course::instance($course->id);
             if (has_capability('moodle/course:manageactivities', $context)) {
                 $isallowed = true;
-                print_object($USER);
                 break;
             }
         }

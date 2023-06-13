@@ -77,7 +77,7 @@ class provider implements
                   FROM {block_instances} b
             INNER JOIN {context} c ON c.instanceid = b.id AND c.contextlevel = :contextblock
             INNER JOIN {context} bpc ON bpc.id = b.parentcontextid
-                 WHERE b.blockname = 'html'
+                 WHERE b.blockname = 'featured_tool'
                    AND bpc.contextlevel = :contextuser
                    AND bpc.instanceid = :userid";
 
@@ -109,7 +109,7 @@ class provider implements
         $sql = "SELECT bpc.instanceid AS userid
                   FROM {block_instances} bi
                   JOIN {context} bpc ON bpc.id = bi.parentcontextid
-                 WHERE bi.blockname = 'html'
+                 WHERE bi.blockname = 'featured_tool'
                    AND bpc.contextlevel = :contextuser
                    AND bi.id = :blockinstanceid";
 
@@ -138,7 +138,7 @@ class provider implements
                     bi.*
                   FROM {context} c
             INNER JOIN {block_instances} bi ON bi.id = c.instanceid AND c.contextlevel = :contextlevel
-                 WHERE bi.blockname = 'html'
+                 WHERE bi.blockname = 'featured_tool'
                    AND(
                     c.id {$contextsql}
                 )
@@ -152,7 +152,7 @@ class provider implements
         $instances = $DB->get_recordset_sql($sql, $params);
         foreach ($instances as $instance) {
             $context = \context_block::instance($instance->id);
-            $block = block_instance('html', $instance);
+            $block = block_instance('featured_tool', $instance);
             if (empty($block->config)) {
                 // Skip this block. It has not been configured.
                 continue;
@@ -238,6 +238,6 @@ class provider implements
     protected static function get_instance_from_context(\context_block $context) {
         global $DB;
 
-        return $DB->get_record('block_instances', ['id' => $context->instanceid, 'blockname' => 'html']);
+        return $DB->get_record('block_instances', ['id' => $context->instanceid, 'blockname' => 'featured_tool']);
     }
 }

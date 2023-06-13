@@ -33,6 +33,6 @@ $string['pluginname'] = 'Featured Tool';
 $string['featuredtoolconfigtitle'] = 'Featured tool block title';
 $string['featuredtool'] = 'Featured tool media';
 $string['featuredtool_desc'] = 'This is where you can upload media to be displayed in the featured block.';
-$string['newfeaturedtoolblock'] = '(new text block)';
+$string['newfeaturedtoolblock'] = '(new featured tool block)';
 $string['search:content'] = 'Featured tool block content';
 $string['privacy:metadata:block'] = 'The featured tool block stores all of its data within the block subsystem.';

@@ -85,7 +85,7 @@ class block_featured_tool extends block_base {
                 $file = reset($files);
                 print_object($file);
                 $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
-                        $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+                        null, $file->get_filepath(), $file->get_filename());
                 $this->content->text = format_text($url, FORMAT_HTML, $filteropt);
             // If files are just being added, rewrite from the draftfile
             } elseif (isset($this->content->text)) {

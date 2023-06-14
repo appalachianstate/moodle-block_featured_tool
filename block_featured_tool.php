@@ -83,10 +83,17 @@ class block_featured_tool extends block_base {
             // If files are already in the file area, load them
             if (count($files)) {
                 $file = reset($files);
-                $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                $this->config->text = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
                         null, $file->get_filepath(), $file->get_filename());
-                #$this->content->text = format_text($url, FORMAT_HTML, $filteropt);
-                $this->content->text = html_writer::img($url, get_string('featuredtool', 'block_featured_tool'), ['class' => 'featuredmedia']);
+                // Default to FORMAT_HTML which is what will have been used before the
+                // editor was properly implemented for the block.
+                $format = FORMAT_HTML;
+                // Check to see if the format has been properly set on the config
+                if (isset($this->config->format)) {
+                    $format = $this->config->format;
+                }
+                #$this->content->text = html_writer::img($url, get_string('featuredtool', 'block_featured_tool'), ['class' => 'featuredmedia']);
+                $this->content->text = format_text($this->config->text, $format, $filteropt);
             // If files are just being added, rewrite from the draftfile
             } elseif (isset($this->content->text)) {
                 // rewrite url

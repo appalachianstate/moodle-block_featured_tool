@@ -86,7 +86,8 @@ class block_featured_tool extends block_base {
                 print_object($file);
                 $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
                         null, $file->get_filepath(), $file->get_filename());
-                $this->content->text = format_text($url, FORMAT_HTML, $filteropt);
+                #$this->content->text = format_text($url, FORMAT_HTML, $filteropt);
+                $this->content->text = html_writer::img($url, get_string('featuredtool', 'block_featured_tool'), ['class' => 'featuredmedia']);
             // If files are just being added, rewrite from the draftfile
             } elseif (isset($this->content->text)) {
                 // rewrite url

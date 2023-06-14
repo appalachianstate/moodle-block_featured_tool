@@ -54,11 +54,12 @@ class block_featured_tool_edit_form extends block_edit_form {
             $mform->addElement('text', 'config_title', get_string('featuredtoolconfigtitle', 'block_featured_tool'));
             $mform->setType('config_title', PARAM_TEXT);
 
+            $sitecontext = context_system::instance();
             $editoroptions = array(
                     'maxfiles' => EDITOR_UNLIMITED_FILES,
                     'noclean' => true,
                     'trusttext' => false,
-                    'context' => $this->block->context,
+                    'context' => $sitecontext,
                     );
             $mform->addElement('editor', 'config_text', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
             $mform->setType('config_text', PARAM_RAW); // XSS is prevented when printing the block contents and serving files

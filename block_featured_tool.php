@@ -78,11 +78,13 @@ class block_featured_tool extends block_base {
             $sitecontext = context_system::instance();
 
             $fs = get_file_storage();
-            $file = $fs->get_area_files($sitecontext->id, 'block_featured_tool', 'content', 0)[0];
+            $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', 'content', 0);
 
-            if (!empty($file)) {
-                print_object($file->get_content());
-                $this->content->text = format_text($file->get_content(), FORMAT_HTML, $filteropt);
+            if (count($files)) {
+                $file = reset($files);
+                $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                        $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+                $this->content->text = format_text($url, FORMAT_HTML, $filteropt);
             } elseif (isset($this->content->text)) {
                 // rewrite url
                 $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id,

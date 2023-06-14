@@ -83,7 +83,6 @@ class block_featured_tool extends block_base {
             // If files are already in the file area, load them
             if (count($files)) {
                 $file = reset($files);
-                print_object($file);
                 $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
                         null, $file->get_filepath(), $file->get_filename());
                 #$this->content->text = format_text($url, FORMAT_HTML, $filteropt);

@@ -78,7 +78,7 @@ class block_featured_tool extends block_base {
             $sitecontext = context_system::instance();
 
             $fs = get_file_storage();
-            $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', 'content', 0, 'filename', false);
+            $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', 'content', false, 'filename', false);
 
             // If files are already in the file area, load them
             if (count($files)) {

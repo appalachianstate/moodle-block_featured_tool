@@ -82,9 +82,12 @@ class block_featured_tool extends block_base {
 
             // If files are already in the file area, load them
             if (count($files)) {
-                $file = reset($files);
-                $this->config->text = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
-                        null, $file->get_filepath(), $file->get_filename());
+                foreach ($files as $file) {
+                    //$this->config->text .= moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                    //        null, $file->get_filepath(), $file->get_filename());
+                    $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id,
+                            'block_featured_tool', 'content', null);
+                }
                 // Default to FORMAT_HTML which is what will have been used before the
                 // editor was properly implemented for the block.
                 $format = FORMAT_HTML;
@@ -190,8 +193,9 @@ class block_featured_tool extends block_base {
 
     function instance_delete() {
         global $DB;
+        $sitecontext = context_system::instance();
         $fs = get_file_storage();
-        $fs->delete_area_files($this->context->id, 'block_featured_tool');
+        $fs->delete_area_files($sitecontext->id, 'block_featured_tool');
         return true;
     }
 

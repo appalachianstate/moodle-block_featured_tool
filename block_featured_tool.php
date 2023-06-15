@@ -46,7 +46,7 @@ class block_featured_tool extends block_base {
     }
 
     function get_content() {
-        global $CFG, $USER;
+        global $DB, $CFG, $USER;
 
         require_once($CFG->libdir . '/filelib.php');
 
@@ -77,28 +77,17 @@ class block_featured_tool extends block_base {
 
             $sitecontext = context_system::instance();
 
-            $fs = get_file_storage();
-            $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', 'content', false, 'filename', false);
-
+            // Grabs the master version of the block
+            $admincontextid = 5;
+            $instance = $DB->get_record('block_instances', array('blockname' => 'featured_tool', 'parentcontextid' => $admincontextid));
             // If files are already in the file area, load them
-            if (count($files)) {
-                foreach ($files as $file) {
-                    //$this->config->text .= moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
-                    //        null, $file->get_filepath(), $file->get_filename());
-                    $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id,
-                            'block_featured_tool', 'content', null);
-                }
-                // Default to FORMAT_HTML which is what will have been used before the
-                // editor was properly implemented for the block.
-                $format = FORMAT_HTML;
-                // Check to see if the format has been properly set on the config
-                if (isset($this->config->format)) {
-                    $format = $this->config->format;
-                }
-                #$this->content->text = html_writer::img($url, get_string('featuredtool', 'block_featured_tool'), ['class' => 'featuredmedia']);
-                $this->content->text = format_text($this->config->text, $format, $filteropt);
-            // If files are just being added, rewrite from the draftfile
-            } elseif (isset($this->content->text)) {
+            if ($instance) {
+                $this->config = unserialize(base64_decode($instance->configdata));
+                $this->content->text = "HTML to be loaded.";
+            }
+
+            // Rewrite HTML from the draftfile
+            if (isset($this->content->text)) {
                 // rewrite url
                 $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id,
                         'block_featured_tool', 'content', null);
@@ -183,10 +172,19 @@ class block_featured_tool extends block_base {
         global $DB;
 
         $config = clone($data);
+
         $sitecontext = context_system::instance();
         // Move embedded files into a proper filearea and adjust HTML links to match
         $config->text = file_save_draft_area_files($data->text['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
         $config->format = $data->text['format'];
+
+        $admincontextid = 5;
+        $instance = $DB->get_record('block_instances', array('blockname' => 'featured_tool', 'parentcontextid' => $admincontextid));
+        // Stores the new data in the admin block's record before storing it in its own
+        if ($this->context->id !== $admincontextid && $instance) {
+            $DB->update_record('block_instances', ['id' => $instance->id,
+                    'configdata' => base64_encode(serialize($config)), 'timemodified' => time()]);
+        }
 
         parent::instance_config_save($config, $nolongerused);
     }

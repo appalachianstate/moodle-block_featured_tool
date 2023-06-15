@@ -48,11 +48,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         }
 
         if ($isallowed) {
-            // Fields for editing featured tool block title and contents.
+            // Fields for editing featured tool block  contents.
             $mform->addElement('header', 'configheader', get_string('editingblock', 'block_featured_tool'));
-
-            $mform->addElement('text', 'config_title', get_string('featuredtoolconfigtitle', 'block_featured_tool'));
-            $mform->setType('config_title', PARAM_TEXT);
 
             $sitecontext = context_system::instance();
             $editoroptions = array(
@@ -102,13 +99,13 @@ class block_featured_tool_edit_form extends block_edit_form {
         $defaults->config_text['itemid'] = $draftid_editor;
         $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
 
-        if (!$this->block->user_can_edit() && !empty($this->block->config->title)) {
-            // If a title has been set but the user cannot edit it format it nicely
-            $title = $this->block->config->title;
-            $defaults->config_title = format_string($title, true, $this->page->context);
-            // Remove the title from the config so that parent::set_data doesn't set it.
-            unset($this->block->config->title);
-        }
+        //if (!$this->block->user_can_edit() && !empty($this->block->config->title)) {
+        //    // If a title has been set but the user cannot edit it format it nicely
+        //    $title = $this->block->config->title;
+        //    $defaults->config_title = format_string($title, true, $this->page->context);
+        //    // Remove the title from the config so that parent::set_data doesn't set it.
+        //    unset($this->block->config->title);
+        //}
 
         // have to delete text here, otherwise parent::set_data will empty content
         // of editor

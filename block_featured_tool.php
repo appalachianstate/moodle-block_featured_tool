@@ -28,21 +28,12 @@ class block_featured_tool extends block_base {
         $this->title = get_string('pluginname', 'block_featured_tool');
     }
 
-    function has_config() {
-        return false;
-    }
-
     function applicable_formats() {
         return array('my' => true);
     }
 
     function specialization() {
-        $sitecontext = context_system::instance();
-        if (isset($this->config->title)) {
-            $this->title = $this->title = format_string($this->config->title, true, ['context' => $sitecontext]);
-        } else {
-            $this->title = get_string('newfeaturedtoolblock', 'block_featured_tool');
-        }
+        //$this->title = get_string('featuredtoolheader', 'block_featured_tool');
     }
 
     function get_content() {
@@ -114,7 +105,7 @@ class block_featured_tool extends block_base {
     }
 
     public function get_content_for_external($output) {
-        global $CFG, $USER;
+        global $DB, $CFG, $USER;
         require_once($CFG->libdir . '/externallib.php');
 
         $isallowed = false;
@@ -141,6 +132,16 @@ class block_featured_tool extends block_base {
                 $bc->title = $this->title;
             }
 
+            $sitecontext = context_system::instance();
+
+            // Grabs the master version of the block
+            $admincontextid = 5;
+            $instance = $DB->get_record('block_instances', array('blockname' => 'featured_tool', 'parentcontextid' => $admincontextid));
+            // If files are already in the file area, load them
+            if ($instance) {
+                $this->config = unserialize(base64_decode($instance->configdata));
+            }
+
             if (isset($this->config->text)) {
                 $filteropt = new stdClass;
                 if ($this->content_is_trusted()) {
@@ -153,7 +154,7 @@ class block_featured_tool extends block_base {
                 if (isset($this->config->format)) {
                     $format = $this->config->format;
                 }
-                $sitecontext = context_system::instance();
+
                 list($bc->content, $bc->contentformat) =
                         external_format_text($this->config->text, $format, $sitecontext->id, 'block_featured_tool', 'content', null,
                                 $filteropt);
@@ -191,9 +192,8 @@ class block_featured_tool extends block_base {
 
     function instance_delete() {
         global $DB;
-        $sitecontext = context_system::instance();
         $fs = get_file_storage();
-        $fs->delete_area_files($sitecontext->id, 'block_featured_tool');
+        $fs->delete_area_files($this->context->id, 'block_featured_tool');
         return true;
     }
 

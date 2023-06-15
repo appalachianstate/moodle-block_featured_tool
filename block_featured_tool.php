@@ -28,24 +28,16 @@ class block_featured_tool extends block_base {
         $this->title = get_string('pluginname', 'block_featured_tool');
     }
 
-    function has_config() {
-        return false;
-    }
-
     function applicable_formats() {
         return array('my' => true);
     }
 
     function specialization() {
-        if (isset($this->config->title)) {
-            $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
-        } else {
-            $this->title = get_string('newfeaturedtoolblock', 'block_featured_tool');
-        }
+        //$this->title = get_string('featuredtoolheader', 'block_featured_tool');
     }
 
     function get_content() {
-        global $CFG, $USER;
+        global $DB, $CFG, $USER;
 
         require_once($CFG->libdir . '/filelib.php');
 
@@ -73,9 +65,22 @@ class block_featured_tool extends block_base {
 
             $this->content = new stdClass;
             $this->content->footer = '';
-            if (isset($this->config->text)) {
+
+            $sitecontext = context_system::instance();
+
+            // Grabs the master version of the block
+            $admincontextid = 5;
+            $instance = $DB->get_record('block_instances', array('blockname' => 'featured_tool', 'parentcontextid' => $admincontextid));
+            // If files are already in the file area, load them
+            if ($instance) {
+                $this->config = unserialize(base64_decode($instance->configdata));
+                $this->content->text = "HTML to be loaded.";
+            }
+
+            // Rewrite HTML from the draftfile
+            if (isset($this->content->text)) {
                 // rewrite url
-                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id,
+                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id,
                         'block_featured_tool', 'content', null);
                 // Default to FORMAT_HTML which is what will have been used before the
                 // editor was properly implemented for the block.
@@ -85,6 +90,7 @@ class block_featured_tool extends block_base {
                     $format = $this->config->format;
                 }
                 $this->content->text = format_text($this->config->text, $format, $filteropt);
+            // Don't show anything if there is nothing to show
             } else {
                 $this->content->text = '';
             }
@@ -99,7 +105,7 @@ class block_featured_tool extends block_base {
     }
 
     public function get_content_for_external($output) {
-        global $CFG;
+        global $DB, $CFG, $USER;
         require_once($CFG->libdir . '/externallib.php');
 
         $isallowed = false;
@@ -126,6 +132,16 @@ class block_featured_tool extends block_base {
                 $bc->title = $this->title;
             }
 
+            $sitecontext = context_system::instance();
+
+            // Grabs the master version of the block
+            $admincontextid = 5;
+            $instance = $DB->get_record('block_instances', array('blockname' => 'featured_tool', 'parentcontextid' => $admincontextid));
+            // If files are already in the file area, load them
+            if ($instance) {
+                $this->config = unserialize(base64_decode($instance->configdata));
+            }
+
             if (isset($this->config->text)) {
                 $filteropt = new stdClass;
                 if ($this->content_is_trusted()) {
@@ -138,10 +154,11 @@ class block_featured_tool extends block_base {
                 if (isset($this->config->format)) {
                     $format = $this->config->format;
                 }
+
                 list($bc->content, $bc->contentformat) =
-                        external_format_text($this->config->text, $format, $this->context, 'block_featured_tool', 'content', null,
+                        external_format_text($this->config->text, $format, $sitecontext->id, 'block_featured_tool', 'content', null,
                                 $filteropt);
-                $bc->files = external_util::get_area_files($this->context->id, 'block_featured_tool', 'content', false, false);
+                $bc->files = external_util::get_area_files($sitecontext->id, 'block_featured_tool', 'content', false, false);
 
             }
         }
@@ -156,9 +173,19 @@ class block_featured_tool extends block_base {
         global $DB;
 
         $config = clone($data);
+
+        $sitecontext = context_system::instance();
         // Move embedded files into a proper filearea and adjust HTML links to match
-        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
+        $config->text = file_save_draft_area_files($data->text['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
         $config->format = $data->text['format'];
+
+        $admincontextid = 5;
+        $instance = $DB->get_record('block_instances', array('blockname' => 'featured_tool', 'parentcontextid' => $admincontextid));
+        // Stores the new data in the admin block's record before storing it in its own
+        if ($this->context->id !== $admincontextid && $instance) {
+            $DB->update_record('block_instances', ['id' => $instance->id,
+                    'configdata' => base64_encode(serialize($config)), 'timemodified' => time()]);
+        }
 
         parent::instance_config_save($config, $nolongerused);
     }

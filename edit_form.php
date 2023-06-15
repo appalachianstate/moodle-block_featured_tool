@@ -48,13 +48,16 @@ class block_featured_tool_edit_form extends block_edit_form {
         }
 
         if ($isallowed) {
-            // Fields for editing featured tool block title and contents.
+            // Fields for editing featured tool block  contents.
             $mform->addElement('header', 'configheader', get_string('editingblock', 'block_featured_tool'));
 
-            $mform->addElement('text', 'config_title', get_string('featuredtoolconfigtitle', 'block_featured_tool'));
-            $mform->setType('config_title', PARAM_TEXT);
-
-            $editoroptions = array('maxfiles' => EDITOR_UNLIMITED_FILES, 'noclean' => true, 'context' => $this->block->context);
+            $sitecontext = context_system::instance();
+            $editoroptions = array(
+                    'maxfiles' => EDITOR_UNLIMITED_FILES,
+                    'noclean' => true,
+                    'trusttext' => false,
+                    'context' => $sitecontext,
+                    );
             $mform->addElement('editor', 'config_text', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
             $mform->setType('config_text', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
         }
@@ -67,28 +70,42 @@ class block_featured_tool_edit_form extends block_edit_form {
      * @return void
      */
     function set_data($defaults) {
+        global $DB;
+
+        $draftid_editor = file_get_submitted_draft_itemid('config_text');
+
+        // Checks if there are any files in the master block tool and syncs them
+        $admincontextid = 5;
+        $instance = $DB->get_record('block_instances', array('blockname' => 'featured_tool', 'parentcontextid' => $admincontextid));
+        $sitecontext = context_system::instance();
+        if ($instance) {
+            $this->block->config = unserialize(base64_decode($instance->configdata));
+        }
+
+        // If a name for the block already exists, use it
         if (!empty($this->block->config) && !empty($this->block->config->text)) {
             $text = $this->block->config->text;
-            $draftid_editor = file_get_submitted_draft_itemid('config_text');
             if (empty($text)) {
                 $currenttext = '';
             } else {
                 $currenttext = $text;
             }
-            $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, $this->block->context->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $currenttext);
-            $defaults->config_text['itemid'] = $draftid_editor;
-            $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
         } else {
             $text = '';
         }
 
-        if (!$this->block->user_can_edit() && !empty($this->block->config->title)) {
-            // If a title has been set but the user cannot edit it format it nicely
-            $title = $this->block->config->title;
-            $defaults->config_title = format_string($title, true, $this->page->context);
-            // Remove the title from the config so that parent::set_data doesn't set it.
-            unset($this->block->config->title);
-        }
+        // Loads any already added files to the feature tool block's draft editor
+        $defaults->config_text['text'] = file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $currenttext);
+        $defaults->config_text['itemid'] = $draftid_editor;
+        $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
+
+        //if (!$this->block->user_can_edit() && !empty($this->block->config->title)) {
+        //    // If a title has been set but the user cannot edit it format it nicely
+        //    $title = $this->block->config->title;
+        //    $defaults->config_title = format_string($title, true, $this->page->context);
+        //    // Remove the title from the config so that parent::set_data doesn't set it.
+        //    unset($this->block->config->title);
+        //}
 
         // have to delete text here, otherwise parent::set_data will empty content
         // of editor

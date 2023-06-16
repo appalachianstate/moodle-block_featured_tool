@@ -25,15 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['editingblock'] = 'Editing featured tool block';
-$string['featured_tool:addinstance'] = 'Add and edit a new featured tool block';
+$string['featured_tool:desc'] = 'This is where you can upload media to be displayed in the featured block.';
+$string['featured_tool:edit'] = 'Editing featured tool block';
+$string['featured_tool:media'] = 'Featured tool media';
 $string['featured_tool:myaddinstance'] = 'Add a new featured tool block to Dashboard';
-$string['featured_tool:viewinstance'] = 'View the featured tool block';
-$string['pluginname'] = 'Featured Tool';
-$string['featuredtoolheader'] = 'Featured';
-$string['featuredtoolconfigtitle'] = 'Featured tool block title';
-$string['featuredtool'] = 'Featured tool media';
-$string['featuredtool_desc'] = 'This is where you can upload media to be displayed in the featured block.';
-$string['newfeaturedtoolblock'] = '(new featured tool block)';
-$string['search:content'] = 'Featured tool block content';
-$string['privacy:metadata:block'] = 'The featured tool block stores all of its data within the block subsystem.';
+$string['pluginname'] = 'Featured tool';

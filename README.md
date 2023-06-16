@@ -1,4 +1,4 @@
-# Featured #
+# Featured tool #
 
 TODO Describe the plugin shortly here.
 

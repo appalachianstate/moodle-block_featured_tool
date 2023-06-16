@@ -37,6 +37,7 @@ class block_featured_tool extends block_base {
      * @return stdClass The block contents.
      */
     public function get_content() {
+        global $USER;
 
         $isallowed = false;
         $courses = enrol_get_all_users_courses($USER->id, true);

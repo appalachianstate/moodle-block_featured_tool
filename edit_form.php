@@ -30,10 +30,28 @@ class block_featured_tool_edit_form extends block_edit_form {
      */
     protected function specific_definition($mform) {
 
-        // Section header title.
-        $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
+        $isallowed = false;
+        $courses = enrol_get_all_users_courses($USER->id, true);
+        foreach ($courses as $course) {
+            $context = context_course::instance($course->id);
+            if (has_capability('moodle/site:configview', $context)) {
+                $isallowed = true;
+                break;
+            }
+        }
 
-        // Please keep in mind that all elements defined here must start with 'config_'.
+        if ($isallowed) {
+            // Section header title.
+            $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
+            $editoroptions = array(
+                    'maxfiles' => EDITOR_UNLIMITED_FILES,
+                    'noclean' => true,
+                    'trusttext' => false,
+                    'context' => $this->block->context,
+            );
+            $mform->addElement('editor', 'config_media', get_string('featuredtool', 'block_featured_tool'), null, $editoroptions);
+            $mform->setType('config_media', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
+        }
     }
 }

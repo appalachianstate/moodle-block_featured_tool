@@ -38,25 +38,39 @@ class block_featured_tool extends block_base {
      */
     public function get_content() {
 
-        if ($this->content !== null) {
-            return $this->content;
+        $isallowed = false;
+        $courses = enrol_get_all_users_courses($USER->id, true);
+        foreach ($courses as $course) {
+            $context = context_course::instance($course->id);
+            if (has_capability('moodle/course:manageactivities', $context)) {
+                $isallowed = true;
+                break;
+            }
         }
 
-        if (empty($this->instance)) {
-            $this->content = '';
-            return $this->content;
-        }
+        if ($isallowed) {
+            if ($this->content !== null) {
+                return $this->content;
+            }
 
-        $this->content = new stdClass();
-        $this->content->items = array();
-        $this->content->icons = array();
-        $this->content->footer = '';
+            if (empty($this->instance)) {
+                $this->content = '';
+                return $this->content;
+            }
 
-        if (!empty($this->config->text)) {
-            $this->content->text = $this->config->text;
+            $this->content = new stdClass();
+            $this->content->items = array();
+            $this->content->icons = array();
+            $this->content->footer = '';
+
+            if (!empty($this->config->text)) {
+                $this->content->text = $this->config->text;
+            } else {
+                $text = 'Please define the content text in /blocks/featured_tool/block_featured_tool.php.';
+                $this->content->text = $text;
+            }
         } else {
-            $text = 'Please define the content text in /blocks/featured_tool/block_featured_tool.php.';
-            $this->content->text = $text;
+            return '';
         }
 
         return $this->content;

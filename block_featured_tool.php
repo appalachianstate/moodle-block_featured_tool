@@ -68,10 +68,10 @@ class block_featured_tool extends block_base {
             $filteropt->overflowdiv = true;
             $filteropt->noclean = true;
 
-            if (!empty($this->config->media)) {
-                $this->config->media = file_rewrite_pluginfile_urls($this->config->media, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'content', null);
+            if (!empty($this->config->text)) {
+                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'content', null);
                 $format = FORMAT_HTML;
-                $this->content->text = format_text($this->config->media, $format, $filteropt);
+                $this->content->text = format_text($this->config->text, $format, $filteropt);
             } else {
                 $text = 'Please define the content text in /blocks/featured_tool/block_featured_tool.php.';
                 $this->content->text = $text;
@@ -81,6 +81,20 @@ class block_featured_tool extends block_base {
         }
 
         return $this->content;
+    }
+
+    /**
+     * Serialize and store config data
+     */
+    function instance_config_save($data, $nolongerused = false) {
+        global $DB;
+
+        $config = clone($data);
+        // Move embedded files into a proper filearea and adjust HTML links to match
+        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text['text']);
+        $config->format = $data->text['format'];
+
+        parent::instance_config_save($config, $nolongerused);
     }
 
     /**

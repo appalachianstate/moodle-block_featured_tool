@@ -51,8 +51,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                     'trusttext' => false,
                     'context' => $this->block->context,
             );
-            $mform->addElement('editor', 'config_media', get_string('featured_tool:media', 'block_featured_tool'), null, $editoroptions);
-            $mform->setType('config_media', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
+            $mform->addElement('editor', 'config_text', get_string('featured_tool:media', 'block_featured_tool'), null, $editoroptions);
+            $mform->setType('config_text', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
         }
     }
 }

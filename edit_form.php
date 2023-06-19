@@ -69,14 +69,6 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         $draftid_editor = file_get_submitted_draft_itemid('config_text');
 
-        // Checks if there are any files in the master block tool and syncs them
-        $admincontextid = 5;
-        $instance = $DB->get_record('block_instances', array('blockname' => 'featured_tool', 'parentcontextid' => $admincontextid));
-        $sitecontext = context_system::instance();
-        if ($instance) {
-            $this->block->config = unserialize(base64_decode($instance->configdata));
-        }
-
         // If there is text in the block's config_text, load it
         if (!empty($this->block->config) && !empty($this->block->config->text)) {
             $text = $this->block->config->text;

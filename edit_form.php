@@ -88,7 +88,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0,
                         array('subdirs' => true), $currenttext);
         $defaults->config_text['itemid'] = $draftid_editor;
-        $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
+        $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_HTML;
 
         // have to delete text here, otherwise parent::set_data will empty content
         // of editor

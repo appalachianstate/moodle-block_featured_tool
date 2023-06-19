@@ -71,7 +71,7 @@ class block_featured_tool extends block_base {
             if (!empty($this->config->text)) {
                 $sitecontext = context_system::instance();
                 $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', 'content', null);
-                //$format = FORMAT_HTML;
+                $format = FORMAT_HTML;
                 $this->content->text = format_text($this->config->text, $format, $filteropt);
             } else {
                 $text = 'Please define the content text in /blocks/featured_tool/block_featured_tool.php.';

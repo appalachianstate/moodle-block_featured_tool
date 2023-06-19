@@ -45,11 +45,12 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Section header title.
             $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
+            $sitecontext = context_system::instance();
             $editoroptions = array(
                     'maxfiles' => EDITOR_UNLIMITED_FILES,
                     'noclean' => true,
                     'trusttext' => false,
-                    'context' => $this->block->context,
+                    'context' => $sitecontext,
             );
             $mform->addElement('editor', 'config_text', get_string('featured_tool:media', 'block_featured_tool'), null,
                     $editoroptions);
@@ -81,9 +82,10 @@ class block_featured_tool_edit_form extends block_edit_form {
             $text = '';
         }
 
+        $sitecontext = context_system::instance();
         // Loads any already added files to the feature tool block's draft editor
         $defaults->config_text['text'] =
-                file_prepare_draft_area($draftid_editor, $this->block->context->id, 'block_featured_tool', 'content', 0,
+                file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0,
                         array('subdirs' => true), $currenttext);
         $defaults->config_text['itemid'] = $draftid_editor;
         $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;

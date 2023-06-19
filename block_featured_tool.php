@@ -65,7 +65,7 @@ class block_featured_tool extends block_base {
             $this->content->footer = '';
 
             if (!empty($this->config->media)) {
-                $this->content->text = file_rewrite_pluginfile_urls($this->config->media, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'content', null);
+                $this->config->media = file_rewrite_pluginfile_urls($this->config->media, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'content', null);
                 $format = FORMAT_HTML;
                 $this->content->text = format_text($this->config->media, $format, null);
             } else {

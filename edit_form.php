@@ -51,8 +51,59 @@ class block_featured_tool_edit_form extends block_edit_form {
                     'trusttext' => false,
                     'context' => $this->block->context,
             );
-            $mform->addElement('editor', 'config_text', get_string('featured_tool:media', 'block_featured_tool'), null, $editoroptions);
+            $mform->addElement('editor', 'config_text', get_string('featured_tool:media', 'block_featured_tool'), null,
+                    $editoroptions);
             $mform->setType('config_text', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
         }
+    }
+
+    /** Loads in existing data as form defaults.
+     * Usually new entry defaults are stored directly in form definition (new entry form);
+     * this function is used to load in data where values already exist and data is being edited (edit entry form).
+     *
+     * @param $defaults
+     * @return void
+     */
+    function set_data($defaults) {
+        global $DB;
+
+        $draftid_editor = file_get_submitted_draft_itemid('config_text');
+
+        // Checks if there are any files in the master block tool and syncs them
+        $admincontextid = 5;
+        $instance = $DB->get_record('block_instances', array('blockname' => 'featured_tool', 'parentcontextid' => $admincontextid));
+        $sitecontext = context_system::instance();
+        if ($instance) {
+            $this->block->config = unserialize(base64_decode($instance->configdata));
+        }
+
+        // If there is text in the block's config_text, load it
+        if (!empty($this->block->config) && !empty($this->block->config->text)) {
+            $text = $this->block->config->text;
+            if (empty($text)) {
+                $currenttext = '';
+            } else {
+                $currenttext = $text;
+            }
+        } else {
+            $text = '';
+        }
+
+        // Loads any already added files to the feature tool block's draft editor
+        $defaults->config_text['text'] =
+                file_prepare_draft_area($draftid_editor, $this->block->context->id, 'block_featured_tool', 'content', 0,
+                        array('subdirs' => true), $currenttext);
+        $defaults->config_text['itemid'] = $draftid_editor;
+        $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_MOODLE;
+
+        // have to delete text here, otherwise parent::set_data will empty content
+        // of editor
+        unset($this->block->config->text);
+        parent::set_data($defaults);
+        // restore $text
+        if (!isset($this->block->config)) {
+            $this->block->config = new stdClass();
+        }
+        $this->block->config->text = $text;
     }
 }

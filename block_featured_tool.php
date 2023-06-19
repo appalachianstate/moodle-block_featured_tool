@@ -87,7 +87,6 @@ class block_featured_tool extends block_base {
      * Serialize and store config data
      */
     function instance_config_save($data, $nolongerused = false) {
-        global $DB;
 
         $config = clone($data);
         // Move embedded files into a proper filearea and adjust HTML links to match

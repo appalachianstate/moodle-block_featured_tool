@@ -64,8 +64,8 @@ class block_featured_tool extends block_base {
             $this->content->icons = array();
             $this->content->footer = '';
 
-            if (!empty($this->config->text)) {
-                $this->content->text = $this->config->text;
+            if (!empty($this->config->media)) {
+                $this->content->text = $this->config->media;
             } else {
                 $text = 'Please define the content text in /blocks/featured_tool/block_featured_tool.php.';
                 $this->content->text = $text;

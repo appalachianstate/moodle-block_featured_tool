@@ -31,11 +31,6 @@
  * @return bool
  */
 function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
-    global $DB, $CFG, $USER;
-
-    if ($filearea !== 'content') {
-        send_file_not_found();
-    }
 
     $fs = get_file_storage();
 

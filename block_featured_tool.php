@@ -64,10 +64,14 @@ class block_featured_tool extends block_base {
             $this->content->icons = array();
             $this->content->footer = '';
 
+            $filteropt = new stdClass;
+            $filteropt->overflowdiv = true;
+            $filteropt->noclean = true;
+
             if (!empty($this->config->media)) {
                 $this->config->media = file_rewrite_pluginfile_urls($this->config->media, 'pluginfile.php', $this->context->id, 'block_featured_tool', 'content', null);
                 $format = FORMAT_HTML;
-                $this->content->text = format_text($this->config->media, $format, null);
+                $this->content->text = format_text($this->config->media, $format, $filteropt);
             } else {
                 $text = 'Please define the content text in /blocks/featured_tool/block_featured_tool.php.';
                 $this->content->text = $text;

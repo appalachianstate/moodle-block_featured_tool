@@ -100,9 +100,6 @@ class block_featured_tool_edit_form extends block_edit_form {
             }
         }
 
-        print_object($text1);
-        print_object($text2);
-        print_object($text3);
         // Loads any already added files to the first feature tool block's draft editor
         $currenttext = $text1;
         $defaults->config_text1['text'] =

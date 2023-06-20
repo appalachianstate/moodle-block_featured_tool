@@ -31,11 +31,13 @@ class block_featured_tool_edit_form extends block_edit_form {
     protected function specific_definition($mform) {
         global $USER;
 
+        $sitecontext = context_system::instance();
+
         $isallowed = false;
         $courses = enrol_get_all_users_courses($USER->id, true);
         foreach ($courses as $course) {
             $context = context_course::instance($course->id);
-            if (has_capability('moodle/site:configview', $context)) {
+            if (has_capability('moodle/site:configview', $sitecontext)) {
                 $isallowed = true;
                 break;
             }
@@ -45,16 +47,21 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Section header title.
             $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
-            $sitecontext = context_system::instance();
             $editoroptions = array(
                     'maxfiles' => EDITOR_UNLIMITED_FILES,
                     'noclean' => true,
                     'trusttext' => false,
                     'context' => $sitecontext,
             );
-            $mform->addElement('editor', 'config_text', get_string('featured_tool:media', 'block_featured_tool'), null,
+            $mform->addElement('editor', 'config_text1', get_string('featured_tool:media', 'block_featured_tool'), null,
                     $editoroptions);
-            $mform->setType('config_text', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
+            $mform->setType('config_text1', PARAM_RAW);
+            $mform->addElement('editor', 'config_text2', get_string('featured_tool:media', 'block_featured_tool'), null,
+                    $editoroptions);
+            $mform->setType('config_text2', PARAM_RAW);
+            $mform->addElement('editor', 'config_text3', get_string('featured_tool:media', 'block_featured_tool'), null,
+                    $editoroptions);
+            $mform->setType('config_text3', PARAM_RAW);
         }
     }
 
@@ -68,14 +75,13 @@ class block_featured_tool_edit_form extends block_edit_form {
     function set_data($defaults) {
         global $DB;
 
-        $draftid_editor = file_get_submitted_draft_itemid('config_text');
+        $draftid_editor = file_get_submitted_draft_itemid('config_text1');
 
         // If there is text in the block's config_text, load it
+        $currenttext = '';
         if (!empty($this->block->config) && !empty($this->block->config->text)) {
             $text = $this->block->config->text;
-            if (empty($text)) {
-                $currenttext = '';
-            } else {
+            if (!empty($text)) {
                 $currenttext = $text;
             }
         } else {
@@ -84,11 +90,11 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         $sitecontext = context_system::instance();
         // Loads any already added files to the feature tool block's draft editor
-        $defaults->config_text['text'] =
+        $defaults->config_text1['text'] =
                 file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0,
                         array('subdirs' => true), $currenttext);
-        $defaults->config_text['itemid'] = $draftid_editor;
-        $defaults->config_text['format'] = $this->block->config->format ?? FORMAT_HTML;
+        $defaults->config_text1['itemid'] = $draftid_editor;
+        $defaults->config_text1['format'] = $this->block->config->format ?? FORMAT_HTML;
 
         // have to delete text here, otherwise parent::set_data will empty content
         // of editor

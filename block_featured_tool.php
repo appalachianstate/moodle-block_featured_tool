@@ -39,6 +39,15 @@ class block_featured_tool extends block_base {
     public function get_content() {
         global $USER;
 
+        if ($this->content !== null) {
+            return $this->content;
+        }
+
+        if (empty($this->instance)) {
+            $this->content = '';
+            return $this->content;
+        }
+
         $isallowed = false;
         $courses = enrol_get_all_users_courses($USER->id, true);
         foreach ($courses as $course) {
@@ -50,14 +59,6 @@ class block_featured_tool extends block_base {
         }
 
         if ($isallowed) {
-            if ($this->content !== null) {
-                return $this->content;
-            }
-
-            if (empty($this->instance)) {
-                $this->content = '';
-                return $this->content;
-            }
 
             $this->content = new stdClass();
             $this->content->items = array();
@@ -74,7 +75,7 @@ class block_featured_tool extends block_base {
                 $format = FORMAT_HTML;
                 $this->content->text = format_text($this->config->text, $format, $filteropt);
             } else {
-                $text = 'Please define the content text in /blocks/featured_tool/block_featured_tool.php.';
+                $text = '';
                 $this->content->text = $text;
             }
         } else {
@@ -96,21 +97,6 @@ class block_featured_tool extends block_base {
         $config->format = $data->text['format'];
 
         parent::instance_config_save($config, $nolongerused);
-    }
-
-    /**
-     * Defines configuration data.
-     *
-     * The function is called immediately after init().
-     */
-    public function specialization() {
-
-        // Load user defined title and make sure it's never empty.
-        if (empty($this->config->title)) {
-            $this->title = get_string('pluginname', 'block_featured_tool');
-        } else {
-            $this->title = $this->config->title;
-        }
     }
 
     /**

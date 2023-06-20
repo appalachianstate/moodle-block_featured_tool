@@ -37,7 +37,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $courses = enrol_get_all_users_courses($USER->id, true);
         foreach ($courses as $course) {
             $context = context_course::instance($course->id);
-            if (has_capability('moodle/site:configview', $sitecontext)) {
+            if (has_capability('block/featured_tool:addinstance', $sitecontext)) {
                 $isallowed = true;
                 break;
             }
@@ -56,9 +56,11 @@ class block_featured_tool_edit_form extends block_edit_form {
             $mform->addElement('editor', 'config_text1', get_string('featured_tool:media1', 'block_featured_tool'), null,
                     $editoroptions);
             $mform->setType('config_text1', PARAM_RAW);
+
             $mform->addElement('editor', 'config_text2', get_string('featured_tool:media2', 'block_featured_tool'), null,
                     $editoroptions);
             $mform->setType('config_text2', PARAM_RAW);
+
             $mform->addElement('editor', 'config_text3', get_string('featured_tool:media3', 'block_featured_tool'), null,
                     $editoroptions);
             $mform->setType('config_text3', PARAM_RAW);
@@ -73,37 +75,68 @@ class block_featured_tool_edit_form extends block_edit_form {
      * @return void
      */
     function set_data($defaults) {
-        global $DB;
 
-        $draftid_editor = file_get_submitted_draft_itemid('config_text1');
-
-        // If there is text in the block's config_text, load it
-        $currenttext = '';
-        if (!empty($this->block->config) && !empty($this->block->config->text1)) {
-            $text = $this->block->config->text1;
-            if (!empty($text)) {
-                $currenttext = $text;
-            }
-        } else {
-            $text = '';
-        }
+        $draftid_editor1 = file_get_submitted_draft_itemid('config_text1');
+        $draftid_editor2 = file_get_submitted_draft_itemid('config_text2');
+        $draftid_editor3 = file_get_submitted_draft_itemid('config_text3');
 
         $sitecontext = context_system::instance();
-        // Loads any already added files to the feature tool block's draft editor
+
+        // If there is text in the block's config_text, load it in the respective text variable
+        $text1 = '';
+        $text2 = '';
+        $text3 = '';
+        if (!empty($this->block->config)) {
+            if (!empty($this->block->config->text1)) {
+                $text1 = $this->block->config->text1;
+            }
+
+            if (!empty($this->block->config->text2)) {
+                $text2 = $this->block->config->text2;
+            }
+
+            if (!empty($this->block->config->text3)) {
+                $text3 = $this->block->config->text3;
+            }
+        }
+
+        // Loads any already added files to the first feature tool block's draft editor
+        $currenttext = $text1;
         $defaults->config_text1['text'] =
-                file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
                         array('subdirs' => true), $currenttext);
-        $defaults->config_text1['itemid'] = $draftid_editor;
+        $defaults->config_text1['itemid'] = $draftid_editor1;
         $defaults->config_text1['format'] = $this->block->config->format ?? FORMAT_HTML;
 
+        // Loads any already added files to the second feature tool block's draft editor
+        $currenttext = $text2;
+        $defaults->config_text2['text'] =
+                file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                        array('subdirs' => true), $currenttext);
+        $defaults->config_text2['itemid'] = $draftid_editor2;
+        $defaults->config_text2['format'] = $this->block->config->format ?? FORMAT_HTML;
+
+        // Loads any already added files to the third feature tool block's draft editor
+        $currenttext = $text3;
+        $defaults->config_text3['text'] =
+                file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                        array('subdirs' => true), $currenttext);
+        $defaults->config_text3['itemid'] = $draftid_editor3;
+        $defaults->config_text3['format'] = $this->block->config->format ?? FORMAT_HTML;
         // have to delete text here, otherwise parent::set_data will empty content
         // of editor
         unset($this->block->config->text1);
-        parent::set_data($defaults);
+        unset($this->block->config->text2);
+        unset($this->block->config->text3);
         // restore $text
         if (!isset($this->block->config)) {
             $this->block->config = new stdClass();
         }
-        $this->block->config->text1 = $text;
+
+        $this->block->config->text1 = $text1;
+        $this->block->config->text2 = $text2;
+        $this->block->config->text3 = $text3;
+
+        parent::set_data($defaults);
     }
 }

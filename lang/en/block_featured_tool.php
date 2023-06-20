@@ -27,7 +27,9 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['featured_tool:desc'] = 'This is where you can upload media to be displayed in the featured block.';
 $string['featured_tool:edit'] = 'Editing featured tool block';
-$string['featured_tool:media'] = 'Featured tool media';
+$string['featured_tool:media1'] = 'First featured tool media block';
+$string['featured_tool:media2'] = 'Second featured tool media block';
+$string['featured_tool:media2'] = 'Third featured tool media block';
 $string['featured_tool:myaddinstance'] = 'Add a new featured tool block to Dashboard';
 $string['pluginname'] = 'Featured tool';
 $string['featured_tool:nocontent'] = 'Please define the content text in /blocks/featured_tool/block_featured_tool.php.';

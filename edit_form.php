@@ -53,13 +53,13 @@ class block_featured_tool_edit_form extends block_edit_form {
                     'trusttext' => false,
                     'context' => $sitecontext,
             );
-            $mform->addElement('editor', 'config_text1', get_string('featured_tool:media', 'block_featured_tool'), null,
+            $mform->addElement('editor', 'config_text1', get_string('featured_tool:media1', 'block_featured_tool'), null,
                     $editoroptions);
             $mform->setType('config_text1', PARAM_RAW);
-            $mform->addElement('editor', 'config_text2', get_string('featured_tool:media', 'block_featured_tool'), null,
+            $mform->addElement('editor', 'config_text2', get_string('featured_tool:media2', 'block_featured_tool'), null,
                     $editoroptions);
             $mform->setType('config_text2', PARAM_RAW);
-            $mform->addElement('editor', 'config_text3', get_string('featured_tool:media', 'block_featured_tool'), null,
+            $mform->addElement('editor', 'config_text3', get_string('featured_tool:media3', 'block_featured_tool'), null,
                     $editoroptions);
             $mform->setType('config_text3', PARAM_RAW);
         }
@@ -79,8 +79,8 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         // If there is text in the block's config_text, load it
         $currenttext = '';
-        if (!empty($this->block->config) && !empty($this->block->config->text)) {
-            $text = $this->block->config->text;
+        if (!empty($this->block->config) && !empty($this->block->config->text1)) {
+            $text = $this->block->config->text1;
             if (!empty($text)) {
                 $currenttext = $text;
             }
@@ -98,12 +98,12 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         // have to delete text here, otherwise parent::set_data will empty content
         // of editor
-        unset($this->block->config->text);
+        unset($this->block->config->text1);
         parent::set_data($defaults);
         // restore $text
         if (!isset($this->block->config)) {
             $this->block->config = new stdClass();
         }
-        $this->block->config->text = $text;
+        $this->block->config->text1 = $text;
     }
 }

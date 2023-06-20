@@ -96,11 +96,11 @@ class block_featured_tool extends block_base {
         $config->text1 = file_save_draft_area_files($data->text1['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text1['text']);
         $config->format1 = $data->text1['format'];
 
-        $config->text2 = file_save_draft_area_files($data->text2['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text2['text']);
-        $config->format2 = $data->text2['format'];
-
-        $config->text3 = file_save_draft_area_files($data->text3['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text3['text']);
-        $config->format3 = $data->text3['format'];
+        //$config->text2 = file_save_draft_area_files($data->text2['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text2['text']);
+        //$config->format2 = $data->text2['format'];
+        //
+        //$config->text3 = file_save_draft_area_files($data->text3['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text3['text']);
+        //$config->format3 = $data->text3['format'];
 
         parent::instance_config_save($config, $nolongerused);
     }

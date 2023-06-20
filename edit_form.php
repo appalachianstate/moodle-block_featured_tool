@@ -104,7 +104,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $currenttext = $text1;
         $defaults->config_text1['text'] =
                 file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
-                        array('subdirs' => true), $currenttext);
+                        array('subdirs' => true), $text1);
         $defaults->config_text1['itemid'] = $draftid_editor1;
         $defaults->config_text1['format'] = $this->block->config->format ?? FORMAT_HTML;
 
@@ -112,7 +112,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $currenttext = $text2;
         $defaults->config_text2['text'] =
                 file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
-                        array('subdirs' => true), $currenttext);
+                        array('subdirs' => true), $text2);
         $defaults->config_text2['itemid'] = $draftid_editor2;
         $defaults->config_text2['format'] = $this->block->config->format ?? FORMAT_HTML;
 
@@ -120,7 +120,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $currenttext = $text3;
         $defaults->config_text3['text'] =
                 file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,
-                        array('subdirs' => true), $currenttext);
+                        array('subdirs' => true), $text3);
         $defaults->config_text3['itemid'] = $draftid_editor3;
         $defaults->config_text3['format'] = $this->block->config->format ?? FORMAT_HTML;
         // have to delete text here, otherwise parent::set_data will empty content

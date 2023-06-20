@@ -69,11 +69,11 @@ class block_featured_tool extends block_base {
             $filteropt->overflowdiv = true;
             $filteropt->noclean = true;
 
-            if (!empty($this->config->text1)) {
+            if (!empty($this->config->text)) {
                 $sitecontext = context_system::instance();
-                $this->config->text1 = file_rewrite_pluginfile_urls($this->config->text1, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', 'content', null);
+                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', 'content', null);
                 $format = FORMAT_HTML;
-                $this->content->text = format_text($this->config->text1, $format, $filteropt);
+                $this->content->text = format_text($this->config->text, $format, $filteropt);
             } else {
                 $text = '';
                 $this->content->text = $text;
@@ -92,15 +92,9 @@ class block_featured_tool extends block_base {
 
         $config = clone($data);
         $sitecontext = context_system::instance();
-        // Move embedded files into a proper filearea for all three editors and adjust HTML links to match
-        $config->text1 = file_save_draft_area_files($data->text1['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text1['text']);
-        $config->format1 = $data->text1['format'];
-
-        //$config->text2 = file_save_draft_area_files($data->text2['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text2['text']);
-        //$config->format2 = $data->text2['format'];
-        //
-        //$config->text3 = file_save_draft_area_files($data->text3['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text3['text']);
-        //$config->format3 = $data->text3['format'];
+        // Move embedded files into a proper filearea and adjust HTML links to match
+        $config->text = file_save_draft_area_files($data->text1['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text1['text']);
+        $config->format = $data->text1['format'];
 
         parent::instance_config_save($config, $nolongerused);
     }
@@ -112,7 +106,7 @@ class block_featured_tool extends block_base {
      */
     public function applicable_formats() {
         return array(
-            'my' => true,
+                'my' => true,
         );
     }
 }

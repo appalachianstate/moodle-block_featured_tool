@@ -73,6 +73,7 @@ class block_featured_tool extends block_base {
                 // Only blocks with text in them should be in config->text at this point
                 $max = sizeof($this->config->text);
                 $randInt = random_int(0, $max-1);
+                // Selects a random block based on the random int
                 $selectedBlock = $this->config->text[$randInt];
 
                 $sitecontext = context_system::instance();
@@ -98,16 +99,12 @@ class block_featured_tool extends block_base {
         $config = clone($data);
 
         $sitecontext = context_system::instance();
-        // Move embedded files into a proper filearea and adjust HTML links to match
-        //$config->text = array(
-        //        file_save_draft_area_files($data->text1['itemid'], $sitecontext->id, 'block_featured_tool', 'content-1', 0, array('subdirs'=>true), $data->text1['text']),
-        //        file_save_draft_area_files($data->text2['itemid'], $sitecontext->id, 'block_featured_tool', 'content-2', 0, array('subdirs'=>true), $data->text2['text']),
-        //        file_save_draft_area_files($data->text3['itemid'], $sitecontext->id, 'block_featured_tool', 'content-3', 0, array('subdirs'=>true), $data->text3['text'])
-        //);
-        // Save only area files that have something in them
+
+        // Save only area files that have something in them and store them
         $config->text = array();
         foreach ($data->text as $key => $text) {
             if (!empty($text)) {
+                // Move embedded files into a proper filearea and adjust HTML links to match
                 array_push($config->text, file_save_draft_area_files($text['itemid'], $sitecontext->id, 'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']));
             }
         }

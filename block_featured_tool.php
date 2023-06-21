@@ -72,7 +72,7 @@ class block_featured_tool extends block_base {
             if (!empty($this->config->text)) {
                 // Only blocks with text in them should be in config->text at this point
                 $max = sizeof($this->config->text);
-                $randInt = random_int(0, $max);
+                $randInt = random_int(0, $max-1);
                 $selectedBlock = $this->config->text[$randInt];
 
                 $sitecontext = context_system::instance();

@@ -70,10 +70,15 @@ class block_featured_tool extends block_base {
             $filteropt->noclean = true;
 
             if (!empty($this->config->text)) {
+                // Only blocks with text in them should be in config->text at this point
+                $max = sizeof($this->config->text);
+                $randInt = random_int(0, $max);
+                $selectedBlock = $this->config->text[$randInt];
+
                 $sitecontext = context_system::instance();
-                $this->config->text = file_rewrite_pluginfile_urls($this->config->text, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', 'content', null);
+                $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', 'content', null);
                 $format = FORMAT_HTML;
-                $this->content->text = format_text($this->config->text, $format, $filteropt);
+                $this->content->text = format_text($selectedBlock, $format, $filteropt);
             } else {
                 $text = '';
                 $this->content->text = $text;
@@ -90,15 +95,23 @@ class block_featured_tool extends block_base {
      */
     function instance_config_save($data, $nolongerused = false) {
 
-        $randInt = random_int(0, 2);
-        $randBlock = $data->text[$randInt];
-
         $config = clone($data);
 
         $sitecontext = context_system::instance();
         // Move embedded files into a proper filearea and adjust HTML links to match
-        $config->text = file_save_draft_area_files($randBlock['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $randBlock['text']);
-        $config->format = $randBlock['format'];
+        //$config->text = array(
+        //        file_save_draft_area_files($data->text1['itemid'], $sitecontext->id, 'block_featured_tool', 'content-1', 0, array('subdirs'=>true), $data->text1['text']),
+        //        file_save_draft_area_files($data->text2['itemid'], $sitecontext->id, 'block_featured_tool', 'content-2', 0, array('subdirs'=>true), $data->text2['text']),
+        //        file_save_draft_area_files($data->text3['itemid'], $sitecontext->id, 'block_featured_tool', 'content-3', 0, array('subdirs'=>true), $data->text3['text'])
+        //);
+        // Save only area files that have something in them
+        $config->text = array();
+        foreach ($data->text as $key => $text) {
+            if (!empty($text)) {
+                array_push($config->text, file_save_draft_area_files($text['itemid'], $sitecontext->id, 'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']));
+            }
+        }
+        $config->format = FORMAT_HTML;
 
         parent::instance_config_save($config, $nolongerused);
     }

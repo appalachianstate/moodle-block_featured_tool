@@ -76,7 +76,7 @@ class block_featured_tool extends block_base {
                 $selectedBlock = $this->config->text[$randInt];
 
                 $sitecontext = context_system::instance();
-                $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
+                $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', 'content', $randInt);
                 $format = FORMAT_HTML;
                 $this->content->text = format_text($selectedBlock, $format, $filteropt);
             } else {
@@ -108,7 +108,7 @@ class block_featured_tool extends block_base {
         $config->text = array();
         foreach ($data->text as $key => $text) {
             if (!empty($text)) {
-                array_push($config->text, file_save_draft_area_files($text['itemid'], $sitecontext->id, 'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']));
+                array_push($config->text, file_save_draft_area_files($text['itemid'], $sitecontext->id, 'block_featured_tool', 'content', $key, array('subdirs'=>true), $text['text']));
             }
         }
         $config->format = FORMAT_HTML;

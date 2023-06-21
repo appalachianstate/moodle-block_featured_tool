@@ -103,8 +103,7 @@ class block_featured_tool extends block_base {
         // Save only area files that have something in them and store them
         $config->text = array();
         foreach ($data->text as $key => $text) {
-            if (!empty($text) && $text !== '<p dir="ltr" style="text-align: left;"><br></p>') {
-                print_object($text);
+            if (!empty($text) && !empty($text['text'])) {
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 array_push($config->text, file_save_draft_area_files($text['itemid'], $sitecontext->id, 'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']));
             }

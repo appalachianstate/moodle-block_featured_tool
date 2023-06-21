@@ -90,7 +90,11 @@ class block_featured_tool extends block_base {
      */
     function instance_config_save($data, $nolongerused = false) {
 
+        $randInt = random_int(1, 3);
+        $randBlock = ${'data->text' . $randInt};
+        print_object($randBlock);
         $config = clone($data);
+
         $sitecontext = context_system::instance();
         // Move embedded files into a proper filearea and adjust HTML links to match
         $config->text = file_save_draft_area_files($data->text1['itemid'], $sitecontext->id, 'block_featured_tool', 'content', 0, array('subdirs'=>true), $data->text1['text']);

@@ -35,12 +35,11 @@ function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $fil
     $fs = get_file_storage();
 
     $filename = array_pop($args);
-    $itemid = array_pop($args);
+    $filepath = $args ? '/'.implode('/', $args).'/' : '/';
 
     $sitecontext = context_system::instance();
-    if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', 'content', $itemid, '', $filename) or $file->is_directory()) {
-        print_object($filearea);
-        //send_file_not_found();
+    if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', $filearea, 0, $filepath, $filename) or $file->is_directory()) {
+        send_file_not_found();
     }
 
     // NOTE: it would be nice to have file revisions here, for now rely on standard file lifetime,

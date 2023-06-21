@@ -39,7 +39,7 @@ function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $fil
 
     $sitecontext = context_system::instance();
     if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', 'content', $itemid, '', $filename) or $file->is_directory()) {
-        print_object($fs->get_file($sitecontext->id, 'block_featured_tool', 'content', 1, '', $filename));
+        print_object($fs->get_file($sitecontext->id, 'block_featured_tool', 'content', 0, 1, $filename));
         //send_file_not_found();
     }
 

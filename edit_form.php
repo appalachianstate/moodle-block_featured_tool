@@ -124,6 +124,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $this->block->config->text1 = $text1;
         $this->block->config->text2 = $text2;
         $this->block->config->text3 = $text3;
+        $this->block->config->text = array($text1, $text2, $text3);
 
         parent::set_data($defaults);
     }

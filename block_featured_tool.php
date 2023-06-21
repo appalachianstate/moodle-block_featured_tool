@@ -90,8 +90,8 @@ class block_featured_tool extends block_base {
      */
     function instance_config_save($data, $nolongerused = false) {
 
-        $randInt = random_int(1, 3);
-        $randBlock = ${'data->text' . $randInt};
+        $randInt = random_int(0, 2);
+        $randBlock = $data->text[$randInt];
 
         $config = clone($data);
 

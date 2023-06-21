@@ -34,12 +34,12 @@ function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $fil
 
     $fs = get_file_storage();
 
-    print_object($args);
     $filename = array_pop($args);
-    $filepath = $args ? '/'.implode('/', $args).'/' : '/';
+    $itemid = array_pop($args);
 
     $sitecontext = context_system::instance();
-    if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', 'content', 0, $filepath, $filename) or $file->is_directory()) {
+    if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', 'content', $itemid, '', $filename) or $file->is_directory()) {
+        print_r("Got here!");
         //send_file_not_found();
     }
 

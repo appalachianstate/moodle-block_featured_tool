@@ -29,42 +29,30 @@ class block_featured_tool_edit_form extends block_edit_form {
      * @param MoodleQuickForm $mform The form being built.
      */
     protected function specific_definition($mform) {
-        global $USER;
 
         $sitecontext = context_system::instance();
+        require_capability('block/featured_tool:addinstance', $sitecontext);
 
-        $isallowed = false;
-        $courses = enrol_get_all_users_courses($USER->id, true);
-        foreach ($courses as $course) {
-            $context = context_course::instance($course->id);
-            if (has_capability('block/featured_tool:addinstance', $sitecontext)) {
-                $isallowed = true;
-                break;
-            }
-        }
+        // Section header title.
+        $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
-        if ($isallowed) {
-            // Section header title.
-            $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
+        $editoroptions = array(
+                'maxfiles' => EDITOR_UNLIMITED_FILES,
+                'noclean' => true,
+                'trusttext' => false,
+                'context' => $sitecontext,
+        );
+        $mform->addElement('editor', 'config_text1', get_string('featured_tool:media1', 'block_featured_tool'), null,
+                $editoroptions);
+        $mform->setType('config_text1', PARAM_RAW);
 
-            $editoroptions = array(
-                    'maxfiles' => EDITOR_UNLIMITED_FILES,
-                    'noclean' => true,
-                    'trusttext' => false,
-                    'context' => $sitecontext,
-            );
-            $mform->addElement('editor', 'config_text1', get_string('featured_tool:media1', 'block_featured_tool'), null,
-                    $editoroptions);
-            $mform->setType('config_text1', PARAM_RAW);
+        $mform->addElement('editor', 'config_text2', get_string('featured_tool:media2', 'block_featured_tool'), null,
+                $editoroptions);
+        $mform->setType('config_text2', PARAM_RAW);
 
-            $mform->addElement('editor', 'config_text2', get_string('featured_tool:media2', 'block_featured_tool'), null,
-                    $editoroptions);
-            $mform->setType('config_text2', PARAM_RAW);
-
-            $mform->addElement('editor', 'config_text3', get_string('featured_tool:media3', 'block_featured_tool'), null,
-                    $editoroptions);
-            $mform->setType('config_text3', PARAM_RAW);
-        }
+        $mform->addElement('editor', 'config_text3', get_string('featured_tool:media3', 'block_featured_tool'), null,
+                $editoroptions);
+        $mform->setType('config_text3', PARAM_RAW);
     }
 
     /** Loads in existing data as form defaults.

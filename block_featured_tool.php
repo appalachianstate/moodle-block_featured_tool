@@ -84,7 +84,7 @@ class block_featured_tool extends block_base {
                 // Selects a random block based on the random int
                 $selectedBlock = $this->config->text[$randInt];
 
-                $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', 'content', null);
+                $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
                 $format = $this->config->format;
                 $this->content->text = format_text($selectedBlock, $format, $filteropt);
             } else {
@@ -111,12 +111,14 @@ class block_featured_tool extends block_base {
 
         // Save only area files that have something in them and store them
         $config->text = array();
-        foreach ($data->text as $key => $text) {
+        foreach ($data->text as $text) {
             if (!empty($text) && !empty($text['text'])) {
+                // Generates the key of where the text will be stored in the final text array
+                $key = sizeof($config->text);
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $text = file_save_draft_area_files($text['itemid'], $sitecontext->id,
-                        'block_featured_tool', 'content', 0, array('subdirs'=>true), $text['text']);
-                array_push($config->text, $text);
+                        'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
+                $config->text[$key] = $text;
             }
         }
         $config->format = FORMAT_HTML;

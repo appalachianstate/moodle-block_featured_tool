@@ -107,8 +107,7 @@ class block_featured_tool extends block_base {
 
         $sitecontext = context_system::instance();
         // Generates an array of the text fields
-        $data->text = array();
-        array_push($data->text, $data->text1, $data->text2, $data->text3);
+        $data->text = array($data->text1, $data->text2, $data->text3);
 
         // Save only area files that have something in them and store them
         $config->text = array();

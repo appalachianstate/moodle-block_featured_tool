@@ -31,5 +31,6 @@ $string['featured_tool:media1'] = 'First featured tool';
 $string['featured_tool:media2'] = 'Second featured tool';
 $string['featured_tool:media3'] = 'Third featured tool';
 $string['featured_tool:myaddinstance'] = 'Add a new featured tool block to Dashboard';
+$string['featured_tool:addinstance'] = 'Add a new featured tool block';
 $string['pluginname'] = 'Featured tool';
 $string['featured_tool:nocontent'] = 'Please define the content text in /blocks/featured_tool/block_featured_tool.php.';

@@ -40,7 +40,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 'maxfiles' => EDITOR_UNLIMITED_FILES,
                 'noclean' => true,
                 'trusttext' => false,
-                'context' => $sitecontext,
+                'context' => $this->block->context,
         );
         $mform->addElement('editor', 'config_text1', get_string('featured_tool:media1', 'block_featured_tool'), null,
                 $editoroptions);

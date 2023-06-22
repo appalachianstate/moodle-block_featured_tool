@@ -48,13 +48,21 @@ class block_featured_tool extends block_base {
             return $this->content;
         }
 
+        // Checks if user is an admin/manager
         $isallowed = false;
-        $courses = enrol_get_all_users_courses($USER->id, true);
-        foreach ($courses as $course) {
-            $context = context_course::instance($course->id);
-            if (has_capability('moodle/course:manageactivities', $context)) {
-                $isallowed = true;
-                break;
+        $sitecontext = context_system::instance();
+        if (has_capability('moodle/site:manageblocks', $sitecontext)) {
+            $isallowed = true;
+        }
+        // If user is not an admin/manager, checks if user is a teacher in a course
+        if (!$isallowed) {
+            $courses = enrol_get_all_users_courses($USER->id, true);
+            foreach ($courses as $course) {
+                $context = context_course::instance($course->id);
+                if (has_capability('moodle/course:manageactivities', $context)) {
+                    $isallowed = true;
+                    break;
+                }
             }
         }
 
@@ -76,7 +84,6 @@ class block_featured_tool extends block_base {
                 // Selects a random block based on the random int
                 $selectedBlock = $this->config->text[$randInt];
 
-                $sitecontext = context_system::instance();
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
                 $format = FORMAT_HTML;
                 $this->content->text = format_text($selectedBlock, $format, $filteropt);
@@ -99,6 +106,8 @@ class block_featured_tool extends block_base {
         $config = clone($data);
 
         $sitecontext = context_system::instance();
+
+        print_object($data);
 
         // Save only area files that have something in them and store them
         $config->text = array();

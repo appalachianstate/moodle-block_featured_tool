@@ -84,7 +84,7 @@ class block_featured_tool extends block_base {
                 // Selects a random block based on the random int
                 $selectedBlock = $this->config->text[$randInt];
 
-                $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
+                $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', 'content', null);
                 $format = $this->config->format;
                 $this->content->text = format_text($selectedBlock, $format, $filteropt);
             } else {
@@ -115,7 +115,7 @@ class block_featured_tool extends block_base {
             if (!empty($text) && !empty($text['text'])) {
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $text = file_save_draft_area_files($text['itemid'], $sitecontext->id,
-                        'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
+                        'block_featured_tool', 'content', 0, array('subdirs'=>true), $text['text']);
                 array_push($config->text, $text);
             }
         }

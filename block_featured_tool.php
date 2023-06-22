@@ -85,7 +85,7 @@ class block_featured_tool extends block_base {
                 $selectedBlock = $this->config->text[$randInt];
 
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
-                $format = FORMAT_HTML;
+                $format = $this->config->format;
                 $this->content->text = format_text($selectedBlock, $format, $filteropt);
             } else {
                 $text = '';
@@ -106,15 +106,17 @@ class block_featured_tool extends block_base {
         $config = clone($data);
 
         $sitecontext = context_system::instance();
-
-        print_object($data);
+        // Generates an array of the text fields
+        array_push($data->text, $data->text1, $data->text2, $data->text3);
 
         // Save only area files that have something in them and store them
         $config->text = array();
         foreach ($data->text as $key => $text) {
             if (!empty($text) && !empty($text['text'])) {
                 // Move embedded files into a proper filearea and adjust HTML links to match
-                array_push($config->text, file_save_draft_area_files($text['itemid'], $sitecontext->id, 'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']));
+                $text = file_save_draft_area_files($text['itemid'], $sitecontext->id,
+                        'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
+                array_push($config->text, $text);
             }
         }
         $config->format = FORMAT_HTML;

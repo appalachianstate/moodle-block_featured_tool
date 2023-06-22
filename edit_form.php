@@ -106,7 +106,6 @@ class block_featured_tool_edit_form extends block_edit_form {
         unset($this->block->config->text1);
         unset($this->block->config->text2);
         unset($this->block->config->text3);
-        unset($this->block->config->text);
         // restore $text
         if (!isset($this->block->config)) {
             $this->block->config = new stdClass();
@@ -115,7 +114,6 @@ class block_featured_tool_edit_form extends block_edit_form {
         $this->block->config->text1 = $text1;
         $this->block->config->text2 = $text2;
         $this->block->config->text3 = $text3;
-        $this->block->config->text = array($text1, $text2, $text3);
 
         parent::set_data($defaults);
     }

@@ -55,7 +55,7 @@ class block_featured_tool extends block_base {
             $isallowed = true;
         }
         // If user is not an admin/manager, checks if user is a teacher in a course
-        if (!$isallowed) {
+        else {
             $courses = enrol_get_all_users_courses($USER->id, true);
             foreach ($courses as $course) {
                 $context = context_course::instance($course->id);

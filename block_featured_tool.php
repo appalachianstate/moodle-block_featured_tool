@@ -89,8 +89,8 @@ class block_featured_tool extends block_base {
 
                 $data = array(
                     "subtitle" => "Card subtitle",
-                    "snippet" => format_text($selectedBlock, $format, $filteropt),
-                    "editorhtml" => format_text($selectedBlock, FORMAT_PLAIN, $filteropt),
+                    "snippet" => format_text($selectedBlock, FORMAT_PLAIN, $filteropt),
+                    "editorhtml" => format_text($selectedBlock, $format, $filteropt),
 
                 );
                 $this->content->text = $OUTPUT->render_from_template('block_featured_tool/featuredcontent', $data);

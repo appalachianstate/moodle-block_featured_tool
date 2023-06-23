@@ -87,7 +87,12 @@ class block_featured_tool extends block_base {
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
                 $format = $this->config->format;
 
-                $snippet = preg_replace("^\<img(.*?)>", '', $selectedBlock);
+                $snippet = $selectedBlock;
+                // Removes images from the snippet that appears on the card if any appear
+                if (str_contains($snippet, '<img')) {
+                    $snippet = preg_replace("^\<img(.*?)>", '', $selectedBlock);
+                }
+
                 $data = array(
                     "subtitle" => "Card subtitle",
                     "snippet" => format_text($snippet, $format, $filteropt),

@@ -25,16 +25,14 @@
         "editorhtml" : "<p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lacinia pretium nulla gravida interdum.</em></p>"
     }
 }}
-<div class="card">
-    <img src="http://localhost:8080/4.1/pluginfile.php/1/block_featured_tool/content0/asulearn.png" alt="..." width="564" height="123" role="presentation" class="img-fluid atto_image_button_text-bottom">
-    <div class="card-body">
-        <h5 class="card-subtitle">{{subtitle}}</h5>
-        <p class="card-text">{{#shortentext}} 30, {{{editorhtml}}} {{/shortentext}}</p>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-            View more...
-        </button>
-    </div>
-</div>
+`<div class="card-body">
+    <h6>class="card-subtitle mb-2 text-muted">{{subtitle}}</h6>
+    <p class="card-text">{{#shortentext}} 100, {{{editorhtml}}} {{/shortentext}}</p>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+        View more...
+    </button>
+</div>`
+
 
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">

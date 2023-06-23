@@ -37,7 +37,7 @@ class block_featured_tool extends block_base {
      * @return stdClass The block contents.
      */
     public function get_content() {
-        global $USER;
+        global $USER, $OUTPUT;
 
         if ($this->content !== null) {
             return $this->content;
@@ -86,7 +86,11 @@ class block_featured_tool extends block_base {
 
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
                 $format = $this->config->format;
-                $this->content->text = format_text($selectedBlock, $format, $filteropt);
+
+                $data = array(
+                        "editorhtml" => format_text($selectedBlock, $format, $filteropt),
+                );
+                $this->content->text = $OUTPUT->render_from_template('block_featured_tool/test', $data);
             } else {
                 $text = '';
                 $this->content->text = $text;
@@ -95,7 +99,7 @@ class block_featured_tool extends block_base {
             return '';
         }
 
-        return $this->content;
+        return $this->content->text;
     }
 
     /**

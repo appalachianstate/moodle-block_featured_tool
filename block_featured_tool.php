@@ -89,7 +89,7 @@ class block_featured_tool extends block_base {
 
                 $data = array(
                     "subtitle" => "Card subtitle",
-                    "snippet" => format_text($selectedBlock, FORMAT_PLAIN, $filteropt),
+                    "snippet" => format_text($selectedBlock, $format, $filteropt),
                     "editorhtml" => format_text($selectedBlock, $format, $filteropt),
 
                 );

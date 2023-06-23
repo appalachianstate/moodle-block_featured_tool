@@ -91,7 +91,7 @@ class block_featured_tool extends block_base {
                     "editorhtml" => format_text($selectedBlock, $format, $filteropt),
                     "subtitle" => "This is a test of the subtitle"
                 );
-                $this->content->text = $OUTPUT->render_from_template('block_featured_tool/modal', $data);
+                $this->content->text = $OUTPUT->render_from_template('block_featured_tool/featuredcontent', $data);
             } else {
                 $text = '';
                 $this->content->text = $text;

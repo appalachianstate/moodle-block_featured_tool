@@ -22,12 +22,13 @@
     Example context (json):
     {
         "subtitle" : "Awesome title for a story",
+        "snippet" : "Awesome title for a story",
         "editorhtml" : "<p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lacinia pretium nulla gravida interdum.</em></p>"
     }
 }}
 <div class="card-body text-left" style="padding: 4px 0 0 0">
     <h5 class="card-subtitle mb-2 text-muted">{{subtitle}}</h5>
-    <p class="card-text">{{#shortentext}} 100, {{{editorhtml}}} {{/shortentext}}</p>
+    <p class="card-text">{{#shortentext}} 100, {{snippet}} {{/shortentext}}</p>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
         View more...
     </button>

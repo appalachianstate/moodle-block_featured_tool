@@ -80,7 +80,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $text1 = $this->block->config->text1;
                 $defaults->config_text1['text'] =
                         file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
-                                array('subdirs' => true), $text1);
+                                array('subdirs' => true, 'context' => $this->block->context->id), $text1);
                 $defaults->config_text1['itemid'] = $draftid_editor1;
             }
             // Loads any already added files to the second feature tool block's draft editor

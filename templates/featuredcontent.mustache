@@ -29,17 +29,17 @@
 <div class="card-body text-left" style="padding: 4px 0 0 0">
     <h6 class="card-subtitle mb-2 text-muted">{{subtitle}}</h6>
     <p class="card-text">{{#shortentext}} 100, {{{snippet}}} {{/shortentext}}</p>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#featuredtoolModal">
         {{#str}} cardbutton, block_featured_tool {{/str}}
     </button>
 </div>
 
 
-<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+<div class="modal fade" id="featuredtoolModal" tabindex="-1" aria-labelledby="featuredtoolModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">{{subtitle}}</h5>
+                <h5 class="modal-title" id="featuredtoolModalLabel">{{subtitle}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

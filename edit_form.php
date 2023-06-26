@@ -121,8 +121,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         $text3 = '';
         if (!empty($this->block->config)) {
             // Loads any already added files to the first feature tool block's draft editor
-            if (!empty($this->block->config->text1)) {
-                $text1 = $this->block->config->text1;
+            if (!empty($this->block->config->text[0])) {
+                $text1 = $this->block->config->text[0];
                 $defaults->config_text1['text'] =
                         file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text1);
@@ -132,8 +132,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text1);
             }
             // Loads any already added files to the second feature tool block's draft editor
-            if (!empty($this->block->config->text2)) {
-                $text2 = $this->block->config->text2;
+            if (!empty($this->block->config->text[1])) {
+                $text2 = $this->block->config->text[1];
                 $defaults->config_text2['text'] =
                         file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text2);
@@ -143,8 +143,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text2);
             }
             // Loads any already added files to the third feature tool block's draft editor
-            if (!empty($this->block->config->text3)) {
-                $text3 = $this->block->config->text3;
+            if (!empty($this->block->config->text[2])) {
+                $text3 = $this->block->config->text[2];
                 $defaults->config_text3['text'] =
                         file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text3);

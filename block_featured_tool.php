@@ -77,6 +77,10 @@ class block_featured_tool extends block_base {
             $filteropt->overflowdiv = true;
             $filteropt->noclean = true;
 
+            $snipfilter = new stdClass;
+            $snipfilter->overflowdiv = true;
+            $snipfilter->noclean = false;
+
             if (!empty($this->config->text)) {
                 // Only blocks with text in them should be in config->text at this point
                 $max = sizeof($this->config->text);
@@ -89,13 +93,13 @@ class block_featured_tool extends block_base {
 
                 $snippet = $selectedBlock;
                 // Removes images from the snippet that appears on the card if any appear
-                if (strpos($snippet, '<img') !== false) {
-                    $snippet = preg_replace("\<img.*?>", '', $snippet);
-                }
+                //if (strpos($snippet, '<img') !== false) {
+                /*    $snippet = preg_replace("\<img.*?>", '', $snippet);*/
+                //}
 
                 $data = array(
                     "subtitle" => "Card subtitle",
-                    "snippet" => format_text($snippet, $format, $filteropt),
+                    "snippet" => format_text($snippet, $format, $snipfilter),
                     "editorhtml" => format_text($selectedBlock, $format, $filteropt),
 
                 );

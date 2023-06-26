@@ -168,8 +168,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->subtitle2);
             }
             // Loads the subtitle set for the third featured tool block if it exists
-            if (!empty($this->block->config->subtitle2)) {
-                $subtitle3 = $this->block->config->subtitle2;
+            if (!empty($this->block->config->subtitle3)) {
+                $subtitle3 = $this->block->config->subtitle3;
                 $defaults->config_subtitle3 = format_string($subtitle3, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle3);

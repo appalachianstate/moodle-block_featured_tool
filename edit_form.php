@@ -84,9 +84,13 @@ class block_featured_tool_edit_form extends block_edit_form {
         $sitecontext = context_system::instance();
 
         // If there is text in the block's config_text, load it in the respective text variable
+        // Also, if there are any subtitles set, load them into respective subtitle variables
         $text1 = '';
         $text2 = '';
         $text3 = '';
+        $subtitle1 = '';
+        $subtitle2 = '';
+        $subtitle3 = '';
         if (!empty($this->block->config)) {
             // Loads any already added files to the first feature tool block's draft editor
             if (!empty($this->block->config->text1)) {
@@ -150,8 +154,6 @@ class block_featured_tool_edit_form extends block_edit_form {
         $this->block->config->text2 = $text2;
         $this->block->config->text3 = $text3;
 
-        parent::set_data($defaults);
-
         if (isset($subtitle1)) {
             // Reset the preserved subtitle
             $this->block->config->subtitle1 = $subtitle1;
@@ -166,5 +168,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Reset the preserved subtitle
             $this->block->config->subtitle3 = $subtitle3;
         }
+
+        parent::set_data($defaults);
     }
 }

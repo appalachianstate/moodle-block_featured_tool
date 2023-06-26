@@ -132,8 +132,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text1);
             }
             // Loads any already added files to the second feature tool block's draft editor
-            if (!empty($this->block->data->text[1])) {
-                $text2 = $this->block->data->text[1];
+            if (!empty($this->block->data->text2)) {
+                $text2 = $this->block->data->text2;
                 $defaults->config_text2['text'] =
                         file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text2);
@@ -143,8 +143,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text2);
             }
             // Loads any already added files to the third feature tool block's draft editor
-            if (!empty($this->block->data->text[2])) {
-                $text3 = $this->block->data->text[2];
+            if (!empty($this->block->data->text3)) {
+                $text3 = $this->block->data->text3;
                 $defaults->config_text3['text'] =
                         file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text3);

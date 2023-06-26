@@ -97,9 +97,13 @@ class block_featured_tool extends block_base {
                     $snippet = preg_replace("/<(img|br).*?>/m", '', $snippet);
                 }
 
+                if (!empty($selectedBlockThumbnail)) {
+                    $selectedBlockThumbnail = file_rewrite_pluginfile_urls($selectedBlockThumbnail, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('thumbnail'. $randInt), null);
+                }
+
                 $data = array(
                     "subtitle" => $selectedBlockSubtitle,
-                    "thumbnail" => $selectedBlockThumbnail,
+                    "thumbnail" => format_text($selectedBlockThumbnail, $format, $filteropt),
                     "snippet" => format_text($snippet, $format, $filteropt),
                     "editorhtml" => format_text($selectedBlock, $format, $filteropt),
 

@@ -97,8 +97,12 @@ class block_featured_tool extends block_base {
                     $snippet = preg_replace("/<(img|br).*?>/m", '', $snippet);
                 }
 
-                if (!empty($selectedBlockThumbnail)) {
-                    $selectedBlockThumbnail = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('thumbnail'. $randInt), null);
+                $fs = get_file_storage();
+                $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', ('thumbnail'. $randInt), false, 'filename', false);
+                if (count($files)) {
+                    $file = reset($files);
+                    $selectedBlockThumbnail = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                            $file->get_itemid(), $file->get_filepath(), $file->get_filename());
                     print_object($selectedBlockThumbnail);
                 }
 

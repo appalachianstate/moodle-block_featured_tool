@@ -123,9 +123,9 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads any already added files to the first feature tool block's draft editor
             if (!empty($this->block->config->text[0])) {
                 $text1 = $this->block->config->text[0];
-                $defaults->config_text1['text'] =
-                        file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
-                                array('subdirs' => true), $text1);
+                $defaults->config_text1['text'] = $text1;
+                        //file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                        //        array('subdirs' => true), $text1);
                 $defaults->config_text1['itemid'] = $draftid_editor1;
                 $defaults->config_text1['format'] = FORMAT_HTML;
                 // Remove the thumbnail from the config so that parent::set_data doesn't empty it.

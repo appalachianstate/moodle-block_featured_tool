@@ -116,21 +116,21 @@ class block_featured_tool_edit_form extends block_edit_form {
                                 array('subdirs' => true), $text3);
                 $defaults->config_text3['itemid'] = $draftid_editor3;
             }
-
+            // Loads the subtitle set for the first featured tool block if it exists
             if (!empty($this->block->config->subtitle1)) {
                 $subtitle1 = $this->block->config->subtitle1;
                 $defaults->subtitle1 = format_string($subtitle1, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle1);
             }
-
+            // Loads the subtitle set for the second featured tool block if it exists
             if (!empty($this->block->config->subtitle2)) {
                 $subtitle2 = $this->block->config->subtitle2;
                 $defaults->subtitle2 = format_string($subtitle2, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle2);
             }
-
+            // Loads the subtitle set for the third featured tool block if it exists
             if (!empty($this->block->config->subtitle3)) {
                 $subtitle3 = $this->block->config->subtitle3;
                 $defaults->subtitle3 = format_string($subtitle3, true, $this->page->context);

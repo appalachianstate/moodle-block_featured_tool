@@ -168,9 +168,8 @@ class block_featured_tool extends block_base {
                 // If a thumbnail exists for this block, move the thumbnail into a proper filearea and adjust HTML link to match
                 if (!empty($data->thumbnail[$key])) {
                     $thumbnail = $data->thumbnail[$key];
-                    $thumbnail = file_save_draft_area_files($thumbnail, $sitecontext->id,
+                    $config->thumbnail[$key] = file_save_draft_area_files($thumbnail, $sitecontext->id,
                     'block_featured_tool', ('thumbnail' . $key), 0, $thumbnailoptions);
-                    $config->thumbnail[$key] = $thumbnail;
                 }
             }
         }

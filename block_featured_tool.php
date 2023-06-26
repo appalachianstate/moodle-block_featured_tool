@@ -99,8 +99,11 @@ class block_featured_tool extends block_base {
 
                 $fs = get_file_storage();
                 $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', ('thumbnail'. $randInt), false, 'filename', false);
+                // Tries to serve the thumbnail if it exists
                 if (count($files)) {
+                    // There should only ever be one file in the filearea
                     $file = reset($files);
+                    // Creates a pluginfile URL for the thumbnail, since it comes from a file picker
                     $selectedBlockThumbnail = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
                             null, $file->get_filepath(), $file->get_filename());
                 }

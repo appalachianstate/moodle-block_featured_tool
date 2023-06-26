@@ -87,6 +87,7 @@ class block_featured_tool extends block_base {
                 $selectedBlockSubtitle = $this->config->subtitle[$randInt];
 
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
+                $this->config->text[$randInt] = $selectedBlock;
                 $format = $this->config->format;
 
                 $snippet = $selectedBlock;

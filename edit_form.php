@@ -36,6 +36,16 @@ class block_featured_tool_edit_form extends block_edit_form {
         // Section header title.
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
+        $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
+        $thumbnailoptions = array(
+                'subdirs' => 0,
+                'maxbytes' => 1048576,
+                'areamaxbytes' => 1048576,
+                'maxfiles' => 1,
+                'accepted_types' => $acceptedtypes,
+                'context' => $sitecontext,
+                'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
+        );
         $editoroptions = array(
                 'maxfiles' => EDITOR_UNLIMITED_FILES,
                 'noclean' => true,
@@ -47,6 +57,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->addElement('text', 'config_subtitle1', get_string('featured_tool:subtitle', 'block_featured_tool'));
         $mform->setType('config_subtitle1', PARAM_TEXT);
 
+        $mform->addElement('filemanager', 'config_thumbnail1', get_string('featured_tool:thumbnail', 'syllabus'), null, $thumbnailoptions);
+
         $mform->addElement('editor', 'config_text1', get_string('featured_tool:media1', 'block_featured_tool'), null,
                 $editoroptions);
         $mform->setType('config_text1', PARAM_RAW);
@@ -55,6 +67,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle', 'block_featured_tool'));
         $mform->setType('config_subtitle2', PARAM_TEXT);
 
+        $mform->addElement('filemanager', 'config_thumbnail2', get_string('featured_tool:thumbnail', 'syllabus'), null, $thumbnailoptions);
+
         $mform->addElement('editor', 'config_text2', get_string('featured_tool:media2', 'block_featured_tool'), null,
                 $editoroptions);
         $mform->setType('config_text2', PARAM_RAW);
@@ -62,6 +76,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         // Parameters for third featured tool
         $mform->addElement('text', 'config_subtitle3', get_string('featured_tool:subtitle', 'block_featured_tool'));
         $mform->setType('config_subtitle3', PARAM_TEXT);
+
+        $mform->addElement('filemanager', 'config_thumbnail3', get_string('featured_tool:thumbnail', 'syllabus'), null, $thumbnailoptions);
 
         $mform->addElement('editor', 'config_text3', get_string('featured_tool:media3', 'block_featured_tool'), null,
                 $editoroptions);
@@ -81,8 +97,22 @@ class block_featured_tool_edit_form extends block_edit_form {
         $draftid_editor2 = file_get_submitted_draft_itemid('config_text2');
         $draftid_editor3 = file_get_submitted_draft_itemid('config_text3');
 
+        $draftid_thumbnail1 = file_get_submitted_draft_itemid('config_thumbnail1');
+        $draftid_thumbnail2 = file_get_submitted_draft_itemid('config_thumbnail2');
+        $draftid_thumbnail3 = file_get_submitted_draft_itemid('config_thumbnail3');
+
         $sitecontext = context_system::instance();
 
+        $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
+        $thumbnailoptions = array(
+                'subdirs' => 0,
+                'maxbytes' => 1048576,
+                'areamaxbytes' => 1048576,
+                'maxfiles' => 1,
+                'accepted_types' => $acceptedtypes,
+                'context' => $sitecontext,
+                'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
+        );
         // If there is text in the block's config_text, load it in the respective text variable
         // Also, if there are any subtitles set, load them into respective subtitle variables
         $text1 = '';
@@ -119,23 +149,53 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads the subtitle set for the first featured tool block if it exists
             if (!empty($this->block->config->subtitle1)) {
                 $subtitle1 = $this->block->config->subtitle1;
-                $defaults->subtitle1 = format_string($subtitle1, true, $this->page->context);
+                $defaults->config_subtitle1 = format_string($subtitle1, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle1);
             }
             // Loads the subtitle set for the second featured tool block if it exists
             if (!empty($this->block->config->subtitle2)) {
                 $subtitle2 = $this->block->config->subtitle2;
-                $defaults->subtitle2 = format_string($subtitle2, true, $this->page->context);
+                $defaults->config_subtitle2 = format_string($subtitle2, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle2);
             }
             // Loads the subtitle set for the third featured tool block if it exists
             if (!empty($this->block->config->subtitle3)) {
                 $subtitle3 = $this->block->config->subtitle3;
-                $defaults->subtitle3 = format_string($subtitle3, true, $this->page->context);
+                $defaults->config_subtitle3 = format_string($subtitle3, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle3);
+            }
+            // Loads an already added thumbnail to the first feature tool block's file picker
+            if (!empty($this->block->config->thumbnail1)) {
+                $thumbnail1 = $this->block->config->thumbnail1;
+                $defaults->config_thumbnail1['text'] =
+                        file_prepare_draft_area($draftid_thumbnail1, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
+                                $thumbnailoptions, $thumbnail1);
+                $defaults->config_thumbnail1['itemid'] = $draftid_thumbnail1;
+                // Remove the thumbnail from the config so that parent::set_data doesn't set it.
+                unset($this->block->config->thumbnail1);
+            }
+            // Loads an already added thumbnail to the second feature tool block's file picker
+            if (!empty($this->block->config->thumbnail2)) {
+                $thumbnail2 = $this->block->config->thumbnail2;
+                $defaults->config_thumbnail2['text'] =
+                        file_prepare_draft_area($draftid_thumbnail2, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
+                                $thumbnailoptions, $thumbnail2);
+                $defaults->config_thumbnail2['itemid'] = $draftid_thumbnail2;
+                // Remove the thumbnail from the config so that parent::set_data doesn't set it.
+                unset($this->block->config->thumbnail2);
+            }
+            // Loads an already added thumbnail to the third feature tool block's file picker
+            if (!empty($this->block->config->thumbnail3)) {
+                $thumbnail3 = $this->block->config->thumbnail3;
+                $defaults->config_thumbnail3['text'] =
+                        file_prepare_draft_area($draftid_thumbnail3, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
+                                $thumbnailoptions, $thumbnail3);
+                $defaults->config_thumbnail3['itemid'] = $draftid_thumbnail3;
+                // Remove the thumbnail from the config so that parent::set_data doesn't set it.
+                unset($this->block->config->thumbnail3);
             }
         }
 
@@ -158,15 +218,26 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Reset the preserved subtitle
             $this->block->config->subtitle1 = $subtitle1;
         }
-
         if (isset($subtitle2)) {
             // Reset the preserved subtitle
             $this->block->config->subtitle2 = $subtitle2;
         }
-
         if (isset($subtitle3)) {
             // Reset the preserved subtitle
             $this->block->config->subtitle3 = $subtitle3;
+        }
+
+        if (isset($thumbnail1)) {
+            // Reset the preserved thumbnail
+            $this->block->config->thumbnail1 = $thumbnail1;
+        }
+        if (isset($thumbnail2)) {
+            // Reset the preserved thumbnail
+            $this->block->config->thumbnail2 = $thumbnail2;
+        }
+        if (isset($thumbnail3)) {
+            // Reset the preserved thumbnail
+            $this->block->config->thumbnail3 = $thumbnail3;
         }
 
         parent::set_data($defaults);

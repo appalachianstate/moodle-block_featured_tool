@@ -85,6 +85,8 @@ class block_featured_tool extends block_base {
                 $selectedBlock = $this->config->text[$randInt];
                 // Grabs that block's subtitle
                 $selectedBlockSubtitle = $this->config->subtitle[$randInt];
+                // Grabs that block's thumbnail
+                $selectedBlockThumbnail = $this->config->thumbnail[$randInt];
 
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
                 $format = $this->config->format;
@@ -97,6 +99,7 @@ class block_featured_tool extends block_base {
 
                 $data = array(
                     "subtitle" => $selectedBlockSubtitle,
+                    "thumbnail" => $selectedBlockThumbnail,
                     "snippet" => format_text($snippet, $format, $filteropt),
                     "editorhtml" => format_text($selectedBlock, $format, $filteropt),
 
@@ -121,14 +124,28 @@ class block_featured_tool extends block_base {
         $config = clone($data);
 
         $sitecontext = context_system::instance();
+        $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
+        $thumbnailoptions = array(
+                'subdirs' => 0,
+                'maxbytes' => 1048576,
+                'areamaxbytes' => 1048576,
+                'maxfiles' => 1,
+                'accepted_types' => $acceptedtypes,
+                'context' => $sitecontext,
+                'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
+        );
+
         // Generates an array of the text fields
         $data->text = array($data->text1, $data->text2, $data->text3);
         // Generates an array of the subtitles
         $data->subtitle = array($data->subtitle1, $data->subtitle2, $data->subtitle3);
+        // Generates an array of thumbnails
+        $data->thumbnail = array($data->thumbnail1, $data->thumbnail2, $data->thumbnail3);
 
         // Save only area files that have something in them and store them
         $config->text = array();
         $config->subtitle = array();
+        $config->thumbnail = array();
         foreach ($data->text as $text) {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array
@@ -140,6 +157,13 @@ class block_featured_tool extends block_base {
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle
                 $config->subtitle[$key] = !empty($data->subtitle[$key]) ? $data->subtitle[$key] : "Announcement";
+                // If a thumbnail exists for this block, move the thumbnail into a proper filearea and adjust HTML link to match
+                if (!empty($data->thumbnail[$key])) {
+                    $thumbnail = $data->thumbnail[$key];
+                    $thumbnail = file_save_draft_area_files($thumbnail['itemid'], $sitecontext->id,
+                    'block_featured_tool', ('thumbnail' . $key), 0, $thumbnailoptions, $thumbnail['text']);
+                    $config->thumbnail[$key] = $thumbnail;
+                }
             }
         }
         $config->format = FORMAT_HTML;

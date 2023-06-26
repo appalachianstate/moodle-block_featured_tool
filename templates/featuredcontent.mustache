@@ -22,11 +22,15 @@
     Example context (json):
     {
         "subtitle" : "Awesome title for a story",
+        "thumbnail" : "<img src="..." alt="...">",
         "snippet" : "<p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lacinia pretium nulla gravida interdum.</em></p>",
         "editorhtml" : "<p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lacinia pretium nulla gravida interdum.</em></p>"
     }
 }}
 <div class="card-body text-left" style="padding: 4px 0 0 0">
+    <div class="card-img-top">
+        {{{thumbnail}}}
+    </div>
     <h6 class="card-subtitle mb-2 text-muted">{{subtitle}}</h6>
     <div class="card-text">
         {{#shortentext}} 100, {{{snippet}}} {{/shortentext}}

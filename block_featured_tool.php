@@ -98,6 +98,7 @@ class block_featured_tool extends block_base {
                 }
 
                 if (!empty($selectedBlockThumbnail)) {
+                    print_object($selectedBlockThumbnail);
                     $selectedBlockThumbnail = file_rewrite_pluginfile_urls($selectedBlockThumbnail, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('thumbnail'. $randInt), null);
                 }
 

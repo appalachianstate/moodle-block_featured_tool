@@ -132,7 +132,7 @@ class block_featured_tool extends block_base {
 
         // Save only area files that have something in them and store them
         $config->text = array();
-        $config->subtitle = array();
+        $config->subtitle = array_fill(0, sizeof($data->subtitle), "Announcement");
         foreach ($data->text as $text) {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array
@@ -143,7 +143,8 @@ class block_featured_tool extends block_base {
                 $config->text[$key] = $text;
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle
-                $config->subtitle[$key] = empty($data->subtitle[$key]) ? $data->subtitle[$key] : "Announcement";
+
+                $config->subtitle[$key] = !empty($data->subtitle[$key]) ?? $data->subtitle[$key];
             }
         }
         $config->format = FORMAT_HTML;

@@ -118,9 +118,6 @@ class block_featured_tool_edit_form extends block_edit_form {
         $text1 = '';
         $text2 = '';
         $text3 = '';
-        $subtitle1 = '';
-        $subtitle2 = '';
-        $subtitle3 = '';
         if (!empty($this->block->config)) {
             // Loads any already added files to the first feature tool block's draft editor
             if (!empty($this->block->config->text1)) {

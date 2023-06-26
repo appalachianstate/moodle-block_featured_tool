@@ -85,8 +85,6 @@ class block_featured_tool extends block_base {
                 $selectedBlock = $this->config->text[$randInt];
                 // Grabs that block's subtitle
                 $selectedBlockSubtitle = $this->config->subtitle[$randInt];
-                // Grabs that block's thumbnail
-                $selectedBlockThumbnail = $this->config->thumbnail[$randInt];
 
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
                 $format = $this->config->format;
@@ -107,10 +105,10 @@ class block_featured_tool extends block_base {
                     $selectedBlockThumbnail = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
                             null, $file->get_filepath(), $file->get_filename());
                 }
-
+                // Creates the data array expected by the featuredcontent templated
                 $data = array(
                     "subtitle" => $selectedBlockSubtitle,
-                    "thumbnail" => $selectedBlockThumbnail,
+                    "thumbnail" => $selectedBlockThumbnail ?? '',
                     "snippet" => format_text($snippet, $format, $filteropt),
                     "editorhtml" => format_text($selectedBlock, $format, $filteropt),
 

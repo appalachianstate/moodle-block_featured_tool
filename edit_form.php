@@ -173,30 +173,27 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads an already added thumbnail to the first feature tool block's file picker
             if (!empty($this->block->config->thumbnail1)) {
                 $thumbnail1 = $this->block->config->thumbnail1;
-                $defaults->config_thumbnail1['text'] =
-                        file_prepare_draft_area($draftid_thumbnail1, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
-                                $thumbnailoptions, $thumbnail1);
-                $defaults->config_thumbnail1['itemid'] = $draftid_thumbnail1;
+                file_prepare_draft_area($draftid_thumbnail1, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
+                        $thumbnailoptions, $thumbnail1);
+                $defaults->config_thumbnail1 = $draftid_thumbnail1;
                 // Remove the thumbnail from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->thumbnail1);
             }
             // Loads an already added thumbnail to the second feature tool block's file picker
             if (!empty($this->block->config->thumbnail2)) {
                 $thumbnail2 = $this->block->config->thumbnail2;
-                $defaults->config_thumbnail2['text'] =
-                        file_prepare_draft_area($draftid_thumbnail2, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
-                                $thumbnailoptions, $thumbnail2);
-                $defaults->config_thumbnail2['itemid'] = $draftid_thumbnail2;
+                file_prepare_draft_area($draftid_thumbnail2, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
+                        $thumbnailoptions, $thumbnail2);
+                $defaults->config_thumbnail2 = $draftid_thumbnail2;
                 // Remove the thumbnail from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->thumbnail2);
             }
             // Loads an already added thumbnail to the third feature tool block's file picker
             if (!empty($this->block->config->thumbnail3)) {
                 $thumbnail3 = $this->block->config->thumbnail3;
-                $defaults->config_thumbnail3['text'] =
-                        file_prepare_draft_area($draftid_thumbnail3, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
-                                $thumbnailoptions, $thumbnail3);
-                $defaults->config_thumbnail3['itemid'] = $draftid_thumbnail3;
+                file_prepare_draft_area($draftid_thumbnail3, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
+                        $thumbnailoptions, $thumbnail3);
+                $defaults->config_thumbnail3 = $draftid_thumbnail3;
                 // Remove the thumbnail from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->thumbnail3);
             }

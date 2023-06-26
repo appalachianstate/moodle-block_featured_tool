@@ -52,7 +52,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->setType('config_text1', PARAM_RAW);
 
         // Parameters for second featured tool
-        $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle', 'block_html'));
+        $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle', 'block_featured_tool'));
         $mform->setType('config_subtitle2', PARAM_TEXT);
 
         $mform->addElement('editor', 'config_text2', get_string('featured_tool:media2', 'block_featured_tool'), null,
@@ -60,7 +60,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->setType('config_text2', PARAM_RAW);
 
         // Parameters for third featured tool
-        $mform->addElement('text', 'config_subtitle3', get_string('featured_tool:subtitle', 'block_html'));
+        $mform->addElement('text', 'config_subtitle3', get_string('featured_tool:subtitle', 'block_featured_tool'));
         $mform->setType('config_subtitle3', PARAM_TEXT);
 
         $mform->addElement('editor', 'config_text3', get_string('featured_tool:media3', 'block_featured_tool'), null,

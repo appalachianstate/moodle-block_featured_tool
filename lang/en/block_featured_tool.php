@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['featured_tool:desc'] = 'This is where you can upload media to be displayed in the featured block.';
 $string['featured_tool:edit'] = 'Editing featured tool block';
+$string['featured_tool:subtitle'] = 'Subtitle for this featured tool';
 $string['featured_tool:media1'] = 'First featured tool';
 $string['featured_tool:media2'] = 'Second featured tool';
 $string['featured_tool:media3'] = 'Third featured tool';

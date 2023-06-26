@@ -120,7 +120,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $text3 = '';
         if (!empty($this->block->config)) {
             // Loads any already added files to the first feature tool block's draft editor
-            if (!empty($this->block->config->text1)) {
+            if (!empty($this->block->config->text[0])) {
                 $text1 = $this->block->config->text[0];
                 $defaults->config_text1['text'] =
                         file_prepare_draft_area($draftid_editor1, $this->block->context->id, 'block_featured_tool', 'content', 0,
@@ -131,7 +131,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text1);
             }
             // Loads any already added files to the second feature tool block's draft editor
-            if (!empty($this->block->config->text2)) {
+            if (!empty($this->block->config->text[1])) {
                 $text2 = $this->block->config->text[1];
                 $defaults->config_text2['text'] =
                         file_prepare_draft_area($draftid_editor2, $this->block->context->id, 'block_featured_tool', 'content', 0,
@@ -142,7 +142,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text2);
             }
             // Loads any already added files to the third feature tool block's draft editor
-            if (!empty($this->block->config->text3)) {
+            if (!empty($this->block->config->text[2])) {
                 $text3 = $this->block->config->text[2];
                 $defaults->config_text3['text'] =
                         file_prepare_draft_area($draftid_editor3, $this->block->context->id, 'block_featured_tool', 'content', 0,
@@ -153,29 +153,29 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text3);
             }
             // Loads the subtitle set for the first featured tool block if it exists
-            if (!empty($this->block->config->subtitle1)) {
-                $subtitle1 = $this->block->config->subtitle1;
+            if (!empty($this->block->config->subtitle[0])) {
+                $subtitle1 = $this->block->config->subtitle[0];
                 $defaults->config_subtitle1 = format_string($subtitle1, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle1);
             }
             // Loads the subtitle set for the second featured tool block if it exists
-            if (!empty($this->block->config->subtitle2)) {
-                $subtitle2 = $this->block->config->subtitle2;
+            if (!empty($this->block->config->subtitle[1])) {
+                $subtitle2 = $this->block->config->subtitle[1];
                 $defaults->config_subtitle2 = format_string($subtitle2, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle2);
             }
             // Loads the subtitle set for the third featured tool block if it exists
-            if (!empty($this->block->config->subtitle3)) {
-                $subtitle3 = $this->block->config->subtitle3;
+            if (!empty($this->block->config->subtitle[2])) {
+                $subtitle3 = $this->block->config->subtitle[2];
                 $defaults->config_subtitle3 = format_string($subtitle3, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle3);
             }
             // Loads an already added thumbnail to the first feature tool block's file picker
-            if (!empty($this->block->config->thumbnail1)) {
-                $thumbnail1 = $this->block->config->thumbnail1;
+            if (!empty($this->block->config->thumbnail[0])) {
+                $thumbnail1 = $this->block->config->thumbnail[0];
                 file_prepare_draft_area($draftid_thumbnail1, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
                         $thumbnailoptions, $thumbnail1);
                 $defaults->config_thumbnail1 = $draftid_thumbnail1;
@@ -183,8 +183,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->thumbnail1);
             }
             // Loads an already added thumbnail to the second feature tool block's file picker
-            if (!empty($this->block->config->thumbnail2)) {
-                $thumbnail2 = $this->block->config->thumbnail2;
+            if (!empty($this->block->config->thumbnail[1])) {
+                $thumbnail2 = $this->block->config->thumbnail[1];
                 file_prepare_draft_area($draftid_thumbnail2, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
                         $thumbnailoptions, $thumbnail2);
                 $defaults->config_thumbnail2 = $draftid_thumbnail2;
@@ -192,8 +192,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->thumbnail2);
             }
             // Loads an already added thumbnail to the third feature tool block's file picker
-            if (!empty($this->block->config->thumbnail3)) {
-                $thumbnail3 = $this->block->config->thumbnail3;
+            if (!empty($this->block->config->thumbnail[2])) {
+                $thumbnail3 = $this->block->config->thumbnail[2];
                 file_prepare_draft_area($draftid_thumbnail3, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
                         $thumbnailoptions, $thumbnail3);
                 $defaults->config_thumbnail3 = $draftid_thumbnail3;

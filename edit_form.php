@@ -59,9 +59,9 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         $mform->addElement('filemanager', 'config_thumbnail1', get_string('featured_tool:thumbnail', 'block_featured_tool'), null, $thumbnailoptions);
 
-        $mform->addElement('editor', 'config_text1', get_string('featured_tool:media1', 'block_featured_tool'), null,
+        $mform->addElement('editor', 'config_text[0]', get_string('featured_tool:media1', 'block_featured_tool'), null,
                 $editoroptions);
-        $mform->setType('config_text1', PARAM_RAW);
+        $mform->setType('config_text[0]', PARAM_RAW);
 
         // Parameters for second featured tool
         $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle', 'block_featured_tool'));
@@ -153,22 +153,22 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text3);
             }
             // Loads the subtitle set for the first featured tool block if it exists
-            if (!empty($this->block->config->subtitle[0])) {
-                $subtitle1 = $this->block->config->subtitle[0];
+            if (!empty($this->block->config->subtitle1)) {
+                $subtitle1 = $this->block->config->subtitle1;
                 $defaults->config_subtitle1 = format_string($subtitle1, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle1);
             }
             // Loads the subtitle set for the second featured tool block if it exists
-            if (!empty($this->block->config->subtitle[1])) {
-                $subtitle2 = $this->block->config->subtitle[1];
+            if (!empty($this->block->config->subtitle2)) {
+                $subtitle2 = $this->block->config->subtitle2;
                 $defaults->config_subtitle2 = format_string($subtitle2, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle2);
             }
             // Loads the subtitle set for the third featured tool block if it exists
-            if (!empty($this->block->config->subtitle[2])) {
-                $subtitle3 = $this->block->config->subtitle[2];
+            if (!empty($this->block->config->subtitle2)) {
+                $subtitle3 = $this->block->config->subtitle2;
                 $defaults->config_subtitle3 = format_string($subtitle3, true, $this->page->context);
                 // Remove the subtitle from the config so that parent::set_data doesn't set it.
                 unset($this->block->config->subtitle3);

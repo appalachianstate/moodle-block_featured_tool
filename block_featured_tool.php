@@ -102,8 +102,7 @@ class block_featured_tool extends block_base {
                 if (count($files)) {
                     $file = reset($files);
                     $selectedBlockThumbnail = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
-                            $file->get_itemid(), $file->get_filepath(), $file->get_filename());
-                    print_object($selectedBlockThumbnail);
+                            null, $file->get_filepath(), $file->get_filename());
                 }
 
                 $data = array(

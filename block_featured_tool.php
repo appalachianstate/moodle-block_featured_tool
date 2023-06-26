@@ -107,7 +107,7 @@ class block_featured_tool extends block_base {
 
                 $data = array(
                     "subtitle" => $selectedBlockSubtitle,
-                    "thumbnail" => format_text($selectedBlockThumbnail, $format, $filteropt),
+                    "thumbnail" => $selectedBlockThumbnail,
                     "snippet" => format_text($snippet, $format, $filteropt),
                     "editorhtml" => format_text($selectedBlock, $format, $filteropt),
 

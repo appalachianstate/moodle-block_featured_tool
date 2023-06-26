@@ -126,6 +126,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                         file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text1);
                 $defaults->config_text1['itemid'] = $draftid_editor1;
+                // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
+                unset($this->block->config->text1);
             }
             // Loads any already added files to the second feature tool block's draft editor
             if (!empty($this->block->config->text2)) {
@@ -134,6 +136,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                         file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text2);
                 $defaults->config_text2['itemid'] = $draftid_editor2;
+                // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
+                unset($this->block->config->text2);
             }
             // Loads any already added files to the third feature tool block's draft editor
             if (!empty($this->block->config->text3)) {
@@ -142,6 +146,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                         file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text3);
                 $defaults->config_text3['itemid'] = $draftid_editor3;
+                // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
+                unset($this->block->config->text3);
             }
             // Loads the subtitle set for the first featured tool block if it exists
             if (!empty($this->block->config->subtitle1)) {
@@ -196,44 +202,41 @@ class block_featured_tool_edit_form extends block_edit_form {
             }
         }
 
-        // have to delete text here, otherwise parent::set_data will empty content
-        // of editor
-        unset($this->block->config->text1);
-        unset($this->block->config->text2);
-        unset($this->block->config->text3);
-        unset($this->block->config->text);
-        // restore $text
+        // Restore variables
         if (!isset($this->block->config)) {
             $this->block->config = new stdClass();
         }
 
-        $this->block->config->text1 = $text1;
-        $this->block->config->text2 = $text2;
-        $this->block->config->text3 = $text3;
+        // Resets the preserved editor text variables
+        if (isset($text1)) {
+            $this->block->config->text1 = $text1;
+        }
+        if (isset($text2)) {
+            $this->block->config->text2 = $text2;
+        }
+        if (isset($text3)) {
+            $this->block->config->text3 = $text3;
+        }
 
+        // Resets the preserved subtitles
         if (isset($subtitle1)) {
-            // Reset the preserved subtitle
             $this->block->config->subtitle1 = $subtitle1;
         }
         if (isset($subtitle2)) {
-            // Reset the preserved subtitle
             $this->block->config->subtitle2 = $subtitle2;
         }
         if (isset($subtitle3)) {
-            // Reset the preserved subtitle
             $this->block->config->subtitle3 = $subtitle3;
         }
 
+        // Resets the preserved thumbnails
         if (isset($thumbnail1)) {
-            // Reset the preserved thumbnail
             $this->block->config->thumbnail1 = $thumbnail1;
         }
         if (isset($thumbnail2)) {
-            // Reset the preserved thumbnail
             $this->block->config->thumbnail2 = $thumbnail2;
         }
         if (isset($thumbnail3)) {
-            // Reset the preserved thumbnail
             $this->block->config->thumbnail3 = $thumbnail3;
         }
 

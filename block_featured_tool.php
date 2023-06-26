@@ -94,7 +94,7 @@ class block_featured_tool extends block_base {
                 $snippet = $selectedBlock;
                 // Removes images from the snippet that appears on the card if any appear
                 if (strpos($snippet, '<img') !== false) {
-                    $snippet = preg_replace("/<img.*?>/m", '', $snippet);
+                    $snippet = preg_replace("/<p[^>]*>(?:(?!<\/p>).)*?<img[^>]*>(?:(?!<\/p>).)*?<\/p>|<img[^>]*>/m", '', $snippet);
                 }
 
                 $data = array(

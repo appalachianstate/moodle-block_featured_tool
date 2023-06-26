@@ -123,7 +123,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             if (!empty($this->block->config->text1)) {
                 $text1 = $this->block->config->text1;
                 $defaults->config_text1['text'] =
-                        file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                        file_prepare_draft_area($draftid_editor1, $this->block->context->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text1);
                 $defaults->config_text1['itemid'] = $draftid_editor1;
                 $defaults->config_text1['format'] = FORMAT_HTML;
@@ -134,7 +134,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             if (!empty($this->block->config->text2)) {
                 $text2 = $this->block->config->text2;
                 $defaults->config_text2['text'] =
-                        file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                        file_prepare_draft_area($draftid_editor2, $this->block->context->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text2);
                 $defaults->config_text2['itemid'] = $draftid_editor2;
                 $defaults->config_text2['format'] = FORMAT_HTML;
@@ -145,7 +145,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             if (!empty($this->block->config->text3)) {
                 $text3 = $this->block->config->text3;
                 $defaults->config_text3['text'] =
-                        file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                        file_prepare_draft_area($draftid_editor3, $this->block->context->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text3);
                 $defaults->config_text3['itemid'] = $draftid_editor3;
                 $defaults->config_text3['format'] = FORMAT_HTML;

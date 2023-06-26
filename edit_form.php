@@ -202,6 +202,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             }
         }
 
+        parent::set_data($defaults);
         // Restore variables
         if (!isset($this->block->config)) {
             $this->block->config = new stdClass();
@@ -239,7 +240,5 @@ class block_featured_tool_edit_form extends block_edit_form {
         if (isset($thumbnail3)) {
             $this->block->config->thumbnail3 = $thumbnail3;
         }
-
-        parent::set_data($defaults);
     }
 }

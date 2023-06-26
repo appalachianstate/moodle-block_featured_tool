@@ -143,7 +143,7 @@ class block_featured_tool extends block_base {
                 $config->text[$key] = $text;
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle
-                $config->subtitle[$key] = $data->subtitle[$key] ?? "Announcement";
+                $config->subtitle[$key] = !empty($data->subtitle[$key]) ? $data->subtitle[$key] : "Announcement";
             }
         }
         $config->format = FORMAT_HTML;

@@ -126,6 +126,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                         file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text1);
                 $defaults->config_text1['itemid'] = $draftid_editor1;
+                $defaults->config_text1['format'] = FORMAT_HTML;
                 // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
                 unset($this->block->config->text1);
             }
@@ -136,6 +137,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                         file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text2);
                 $defaults->config_text2['itemid'] = $draftid_editor2;
+                $defaults->config_text2['format'] = FORMAT_HTML;
                 // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
                 unset($this->block->config->text2);
             }
@@ -146,6 +148,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                         file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text3);
                 $defaults->config_text3['itemid'] = $draftid_editor3;
+                $defaults->config_text3['format'] = FORMAT_HTML;
                 // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
                 unset($this->block->config->text3);
             }

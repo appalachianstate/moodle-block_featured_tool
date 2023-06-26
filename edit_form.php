@@ -59,9 +59,9 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         $mform->addElement('filemanager', 'config_thumbnail1', get_string('featured_tool:thumbnail', 'block_featured_tool'), null, $thumbnailoptions);
 
-        $mform->addElement('editor', 'config_text[0]', get_string('featured_tool:media1', 'block_featured_tool'), null,
+        $mform->addElement('editor', 'config_text1', get_string('featured_tool:media1', 'block_featured_tool'), null,
                 $editoroptions);
-        $mform->setType('config_text[0]', PARAM_RAW);
+        $mform->setType('config_text1', PARAM_RAW);
 
         // Parameters for second featured tool
         $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle', 'block_featured_tool'));
@@ -114,13 +114,14 @@ class block_featured_tool_edit_form extends block_edit_form {
                 'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
         );
         // If there is text in the block's config_text, load it in the respective text variable
-        // Also, if there are any subtitles set, load them into respective subtitle variables
+        // If there are any subtitles set, load them into respective subtitle variables
+        // If there are any thumbnails uploaded, load them into the respective thumbnail variables
         $text1 = '';
         $text2 = '';
         $text3 = '';
         if (!empty($this->block->config)) {
             // Loads any already added files to the first feature tool block's draft editor
-            if (!empty($this->block->config->text[0])) {
+            if (!empty($this->block->config->text1)) {
                 $text1 = $this->block->config->text[0];
                 $defaults->config_text1['text'] =
                         file_prepare_draft_area($draftid_editor1, $this->block->context->id, 'block_featured_tool', 'content', 0,
@@ -131,7 +132,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text1);
             }
             // Loads any already added files to the second feature tool block's draft editor
-            if (!empty($this->block->config->text[1])) {
+            if (!empty($this->block->config->text2)) {
                 $text2 = $this->block->config->text[1];
                 $defaults->config_text2['text'] =
                         file_prepare_draft_area($draftid_editor2, $this->block->context->id, 'block_featured_tool', 'content', 0,
@@ -142,7 +143,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text2);
             }
             // Loads any already added files to the third feature tool block's draft editor
-            if (!empty($this->block->config->text[2])) {
+            if (!empty($this->block->config->text3)) {
                 $text3 = $this->block->config->text[2];
                 $defaults->config_text3['text'] =
                         file_prepare_draft_area($draftid_editor3, $this->block->context->id, 'block_featured_tool', 'content', 0,

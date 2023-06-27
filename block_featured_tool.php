@@ -156,8 +156,9 @@ class block_featured_tool extends block_base {
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $config->text[$key] = file_save_draft_area_files($text['itemid'], $sitecontext->id,
                         'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
+
                 $temp_text = "text" . ($idx+1);
-                $test[$idx] = $config->$temp_text;
+                $config->$temp_text = $config->text[$key];
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle
                 $config->subtitle[$key] = !empty($data->subtitle[$idx]) ? $data->subtitle[$idx] : "Announcement";
@@ -171,7 +172,7 @@ class block_featured_tool extends block_base {
         }
         $config->format = FORMAT_HTML;
 
-        print_object($test);
+        print_object($config);
         #print_object($data);
 
         parent::instance_config_save($config, $nolongerused);

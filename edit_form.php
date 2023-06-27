@@ -54,6 +54,10 @@ class block_featured_tool_edit_form extends block_edit_form {
         );
 
         // Parameters for first featured tool
+        $mform->addElement('html', '
+            <h3>First Featured Tool</h3>
+        ');
+
         $mform->addElement('text', 'config_subtitle1', get_string('featured_tool:subtitle1', 'block_featured_tool'));
         $mform->setType('config_subtitle1', PARAM_TEXT);
 
@@ -63,9 +67,12 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $editoroptions);
         $mform->setType('config_text1', PARAM_RAW);
 
-        $mform->addElement('html', '<hr/>');
-
         // Parameters for second featured tool
+        $mform->addElement('html', '
+            <hr/>
+            <h3>Second Featured Tool</h3>
+        ');
+
         $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle2', 'block_featured_tool'));
         $mform->setType('config_subtitle2', PARAM_TEXT);
 
@@ -75,9 +82,12 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $editoroptions);
         $mform->setType('config_text2', PARAM_RAW);
 
-        $mform->addElement('html', '<hr/>');
-
         // Parameters for third featured tool
+        $mform->addElement('html', '
+            <hr/>
+            <h3>Third Featured Tool</h3>
+        ');
+
         $mform->addElement('text', 'config_subtitle3', get_string('featured_tool:subtitle3', 'block_featured_tool'));
         $mform->setType('config_subtitle3', PARAM_TEXT);
 

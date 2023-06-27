@@ -156,7 +156,7 @@ class block_featured_tool extends block_base {
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $config->text[$key] = file_save_draft_area_files($text['itemid'], $sitecontext->id,
                         'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
-                $temp_text = "text" . $idx;
+                $temp_text = "text" . $idx+1;
                 $test[$idx] = $config->$temp_text;
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle

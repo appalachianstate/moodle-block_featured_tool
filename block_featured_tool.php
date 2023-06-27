@@ -152,11 +152,9 @@ class block_featured_tool extends block_base {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array
                 $key = sizeof($config->text);
-                print_object($key);
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $config->text[$key] = file_save_draft_area_files($text['itemid'], $sitecontext->id,
                         'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
-                print_object($key);
                 $text = $config->text[$key];
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle
@@ -170,6 +168,8 @@ class block_featured_tool extends block_base {
             }
         }
         $config->format = FORMAT_HTML;
+
+        print_object($config);
 
         parent::instance_config_save($config, $nolongerused);
     }

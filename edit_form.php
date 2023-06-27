@@ -39,8 +39,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
         $thumbnailoptions = array(
                 'subdirs' => 0,
-                'maxbytes' => 1048576,
-                'areamaxbytes' => 1048576,
+                'maxbytes' => 104857600,
+                'areamaxbytes' => 104857600,
                 'maxfiles' => 1,
                 'accepted_types' => $acceptedtypes,
                 'context' => $sitecontext,
@@ -121,8 +121,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
         $thumbnailoptions = array(
                 'subdirs' => 0,
-                'maxbytes' => 1048576,
-                'areamaxbytes' => 1048576,
+                'maxbytes' => 104857600,
+                'areamaxbytes' => 104857600,
                 'maxfiles' => 1,
                 'accepted_types' => $acceptedtypes,
                 'context' => $sitecontext,

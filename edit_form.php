@@ -108,14 +108,6 @@ class block_featured_tool_edit_form extends block_edit_form {
      */
     function set_data($defaults) {
 
-        $draftid_editor1 = file_get_submitted_draft_itemid('config_text1');
-        $draftid_editor2 = file_get_submitted_draft_itemid('config_text2');
-        $draftid_editor3 = file_get_submitted_draft_itemid('config_text3');
-
-        $draftid_thumbnail1 = file_get_submitted_draft_itemid('config_thumbnail1');
-        $draftid_thumbnail2 = file_get_submitted_draft_itemid('config_thumbnail2');
-        $draftid_thumbnail3 = file_get_submitted_draft_itemid('config_thumbnail3');
-
         $sitecontext = context_system::instance();
 
         $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
@@ -128,6 +120,12 @@ class block_featured_tool_edit_form extends block_edit_form {
                 'context' => $sitecontext,
                 'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
         );
+        $editoroptions = array(
+                'maxfiles' => EDITOR_UNLIMITED_FILES,
+                'noclean' => true,
+                'trusttext' => false,
+                'context' => $sitecontext,
+        );
         // If there is text in the block's config_text, load it in the respective text variable
         // If there are any subtitles set, load them into respective subtitle variables
         // If there are any thumbnails uploaded, load them into the respective thumbnail variables
@@ -138,6 +136,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads any already added files to the first feature tool block's draft editor
             if (!empty($this->block->data->text1)) {
                 $text1 = $this->block->data->text1;
+                $draftid_editor1 = file_get_submitted_draft_itemid('config_text1');
                 $defaults->config_text1['text'] =
                         file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text1);
@@ -149,6 +148,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads any already added files to the second feature tool block's draft editor
             if (!empty($this->block->data->text2)) {
                 $text2 = $this->block->data->text2;
+                $draftid_editor2 = file_get_submitted_draft_itemid('config_text2');
                 $defaults->config_text2['text'] =
                         file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text2);
@@ -160,6 +160,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads any already added files to the third feature tool block's draft editor
             if (!empty($this->block->data->text3)) {
                 $text3 = $this->block->data->text3;
+                $draftid_editor3 = file_get_submitted_draft_itemid('config_text3');
                 $defaults->config_text3['text'] =
                         file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,
                                 array('subdirs' => true), $text3);
@@ -192,6 +193,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads an already added thumbnail to the first feature tool block's file picker
             if (!empty($this->block->config->thumbnail1)) {
                 $thumbnail1 = $this->block->config->thumbnail1;
+                $draftid_thumbnail1 = file_get_submitted_draft_itemid('config_thumbnail1');
                 file_prepare_draft_area($draftid_thumbnail1, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
                         $thumbnailoptions, $thumbnail1);
                 $defaults->config_thumbnail1 = $draftid_thumbnail1;
@@ -201,6 +203,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads an already added thumbnail to the second feature tool block's file picker
             if (!empty($this->block->config->thumbnail2)) {
                 $thumbnail2 = $this->block->config->thumbnail2;
+                $draftid_thumbnail2 = file_get_submitted_draft_itemid('config_thumbnail2');
                 file_prepare_draft_area($draftid_thumbnail2, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
                         $thumbnailoptions, $thumbnail2);
                 $defaults->config_thumbnail2 = $draftid_thumbnail2;
@@ -210,6 +213,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads an already added thumbnail to the third feature tool block's file picker
             if (!empty($this->block->config->thumbnail3)) {
                 $thumbnail3 = $this->block->config->thumbnail3;
+                $draftid_thumbnail3 = file_get_submitted_draft_itemid('config_thumbnail3');
                 file_prepare_draft_area($draftid_thumbnail3, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
                         $thumbnailoptions, $thumbnail3);
                 $defaults->config_thumbnail3 = $draftid_thumbnail3;

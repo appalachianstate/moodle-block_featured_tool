@@ -190,8 +190,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->subtitle3);
             }
             // Loads an already added thumbnail to the first feature tool block's file picker
-            if (!empty($this->block->config->thumbnail[0])) {
-                $thumbnail1 = $this->block->config->thumbnail[0];
+            if (!empty($this->block->config->thumbnail1)) {
+                $thumbnail1 = $this->block->config->thumbnail1;
                 file_prepare_draft_area($draftid_thumbnail1, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
                         $thumbnailoptions, $thumbnail1);
                 $defaults->config_thumbnail1 = $draftid_thumbnail1;
@@ -199,8 +199,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->thumbnail1);
             }
             // Loads an already added thumbnail to the second feature tool block's file picker
-            if (!empty($this->block->config->thumbnail[1])) {
-                $thumbnail2 = $this->block->config->thumbnail[1];
+            if (!empty($this->block->config->thumbnail2)) {
+                $thumbnail2 = $this->block->config->thumbnail2;
                 file_prepare_draft_area($draftid_thumbnail2, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
                         $thumbnailoptions, $thumbnail2);
                 $defaults->config_thumbnail2 = $draftid_thumbnail2;
@@ -208,8 +208,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->thumbnail2);
             }
             // Loads an already added thumbnail to the third feature tool block's file picker
-            if (!empty($this->block->config->thumbnail[2])) {
-                $thumbnail3 = $this->block->config->thumbnail[2];
+            if (!empty($this->block->config->thumbnail3)) {
+                $thumbnail3 = $this->block->config->thumbnail3;
                 file_prepare_draft_area($draftid_thumbnail3, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
                         $thumbnailoptions, $thumbnail3);
                 $defaults->config_thumbnail3 = $draftid_thumbnail3;

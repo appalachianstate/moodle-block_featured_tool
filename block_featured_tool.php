@@ -168,8 +168,8 @@ class block_featured_tool extends block_base {
         }
         $config->format = FORMAT_HTML;
 
-        #print_object($config);
-        print_object($data);
+        print_object($config);
+        #print_object($data);
 
         parent::instance_config_save($config, $nolongerused);
     }

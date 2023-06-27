@@ -105,7 +105,7 @@ class block_featured_tool extends block_base {
                     $selectedBlockThumbnail = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
                             null, $file->get_filepath(), $file->get_filename());
                 }
-                // Creates the data array expected by the featuredcontent templated
+                // Creates the data array expected by the featuredcontent template
                 $data = array(
                     "subtitle" => $selectedBlockSubtitle,
                     "thumbnail" => $selectedBlockThumbnail ?? '',

@@ -87,6 +87,8 @@ class block_featured_tool extends block_base {
                 $selectedBlockSubtitle = $this->config->subtitle[$randInt];
 
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
+                // Stores the pluginfile link back into the respective config->text position
+                $this->config->text[$randInt] = $selectedBlock;
                 $format = $this->config->format;
 
                 $fs = get_file_storage();
@@ -154,7 +156,7 @@ class block_featured_tool extends block_base {
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $config->text[$key] = file_save_draft_area_files($text['itemid'], $sitecontext->id,
                         'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
-                $text = $config->text[$key];
+                ${'config->text'} . $idx = $config->text[$key];
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle
                 $config->subtitle[$key] = !empty($data->subtitle[$idx]) ? $data->subtitle[$idx] : "Announcement";

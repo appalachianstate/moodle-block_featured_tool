@@ -89,12 +89,6 @@ class block_featured_tool extends block_base {
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
                 $format = $this->config->format;
 
-                $snippet = $selectedBlock;
-                // Removes images from the snippet that appears on the card if any appear
-                if (strpos($snippet, '<img') !== false) {
-                    $snippet = preg_replace("/<(img|br).*?>/m", '', $snippet);
-                }
-
                 $fs = get_file_storage();
                 $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', ('thumbnail'. $randInt), false, 'filename', false);
                 // Tries to serve the thumbnail if it exists
@@ -109,7 +103,6 @@ class block_featured_tool extends block_base {
                 $data = array(
                     "subtitle" => $selectedBlockSubtitle,
                     "thumbnail" => $selectedBlockThumbnail ?? '',
-                    "snippet" => format_text($snippet, $format, $filteropt),
                     "editorhtml" => format_text($selectedBlock, $format, $filteropt),
 
                 );

@@ -100,6 +100,7 @@ class block_featured_tool extends block_base {
                     $selectedBlockThumbnail = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
                             null, $file->get_filepath(), $file->get_filename());
                 }
+
                 // Creates the data array expected by the featuredcontent template
                 $data = array(
                     "subtitle" => $selectedBlockSubtitle,
@@ -146,8 +147,14 @@ class block_featured_tool extends block_base {
         $data->thumbnail = array($data->thumbnail0, $data->thumbnail1, $data->thumbnail2);
 
         // Save only area files that have something in them and store them
-        $config->text = array(array());
-        $config->subtitle = array(array());
+        $config->text = array(array(
+                "content" => '',
+                "idx" => '',
+        ));
+        $config->subtitle = array(array(
+                "content" => '',
+                "idx" => '',
+        ));
         foreach ($data->text as $idx => $text) {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array

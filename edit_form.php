@@ -135,12 +135,12 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $config_text_num = 'config_text' . $idx;
                 $draftid_editor = file_get_submitted_draft_itemid($config_text_num);
 
-                $defaults->{$config_text_num}['text'] =
+                $defaults->{$config_text_num}->text =
                         file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', ('content' . $idx), 0,
                                 array('subdirs' => true), $text);
-                $defaults->{$config_text_num}['itemid'] = $draftid_editor;
-                $defaults->{$config_text_num}['format'] = FORMAT_HTML;
-                print_object($this->block->config);
+                $defaults->{$config_text_num}->itemid = $draftid_editor;
+                $defaults->{$config_text_num}->format = FORMAT_HTML;
+                print_object($defaults);
                 // Remove the text from the config so that parent::set_data doesn't empty it.
                 unset($this->block->config->${'text' . $idx});
                 print_object($this->block->config);

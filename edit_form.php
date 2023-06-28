@@ -130,11 +130,12 @@ class block_featured_tool_edit_form extends block_edit_form {
         // If there are any subtitles set, load them into respective subtitle variables
         // If there are any thumbnails uploaded, load them into the respective thumbnail variables
         if (!empty($this->block->config)) {
-            $defaultTexts = ['text0', 'text1', 'text2'];
+            $textArray = $this->block->config->text;
 
-            foreach ($defaultTexts as $index => $textKey) {
-                if (!empty($this->block->config->$textKey)) {
-                    $text = $this->block->config->$textKey;
+            foreach ($textArray as $index => $text) {
+                $textKey = 'text' . $index;
+
+                if (!empty($text)) {
                     $draftIdEditor = file_get_submitted_draft_itemid('config_' . $textKey);
                     $defaults->{'config_' . $textKey}['text'] =
                             file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'content' . $index, 0,

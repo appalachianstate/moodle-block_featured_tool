@@ -238,6 +238,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             }
         }
 
+        print_object($defaults);
         parent::set_data($defaults);
         // Restore variables
         if (!isset($this->block->config)) {

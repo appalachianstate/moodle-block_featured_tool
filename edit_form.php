@@ -142,9 +142,9 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $defaults->{$config_text_num}['format'] = FORMAT_HTML;
 
                 // Remove the text from the config so that parent::set_data doesn't empty it.
-                print_object($this->block->config->${'text' . $idx});
+                print_object($this->block->config);
                 unset($this->block->config->${'text' . $idx});
-                print_object($this->block->config->${'text' . $idx});
+                print_object($this->block->config);
             }
             // Loads any already added files to the first feature tool block's draft editor
             //if (!empty($this->block->config->text1)) {
@@ -246,15 +246,12 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         // Resets the preserved editor text variables
         if (isset($text0)) {
-            print_object($text0);
             $this->block->config->text0 = $text0;
         }
         if (isset($text1)) {
-            print_object($text1);
             $this->block->config->text1 = $text1;
         }
         if (isset($text2)) {
-            print_object($text2);
             $this->block->config->text2 = $text2;
         }
 

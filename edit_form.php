@@ -133,9 +133,8 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads any already added files to the respective feature tool block's draft editor
             foreach ($this->block->config->text as $index => $text) {
                 $textKey = 'text' . $index;
-                ${'text' . $index} = $text;
-
                 if (!empty($text)) {
+                    ${'text' . $index} = $text;
                     $draftIdEditor = file_get_submitted_draft_itemid('config_' . $textKey);
 
                     $defaults->{'config_' . $textKey}['text'] =

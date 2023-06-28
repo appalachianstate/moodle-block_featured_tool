@@ -204,15 +204,15 @@ class block_featured_tool_edit_form extends block_edit_form {
             $this->block->config->subtitle3 = $subtitle3;
         }
 
-        // Resets the preserved thumbnails
-        if (isset($thumbnail1)) {
-            $this->block->config->thumbnail1 = $thumbnail1;
-        }
-        if (isset($thumbnail2)) {
-            $this->block->config->thumbnail2 = $thumbnail2;
-        }
-        if (isset($thumbnail3)) {
-            $this->block->config->thumbnail3 = $thumbnail3;
-        }
+        //// Resets the preserved thumbnails
+        //if (isset($thumbnail1)) {
+        //    $this->block->config->thumbnail1 = $thumbnail1;
+        //}
+        //if (isset($thumbnail2)) {
+        //    $this->block->config->thumbnail2 = $thumbnail2;
+        //}
+        //if (isset($thumbnail3)) {
+        //    $this->block->config->thumbnail3 = $thumbnail3;
+        //}
     }
 }

@@ -134,11 +134,12 @@ class block_featured_tool_edit_form extends block_edit_form {
                 ${'text' . $idx} = $text;
                 $draftid_editor = file_get_submitted_draft_itemid('config_text' . $idx);
                 $editor_spec = 'config_text' . $idx;
-                $defaults->$editor_spec['text'] =
+                $defaults->$editor_spec[$text_var] =
                         file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content0', 0,
                                 array('subdirs' => true), $text);
                 $defaults->$editor_spec['itemid'] = $draftid_editor;
                 $defaults->$editor_spec['format'] = FORMAT_HTML;
+                print_object($defaults);
                 // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
                 unset($this->block->config->${'text'.$idx});
             }

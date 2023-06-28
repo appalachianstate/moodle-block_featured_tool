@@ -147,19 +147,12 @@ class block_featured_tool extends block_base {
         $data->thumbnail = array($data->thumbnail0, $data->thumbnail1, $data->thumbnail2);
 
         // Save only area files that have something in them and store them
-        $config->text = array(array(
-                'content' => '',
-                'idx' => '',
-        ));
-        $config->subtitle = array(array(
-                'content' => '',
-                'idx' => '',
-        ));
+        $config->text = array();
+        $config->subtitle = array();
         foreach ($data->text as $idx => $text) {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array
-                $key = sizeof($config->text);
-                print_object($key);
+                $key = sizeof($config->text) - 1;
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $config->text[$key]['content'] = file_save_draft_area_files($text['itemid'], $sitecontext->id,
                         'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);

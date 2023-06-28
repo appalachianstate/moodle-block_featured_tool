@@ -131,16 +131,17 @@ class block_featured_tool_edit_form extends block_edit_form {
         // If there are any thumbnails uploaded, load them into the respective thumbnail variables
         if (!empty($this->block->config)) {
             foreach ($this->block->config->text as $idx => $text) {
-                ${'text' . $idx} = $text;
-                $draftid_editor = file_get_submitted_draft_itemid('config_text' . $idx);
+                $texts[$idx] = $text;
+                $config_text_num = 'config_text' . $idx;
+                $draftid_editor = file_get_submitted_draft_itemid($config_text_num);
                 $editor_spec = 'config_text' . $idx;
                 $defaults->{$editor_spec}['text'] =
                         file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content0', 0,
                                 array('subdirs' => true), $text);
                 $defaults->{$editor_spec}['itemid'] = $draftid_editor;
                 $defaults->{$editor_spec}['format'] = FORMAT_HTML;
-
-                // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
+                print_object($defaults);
+                // Remove the text from the config so that parent::set_data doesn't empty it.
                 unset($this->block->config->text[$idx]);
             }
             // Loads any already added files to the first feature tool block's draft editor
@@ -239,17 +240,17 @@ class block_featured_tool_edit_form extends block_edit_form {
         }
 
         // Resets the preserved editor text variables
-        if (isset($text0)) {
-            print_object($text0);
-            $this->block->config->text0 = $text0;
+        if (isset($texts[0])) {
+            print_object($texts[0]);
+            $this->block->config->text0 = $texts[0];
         }
-        if (isset($text1)) {
-            print_object($text1);
-            $this->block->config->text1 = $text1;
+        if (isset($texts[1])) {
+            print_object($texts[1]);
+            $this->block->config->text1 = $texts[1];
         }
-        if (isset($text2)) {
-            print_object($text2);
-            $this->block->config->text2 = $text2;
+        if (isset($texts[2])) {
+            print_object($texts[2]);
+            $this->block->config->text2 = $texts[2];
         }
 
         // Resets the preserved subtitles

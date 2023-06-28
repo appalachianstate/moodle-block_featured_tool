@@ -148,12 +148,12 @@ class block_featured_tool extends block_base {
 
         // Save only area files that have something in them and store them
         $config->text = array(array(
-                "content" => '',
-                "idx" => '',
+                'content' => '',
+                'idx' => '',
         ));
         $config->subtitle = array(array(
-                "content" => '',
-                "idx" => '',
+                'content' => '',
+                'idx' => '',
         ));
         foreach ($data->text as $idx => $text) {
             if (!empty($text) && !empty($text['text'])) {
@@ -162,9 +162,11 @@ class block_featured_tool extends block_base {
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $config->text[$key]['content'] = file_save_draft_area_files($text['itemid'], $sitecontext->id,
                         'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
+                $config->text[$key]['idx'] = $idx;
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle
                 $config->subtitle[$key]['content'] = !empty($data->subtitle[$idx]) ? $data->subtitle[$idx] : "Announcement";
+                $config->subtitle[$key]['idx'] = $idx;
                 // If a thumbnail exists for this block, move the thumbnail into a proper filearea and adjust HTML link to match
                 if (!empty($data->thumbnail[$idx])) {
                     $thumbnail = $data->thumbnail[$idx];

@@ -276,5 +276,6 @@ class block_featured_tool_edit_form extends block_edit_form {
         if (isset($thumbnail3)) {
             $this->block->config->thumbnail3 = $thumbnail3;
         }
+        print_object($this->block->config);
     }
 }

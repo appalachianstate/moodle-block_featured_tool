@@ -209,12 +209,15 @@ class block_featured_tool_edit_form extends block_edit_form {
         // Resets the preserved editor text variables
         if (isset($text0)) {
             $this->block->config->text0 = $text0;
+            unset($text0);
         }
         if (isset($text1)) {
             $this->block->config->text1 = $text1;
+            unset($text1);
         }
         if (isset($text2)) {
             $this->block->config->text2 = $text2;
+            unset($text2);
         }
 
         // Resets the preserved subtitles

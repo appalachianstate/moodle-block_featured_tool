@@ -130,61 +130,58 @@ class block_featured_tool_edit_form extends block_edit_form {
         // If there are any subtitles set, load them into respective subtitle variables
         // If there are any thumbnails uploaded, load them into the respective thumbnail variables
         if (!empty($this->block->config)) {
-            foreach ($this->block->config->text as $idx => $text) {
-                ${'text' . $idx} = $text;
-                $config_text_num = 'config_text' . $idx;
-                $draftid_editor = file_get_submitted_draft_itemid($config_text_num);
-
-                $defaults->{$config_text_num}['text'] =
-                        file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', ('content' . $idx), 0,
-                                array('subdirs' => true), $text);
-                $defaults->{$config_text_num}['itemid'] = $draftid_editor;
-                $defaults->{$config_text_num}['format'] = FORMAT_HTML;
-                print_object($defaults);
-                // Remove the text from the config so that parent::set_data doesn't empty it.
-                print_object($this->block->config);
-                unset($this->block->config->${'text' . $idx});
-                print_object($this->block->config);
-            }
+            //foreach ($this->block->config->text as $idx => $text) {
+            //    ${'text' . $idx} = $text;
+            //    $config_text_num = 'config_text' . $idx;
+            //    $draftid_editor = file_get_submitted_draft_itemid($config_text_num);
+            //
+            //    $defaults->{$config_text_num}['text'] =
+            //            file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', ('content' . $idx), 0,
+            //                    array('subdirs' => true), $text);
+            //    $defaults->{$config_text_num}['itemid'] = $draftid_editor;
+            //    $defaults->{$config_text_num}['format'] = FORMAT_HTML;
+            //    print_object($defaults);
+            //    // Remove the text from the config so that parent::set_data doesn't empty it.
+            //    print_object($this->block->config);
+            //    unset($this->block->config->${'text' . $idx});
+            //    print_object($this->block->config);
+            //}
             // Loads any already added files to the first feature tool block's draft editor
-            //if (!empty($this->block->config->text1)) {
-            //    $text1 = $this->block->config->text1;
-            //    $draftid_editor1 = file_get_submitted_draft_itemid('config_text0');
-            //    $defaults->config_text0['text'] =
-            //            file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content0', 0,
-            //                    array('subdirs' => true), $text1);
-            //    $defaults->config_text0['itemid'] = $draftid_editor1;
-            //    $defaults->config_text0['format'] = FORMAT_HTML;
-            //    print_object($defaults);
-            //    // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
-            //    unset($this->block->config->text1);
-            //}
-            //// Loads any already added files to the second feature tool block's draft editor
-            //if (!empty($this->block->config->text2)) {
-            //    $text2 = $this->block->config->text2;
-            //    $draftid_editor2 = file_get_submitted_draft_itemid('config_text1');
-            //    $defaults->config_text1['text'] =
-            //            file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content1', 0,
-            //                    array('subdirs' => true), $text2);
-            //    $defaults->config_text1['itemid'] = $draftid_editor2;
-            //    $defaults->config_text1['format'] = FORMAT_HTML;
-            //    print_object($defaults);
-            //    // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
-            //    unset($this->block->config->text2);
-            //}
-            //// Loads any already added files to the third feature tool block's draft editor
-            //if (!empty($this->block->config->text3)) {
-            //    $text3 = $this->block->config->text3;
-            //    $draftid_editor3 = file_get_submitted_draft_itemid('config_text2');
-            //    $defaults->config_text2['text'] =
-            //            file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content2', 0,
-            //                    array('subdirs' => true), $text3);
-            //    $defaults->config_text2['itemid'] = $draftid_editor3;
-            //    $defaults->config_text2['format'] = FORMAT_HTML;
-            //    print_object($defaults);
-            //    // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
-            //    unset($this->block->config->text3);
-            //}
+            if (!empty($this->block->config->text1)) {
+                $text1 = $this->block->config->text1;
+                $draftid_editor1 = file_get_submitted_draft_itemid('config_text0');
+                $defaults->config_text0['text'] =
+                        file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content0', 0,
+                                array('subdirs' => true), $text1);
+                $defaults->config_text0['itemid'] = $draftid_editor1;
+                $defaults->config_text0['format'] = FORMAT_HTML;
+                // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
+                unset($this->block->config->text1);
+            }
+            // Loads any already added files to the second feature tool block's draft editor
+            if (!empty($this->block->config->text2)) {
+                $text2 = $this->block->config->text2;
+                $draftid_editor2 = file_get_submitted_draft_itemid('config_text1');
+                $defaults->config_text1['text'] =
+                        file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content1', 0,
+                                array('subdirs' => true), $text2);
+                $defaults->config_text1['itemid'] = $draftid_editor2;
+                $defaults->config_text1['format'] = FORMAT_HTML;
+                // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
+                unset($this->block->config->text2);
+            }
+            // Loads any already added files to the third feature tool block's draft editor
+            if (!empty($this->block->config->text3)) {
+                $text3 = $this->block->config->text3;
+                $draftid_editor3 = file_get_submitted_draft_itemid('config_text2');
+                $defaults->config_text2['text'] =
+                        file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content2', 0,
+                                array('subdirs' => true), $text3);
+                $defaults->config_text2['itemid'] = $draftid_editor3;
+                $defaults->config_text2['format'] = FORMAT_HTML;
+                // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
+                unset($this->block->config->text3);
+            }
             // Loads the subtitle set for the first featured tool block if it exists
             if (!empty($this->block->config->subtitle1)) {
                 $subtitle1 = $this->block->config->subtitle1;

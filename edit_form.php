@@ -138,7 +138,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $text1 = $this->block->config->text1;
                 $draftid_editor1 = file_get_submitted_draft_itemid('config_text1');
                 $defaults->config_text1['text'] =
-                        file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                        file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content0', 0,
                                 array('subdirs' => true), $text1);
                 $defaults->config_text1['itemid'] = $draftid_editor1;
                 $defaults->config_text1['format'] = FORMAT_HTML;
@@ -150,7 +150,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $text2 = $this->block->config->text2;
                 $draftid_editor2 = file_get_submitted_draft_itemid('config_text2');
                 $defaults->config_text2['text'] =
-                        file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                        file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content1', 0,
                                 array('subdirs' => true), $text2);
                 $defaults->config_text2['itemid'] = $draftid_editor2;
                 $defaults->config_text2['format'] = FORMAT_HTML;
@@ -162,7 +162,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $text3 = $this->block->config->text3;
                 $draftid_editor3 = file_get_submitted_draft_itemid('config_text3');
                 $defaults->config_text3['text'] =
-                        file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,
+                        file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content2', 0,
                                 array('subdirs' => true), $text3);
                 $defaults->config_text3['itemid'] = $draftid_editor3;
                 $defaults->config_text3['format'] = FORMAT_HTML;

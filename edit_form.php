@@ -158,19 +158,19 @@ class block_featured_tool_edit_form extends block_edit_form {
                 }
             }
             // Loads an already added thumbnail to the respective feature tool block's file picker
-            foreach ($this->block->config->thumbnail as $index => $thumbnail) {
-                if (!empty($thumbnail)) {
-                    $thumbKey = 'thumbnail' . $index;
-                    ${'thumbnail' . $index} = $thumbnail;
-                    $draftIdEditor = file_get_submitted_draft_itemid('config_' . $thumbKey);
-
-                    file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'thumbnail' . $index, 0,
-                            $thumbnailoptions, $thumbnail);
-
-                    // Remove the text from the config so that parent::set_data doesn't empty it.
-                    unset($this->block->config->$thumbKey);
-                }
-            }
+            //foreach ($this->block->config->thumbnail as $index => $thumbnail) {
+            //    if (!empty($thumbnail)) {
+            //        $thumbKey = 'thumbnail' . $index;
+            //        ${'thumbnail' . $index} = $thumbnail;
+            //        $draftIdEditor = file_get_submitted_draft_itemid('config_' . $thumbKey);
+            //
+            //        file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'thumbnail' . $index, 0,
+            //                $thumbnailoptions, $thumbnail);
+            //
+            //        // Remove the text from the config so that parent::set_data doesn't empty it.
+            //        unset($this->block->config->$thumbKey);
+            //    }
+            //}
         }
 
         parent::set_data($defaults);

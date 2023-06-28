@@ -240,14 +240,15 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         // Resets the preserved editor text variables
         if (isset($text0)) {
-            print_object($this->block->config);
+            print_object($text0);
             $this->block->config->text0 = $text0;
         }
         if (isset($text1)) {
-            print_object($this->block->config);
+            print_object($text1);
             $this->block->config->text1 = $text1;
         }
         if (isset($text2)) {
+            print_object($text2);
             $this->block->config->text2 = $text2;
         }
 

@@ -133,7 +133,8 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads any already added files to the respective feature tool block's draft editor
             foreach ($this->block->config->text as $index => $textInfo) {
                 $text = $textInfo['content'];
-                if (!empty($text)) {
+                $canonIdx = $textInfo['idx'];
+                if (!empty($text) && $canonIdx === $index) {
                     $textKey = 'text' . $index;
                     ${'text' . $index} = $text;
                     $draftIdEditor = file_get_submitted_draft_itemid('config_' . $textKey);
@@ -151,7 +152,8 @@ class block_featured_tool_edit_form extends block_edit_form {
             // Loads the subtitle set for a respective featured tool block if it exists
             foreach ($this->block->config->subtitle as $index => $subtitleInfo) {
                 $subtitle = $subtitleInfo['content'];
-                if (!empty($subtitle)) {
+                $canonIdx = $textInfo['idx'];
+                if (!empty($subtitle) && $canonIdx === $index) {
                     $subKey = 'subtitle' . $index;
                     ${'subtitle' . $index} = $subtitle;
                     $defaults->{'config_' . $subKey} = format_string($subtitle, true, $this->page->context);

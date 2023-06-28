@@ -89,7 +89,7 @@ class block_featured_tool extends block_base {
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
                 // Stores the pluginfile link back into the respective config->text position
                 $temp_text = "text" . ($randInt+1);
-                $this->config->$temp_text = $selectedBlock;
+                //$this->config->$temp_text = $selectedBlock;
                 $format = $this->config->format;
 
                 $fs = get_file_storage();

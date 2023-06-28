@@ -131,7 +131,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         // If there are any thumbnails uploaded, load them into the respective thumbnail variables
         if (!empty($this->block->config)) {
             // Loads any already added files to the respective feature tool block's draft editor
-            foreach ($this->block->config->text as $index => $text) {
+            foreach ($this->block->config->text as $index => $textInfo) {
+                $text = $textInfo['content'];
                 if (!empty($text)) {
                     $textKey = 'text' . $index;
                     ${'text' . $index} = $text;
@@ -148,7 +149,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 }
             }
             // Loads the subtitle set for a respective featured tool block if it exists
-            foreach ($this->block->config->subtitle as $index => $subtitle) {
+            foreach ($this->block->config->subtitle as $index => $subtitleInfo) {
+                $subtitle = $subtitleInfo['content'];
                 if (!empty($subtitle)) {
                     $subKey = 'subtitle' . $index;
                     ${'subtitle' . $index} = $subtitle;
@@ -157,20 +159,6 @@ class block_featured_tool_edit_form extends block_edit_form {
                     unset($this->block->config->$subKey);
                 }
             }
-            // Loads an already added thumbnail to the respective feature tool block's file picker
-            //foreach ($this->block->config->thumbnail as $index => $thumbnail) {
-            //    if (!empty($thumbnail)) {
-            //        $thumbKey = 'thumbnail' . $index;
-            //        ${'thumbnail' . $index} = $thumbnail;
-            //        $draftIdEditor = file_get_submitted_draft_itemid('config_' . $thumbKey);
-            //
-            //        file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'thumbnail' . $index, 0,
-            //                $thumbnailoptions, $thumbnail);
-            //
-            //        // Remove the text from the config so that parent::set_data doesn't empty it.
-            //        unset($this->block->config->$thumbKey);
-            //    }
-            //}
         }
 
         parent::set_data($defaults);
@@ -203,16 +191,5 @@ class block_featured_tool_edit_form extends block_edit_form {
         if (isset($subtitle3)) {
             $this->block->config->subtitle3 = $subtitle3;
         }
-
-        //// Resets the preserved thumbnails
-        //if (isset($thumbnail1)) {
-        //    $this->block->config->thumbnail1 = $thumbnail1;
-        //}
-        //if (isset($thumbnail2)) {
-        //    $this->block->config->thumbnail2 = $thumbnail2;
-        //}
-        //if (isset($thumbnail3)) {
-        //    $this->block->config->thumbnail3 = $thumbnail3;
-        //}
     }
 }

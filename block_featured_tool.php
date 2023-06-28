@@ -82,9 +82,9 @@ class block_featured_tool extends block_base {
                 $max = sizeof($this->config->text);
                 $randInt = random_int(0, $max-1);
                 // Selects a random block based on the random int
-                $selectedBlock = $this->config->text[$randInt];
+                $selectedBlock = $this->config->text[$randInt]['content'];
                 // Grabs that block's subtitle
-                $selectedBlockSubtitle = $this->config->subtitle[$randInt];
+                $selectedBlockSubtitle = $this->config->subtitle[$randInt]['content'];
 
                 $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
                 // Stores the pluginfile link back into the respective config->text position
@@ -146,18 +146,18 @@ class block_featured_tool extends block_base {
         $data->thumbnail = array($data->thumbnail0, $data->thumbnail1, $data->thumbnail2);
 
         // Save only area files that have something in them and store them
-        $config->text = array();
-        $config->subtitle = array();
+        $config->text = array(array());
+        $config->subtitle = array(array());
         foreach ($data->text as $idx => $text) {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array
                 $key = sizeof($config->text);
                 // Move embedded files into a proper filearea and adjust HTML links to match
-                $config->text[$key] = file_save_draft_area_files($text['itemid'], $sitecontext->id,
+                $config->text[$key]['content'] = file_save_draft_area_files($text['itemid'], $sitecontext->id,
                         'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle
-                $config->subtitle[$key] = !empty($data->subtitle[$idx]) ? $data->subtitle[$idx] : "Announcement";
+                $config->subtitle[$key]['content'] = !empty($data->subtitle[$idx]) ? $data->subtitle[$idx] : "Announcement";
                 // If a thumbnail exists for this block, move the thumbnail into a proper filearea and adjust HTML link to match
                 if (!empty($data->thumbnail[$idx])) {
                     $thumbnail = $data->thumbnail[$idx];

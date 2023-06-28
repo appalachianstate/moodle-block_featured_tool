@@ -140,7 +140,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                                 array('subdirs' => true), $text);
                 $defaults->{$config_text_num}['itemid'] = $draftid_editor;
                 $defaults->{$config_text_num}['format'] = FORMAT_HTML;
-
+                print_object($defaults);
                 // Remove the text from the config so that parent::set_data doesn't empty it.
                 print_object($this->block->config);
                 unset($this->block->config->${'text' . $idx});

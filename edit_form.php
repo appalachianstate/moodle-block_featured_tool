@@ -147,8 +147,8 @@ class block_featured_tool_edit_form extends block_edit_form {
             //    print_object($this->block->config);
             //}
             // Loads any already added files to the first feature tool block's draft editor
-            if (!empty($this->block->config->text1)) {
-                $text1 = $this->block->config->text1;
+            if (!empty($this->block->config->text0)) {
+                $text1 = $this->block->config->text0;
                 $draftid_editor1 = file_get_submitted_draft_itemid('config_text0');
                 $defaults->config_text0['text'] =
                         file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content0', 0,
@@ -156,11 +156,11 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $defaults->config_text0['itemid'] = $draftid_editor1;
                 $defaults->config_text0['format'] = FORMAT_HTML;
                 // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
-                unset($this->block->config->text1);
+                unset($this->block->config->text0);
             }
             // Loads any already added files to the second feature tool block's draft editor
-            if (!empty($this->block->config->text2)) {
-                $text2 = $this->block->config->text2;
+            if (!empty($this->block->config->text1)) {
+                $text2 = $this->block->config->text1;
                 $draftid_editor2 = file_get_submitted_draft_itemid('config_text1');
                 $defaults->config_text1['text'] =
                         file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content1', 0,
@@ -168,11 +168,11 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $defaults->config_text1['itemid'] = $draftid_editor2;
                 $defaults->config_text1['format'] = FORMAT_HTML;
                 // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
-                unset($this->block->config->text2);
+                unset($this->block->config->text1);
             }
             // Loads any already added files to the third feature tool block's draft editor
-            if (!empty($this->block->config->text3)) {
-                $text3 = $this->block->config->text3;
+            if (!empty($this->block->config->text2)) {
+                $text3 = $this->block->config->text2;
                 $draftid_editor3 = file_get_submitted_draft_itemid('config_text2');
                 $defaults->config_text2['text'] =
                         file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content2', 0,
@@ -180,7 +180,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 $defaults->config_text2['itemid'] = $draftid_editor3;
                 $defaults->config_text2['format'] = FORMAT_HTML;
                 // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
-                unset($this->block->config->text3);
+                unset($this->block->config->text2);
             }
             // Loads the subtitle set for the first featured tool block if it exists
             if (!empty($this->block->config->subtitle1)) {

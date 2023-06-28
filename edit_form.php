@@ -139,7 +139,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                                 array('subdirs' => true), $text);
                 $defaults->$editor_spec['itemid'] = $draftid_editor;
                 $defaults->$editor_spec['format'] = FORMAT_HTML;
-                print_object(${'text' . $idx});
+
                 // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
                 unset($this->block->config->${'text'.$idx});
             }
@@ -240,9 +240,11 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         // Resets the preserved editor text variables
         if (isset($text0)) {
+            print_object($this->block->config);
             $this->block->config->text0 = $text0;
         }
         if (isset($text1)) {
+            print_object($this->block->config);
             $this->block->config->text1 = $text1;
         }
         if (isset($text2)) {

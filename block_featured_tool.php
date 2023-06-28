@@ -139,7 +139,7 @@ class block_featured_tool extends block_base {
         );
 
         // Generates an array of the text fields
-        $data->text = array($data->text1, $data->text2, $data->text3);
+        $data->text = array($data->text0, $data->text1, $data->text2);
         // Generates an array of the subtitles
         $data->subtitle = array($data->subtitle1, $data->subtitle2, $data->subtitle3);
         // Generates an array of thumbnails

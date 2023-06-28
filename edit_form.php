@@ -110,29 +110,14 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         $sitecontext = context_system::instance();
 
-        $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
-        $thumbnailoptions = array(
-                'subdirs' => 0,
-                'maxbytes' => 104857600,
-                'areamaxbytes' => 104857600,
-                'maxfiles' => 1,
-                'accepted_types' => $acceptedtypes,
-                'context' => $sitecontext,
-                'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
-        );
-        $editoroptions = array(
-                'maxfiles' => EDITOR_UNLIMITED_FILES,
-                'noclean' => true,
-                'trusttext' => false,
-                'context' => $sitecontext,
-        );
         // If there is text in the block's config_text, load it in the respective text variable
         // If there are any subtitles set, load them into respective subtitle variables
-        // If there are any thumbnails uploaded, load them into the respective thumbnail variables
         if (!empty($this->block->config)) {
             // Loads any already added files to the respective feature tool block's draft editor
             foreach ($this->block->config->text as $index => $textInfo) {
+                // Grabs the actual editor text
                 $text = $textInfo['content'];
+                // Grabs the canonical index set during saving
                 $canonIdx = $textInfo['idx'];
                 if (!empty($text) && $canonIdx === $index) {
                     $textKey = 'text' . $index;
@@ -151,7 +136,9 @@ class block_featured_tool_edit_form extends block_edit_form {
             }
             // Loads the subtitle set for a respective featured tool block if it exists
             foreach ($this->block->config->subtitle as $index => $subtitleInfo) {
+                // Grabs the actual subtitle text
                 $subtitle = $subtitleInfo['content'];
+                // Grabs the canonical index set during saving
                 $canonIdx = $textInfo['idx'];
                 if (!empty($subtitle) && $canonIdx === $index) {
                     $subKey = 'subtitle' . $index;

@@ -241,17 +241,17 @@ class block_featured_tool_edit_form extends block_edit_form {
         }
 
         // Resets the preserved editor text variables
-        if (isset($texts[0])) {
-            print_object($texts[0]);
-            $this->block->config->text0 = $texts[0];
+        if (isset($text0)) {
+            print_object($text0);
+            $this->block->config->text0 = $text0;
         }
-        if (isset($texts[1])) {
-            print_object($texts[1]);
-            $this->block->config->text1 = $texts[1];
+        if (isset($text1)) {
+            print_object($text1);
+            $this->block->config->text1 = $text1;
         }
-        if (isset($texts[2])) {
-            print_object($texts[2]);
-            $this->block->config->text2 = $texts[2];
+        if (isset($text2)) {
+            print_object($text2);
+            $this->block->config->text2 = $text2;
         }
 
         // Resets the preserved subtitles

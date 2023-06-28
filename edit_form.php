@@ -59,10 +59,10 @@ class block_featured_tool_edit_form extends block_edit_form {
             <h4>First Featured Tool</h4>
         ');
 
-        $mform->addElement('text', 'config_subtitle1', get_string('featured_tool:subtitle1', 'block_featured_tool'));
-        $mform->setType('config_subtitle1', PARAM_TEXT);
+        $mform->addElement('text', 'config_subtitle0', get_string('featured_tool:subtitle1', 'block_featured_tool'));
+        $mform->setType('config_subtitle0', PARAM_TEXT);
 
-        $mform->addElement('filemanager', 'config_thumbnail1', get_string('featured_tool:thumbnail1', 'block_featured_tool'), null, $thumbnailoptions);
+        $mform->addElement('filemanager', 'config_thumbnail0', get_string('featured_tool:thumbnail1', 'block_featured_tool'), null, $thumbnailoptions);
 
         $mform->addElement('editor', 'config_text0', get_string('featured_tool:media1', 'block_featured_tool'), null,
                 $editoroptions);
@@ -74,10 +74,10 @@ class block_featured_tool_edit_form extends block_edit_form {
             <h4>Second Featured Tool</h4>
         ');
 
-        $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle2', 'block_featured_tool'));
-        $mform->setType('config_subtitle2', PARAM_TEXT);
+        $mform->addElement('text', 'config_subtitle1', get_string('featured_tool:subtitle2', 'block_featured_tool'));
+        $mform->setType('config_subtitle1', PARAM_TEXT);
 
-        $mform->addElement('filemanager', 'config_thumbnail2', get_string('featured_tool:thumbnail2', 'block_featured_tool'), null, $thumbnailoptions);
+        $mform->addElement('filemanager', 'config_thumbnail1', get_string('featured_tool:thumbnail2', 'block_featured_tool'), null, $thumbnailoptions);
 
         $mform->addElement('editor', 'config_text1', get_string('featured_tool:media2', 'block_featured_tool'), null,
                 $editoroptions);
@@ -89,10 +89,10 @@ class block_featured_tool_edit_form extends block_edit_form {
             <h4>Third Featured Tool</h4>
         ');
 
-        $mform->addElement('text', 'config_subtitle3', get_string('featured_tool:subtitle3', 'block_featured_tool'));
-        $mform->setType('config_subtitle3', PARAM_TEXT);
+        $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle3', 'block_featured_tool'));
+        $mform->setType('config_subtitle2', PARAM_TEXT);
 
-        $mform->addElement('filemanager', 'config_thumbnail3', get_string('featured_tool:thumbnail3', 'block_featured_tool'), null, $thumbnailoptions);
+        $mform->addElement('filemanager', 'config_thumbnail2', get_string('featured_tool:thumbnail3', 'block_featured_tool'), null, $thumbnailoptions);
 
         $mform->addElement('editor', 'config_text2', get_string('featured_tool:media3', 'block_featured_tool'), null,
                 $editoroptions);
@@ -132,8 +132,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         if (!empty($this->block->config)) {
             // Loads any already added files to the respective feature tool block's draft editor
             foreach ($this->block->config->text as $index => $text) {
-                $textKey = 'text' . $index;
                 if (!empty($text)) {
+                    $textKey = 'text' . $index;
                     ${'text' . $index} = $text;
                     $draftIdEditor = file_get_submitted_draft_itemid('config_' . $textKey);
 
@@ -147,56 +147,29 @@ class block_featured_tool_edit_form extends block_edit_form {
                     unset($this->block->config->$textKey);
                 }
             }
-            // Loads the subtitle set for the first featured tool block if it exists
-            if (!empty($this->block->config->subtitle1)) {
-                $subtitle1 = $this->block->config->subtitle1;
-                $defaults->config_subtitle1 = format_string($subtitle1, true, $this->page->context);
-                // Remove the subtitle from the config so that parent::set_data doesn't set it.
-                unset($this->block->config->subtitle1);
+            // Loads the subtitle set for a respective featured tool block if it exists
+            foreach ($this->block->config->subtitle as $index => $subtitle) {
+                if (!empty($subtitle)) {
+                    $subKey = 'subtitle' . $index;
+                    ${'subtitle' . $index} = $subtitle;
+                    $defaults->{'config_' . $subKey} = format_string($subtitle, true, $this->page->context);
+                    // Remove the subtitle from the config so that parent::set_data doesn't set it.
+                    unset($this->block->config->$subKey);
+                }
             }
-            // Loads the subtitle set for the second featured tool block if it exists
-            if (!empty($this->block->config->subtitle2)) {
-                $subtitle2 = $this->block->config->subtitle2;
-                $defaults->config_subtitle2 = format_string($subtitle2, true, $this->page->context);
-                // Remove the subtitle from the config so that parent::set_data doesn't set it.
-                unset($this->block->config->subtitle2);
-            }
-            // Loads the subtitle set for the third featured tool block if it exists
-            if (!empty($this->block->config->subtitle3)) {
-                $subtitle3 = $this->block->config->subtitle3;
-                $defaults->config_subtitle3 = format_string($subtitle3, true, $this->page->context);
-                // Remove the subtitle from the config so that parent::set_data doesn't set it.
-                unset($this->block->config->subtitle3);
-            }
-            // Loads an already added thumbnail to the first feature tool block's file picker
-            if (!empty($this->block->config->thumbnail1)) {
-                $thumbnail1 = $this->block->config->thumbnail1;
-                $draftid_thumbnail1 = file_get_submitted_draft_itemid('config_thumbnail1');
-                file_prepare_draft_area($draftid_thumbnail1, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
-                        $thumbnailoptions, $thumbnail1);
-                $defaults->config_thumbnail1 = $draftid_thumbnail1;
-                // Remove the thumbnail from the config so that parent::set_data doesn't set it.
-                unset($this->block->config->thumbnail1);
-            }
-            // Loads an already added thumbnail to the second feature tool block's file picker
-            if (!empty($this->block->config->thumbnail2)) {
-                $thumbnail2 = $this->block->config->thumbnail2;
-                $draftid_thumbnail2 = file_get_submitted_draft_itemid('config_thumbnail2');
-                file_prepare_draft_area($draftid_thumbnail2, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
-                        $thumbnailoptions, $thumbnail2);
-                $defaults->config_thumbnail2 = $draftid_thumbnail2;
-                // Remove the thumbnail from the config so that parent::set_data doesn't set it.
-                unset($this->block->config->thumbnail2);
-            }
-            // Loads an already added thumbnail to the third feature tool block's file picker
-            if (!empty($this->block->config->thumbnail3)) {
-                $thumbnail3 = $this->block->config->thumbnail3;
-                $draftid_thumbnail3 = file_get_submitted_draft_itemid('config_thumbnail3');
-                file_prepare_draft_area($draftid_thumbnail3, $sitecontext->id, 'block_featured_tool', 'thumbnail', 0,
-                        $thumbnailoptions, $thumbnail3);
-                $defaults->config_thumbnail3 = $draftid_thumbnail3;
-                // Remove the thumbnail from the config so that parent::set_data doesn't set it.
-                unset($this->block->config->thumbnail3);
+            // Loads an already added thumbnail to the respective feature tool block's file picker
+            foreach ($this->block->config->thumbnail as $index => $thumbnail) {
+                if (!empty($thumbnail)) {
+                    $thumbKey = 'thumbnail' . $index;
+                    ${'thumbnail' . $index} = $thumbnail;
+                    $draftIdEditor = file_get_submitted_draft_itemid('config_' . $thumbKey);
+
+                    file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'thumbnail' . $index, 0,
+                            $thumbnailoptions, $thumbnail);
+
+                    // Remove the text from the config so that parent::set_data doesn't empty it.
+                    unset($this->block->config->$thumbKey);
+                }
             }
         }
 

@@ -134,8 +134,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         $text3 = '';
         if (!empty($this->block->config)) {
             // Loads any already added files to the first feature tool block's draft editor
-            if (!empty($this->block->data->text1)) {
-                $text1 = $this->block->data->text1;
+            if (!empty($this->block->config->text1)) {
+                $text1 = $this->block->config->text1;
                 $draftid_editor1 = file_get_submitted_draft_itemid('config_text1');
                 $defaults->config_text1['text'] =
                         file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content', 0,
@@ -146,8 +146,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text1);
             }
             // Loads any already added files to the second feature tool block's draft editor
-            if (!empty($this->block->data->text2)) {
-                $text2 = $this->block->data->text2;
+            if (!empty($this->block->config->text2)) {
+                $text2 = $this->block->config->text2;
                 $draftid_editor2 = file_get_submitted_draft_itemid('config_text2');
                 $defaults->config_text2['text'] =
                         file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content', 0,
@@ -158,8 +158,8 @@ class block_featured_tool_edit_form extends block_edit_form {
                 unset($this->block->config->text2);
             }
             // Loads any already added files to the third feature tool block's draft editor
-            if (!empty($this->block->data->text3)) {
-                $text3 = $this->block->data->text3;
+            if (!empty($this->block->config->text3)) {
+                $text3 = $this->block->config->text3;
                 $draftid_editor3 = file_get_submitted_draft_itemid('config_text3');
                 $defaults->config_text3['text'] =
                         file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content', 0,

@@ -152,12 +152,10 @@ class block_featured_tool extends block_base {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array
                 $key = sizeof($config->text);
+                $temp_text = "text" . $idx;
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $config->text[$key] = file_save_draft_area_files($text['itemid'], $sitecontext->id,
                         'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']);
-
-                $temp_text = "text" . ($idx);
-                $config->$temp_text = $config->text[$key];
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
                 // Otherwise, it stores a default subtitle
                 $config->subtitle[$key] = !empty($data->subtitle[$idx]) ? $data->subtitle[$idx] : "Announcement";

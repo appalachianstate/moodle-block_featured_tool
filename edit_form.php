@@ -130,57 +130,24 @@ class block_featured_tool_edit_form extends block_edit_form {
         // If there are any subtitles set, load them into respective subtitle variables
         // If there are any thumbnails uploaded, load them into the respective thumbnail variables
         if (!empty($this->block->config)) {
+            // Loads any already added files to the respective feature tool block's draft editor
             foreach ($this->block->config->text as $index => $text) {
                 $textKey = 'text' . $index;
                 ${'text' . $index} = $text;
 
                 if (!empty($text)) {
                     $draftIdEditor = file_get_submitted_draft_itemid('config_' . $textKey);
+
                     $defaults->{'config_' . $textKey}['text'] =
                             file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'content' . $index, 0,
                                     array('subdirs' => true), $text);
                     $defaults->{'config_' . $textKey}['itemid'] = $draftIdEditor;
                     $defaults->{'config_' . $textKey}['format'] = FORMAT_HTML;
-                    // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
+
+                    // Remove the text from the config so that parent::set_data doesn't empty it.
                     unset($this->block->config->$textKey);
                 }
             }
-            // Loads any already added files to the first feature tool block's draft editor
-            //if (!empty($this->block->config->text0)) {
-            //    $text1 = $this->block->config->text0;
-            //    $draftid_editor1 = file_get_submitted_draft_itemid('config_text0');
-            //    $defaults->config_text0['text'] =
-            //            file_prepare_draft_area($draftid_editor1, $sitecontext->id, 'block_featured_tool', 'content0', 0,
-            //                    array('subdirs' => true), $text1);
-            //    $defaults->config_text0['itemid'] = $draftid_editor1;
-            //    $defaults->config_text0['format'] = FORMAT_HTML;
-            //    // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
-            //    unset($this->block->config->text0);
-            //}
-            //// Loads any already added files to the second feature tool block's draft editor
-            //if (!empty($this->block->config->text1)) {
-            //    $text2 = $this->block->config->text1;
-            //    $draftid_editor2 = file_get_submitted_draft_itemid('config_text1');
-            //    $defaults->config_text1['text'] =
-            //            file_prepare_draft_area($draftid_editor2, $sitecontext->id, 'block_featured_tool', 'content1', 0,
-            //                    array('subdirs' => true), $text2);
-            //    $defaults->config_text1['itemid'] = $draftid_editor2;
-            //    $defaults->config_text1['format'] = FORMAT_HTML;
-            //    // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
-            //    unset($this->block->config->text1);
-            //}
-            //// Loads any already added files to the third feature tool block's draft editor
-            //if (!empty($this->block->config->text2)) {
-            //    $text3 = $this->block->config->text2;
-            //    $draftid_editor3 = file_get_submitted_draft_itemid('config_text2');
-            //    $defaults->config_text2['text'] =
-            //            file_prepare_draft_area($draftid_editor3, $sitecontext->id, 'block_featured_tool', 'content2', 0,
-            //                    array('subdirs' => true), $text3);
-            //    $defaults->config_text2['itemid'] = $draftid_editor3;
-            //    $defaults->config_text2['format'] = FORMAT_HTML;
-            //    // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
-            //    unset($this->block->config->text2);
-            //}
             // Loads the subtitle set for the first featured tool block if it exists
             if (!empty($this->block->config->subtitle1)) {
                 $subtitle1 = $this->block->config->subtitle1;
@@ -234,7 +201,6 @@ class block_featured_tool_edit_form extends block_edit_form {
             }
         }
 
-        print_object($defaults);
         parent::set_data($defaults);
         // Restore variables
         if (!isset($this->block->config)) {
@@ -273,6 +239,5 @@ class block_featured_tool_edit_form extends block_edit_form {
         if (isset($thumbnail3)) {
             $this->block->config->thumbnail3 = $thumbnail3;
         }
-        print_object($this->block->config);
     }
 }

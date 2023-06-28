@@ -147,8 +147,8 @@ class block_featured_tool extends block_base {
         $data->thumbnail = array($data->thumbnail0, $data->thumbnail1, $data->thumbnail2);
 
         // Save only area files that have something in them and store them
-        $config->text = array();
-        $config->subtitle = array();
+        $config->text = array(array());
+        $config->subtitle = array(array());
         foreach ($data->text as $idx => $text) {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array

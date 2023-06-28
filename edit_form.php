@@ -130,20 +130,20 @@ class block_featured_tool_edit_form extends block_edit_form {
         // If there are any subtitles set, load them into respective subtitle variables
         // If there are any thumbnails uploaded, load them into the respective thumbnail variables
         if (!empty($this->block->config)) {
-            foreach ($this->block->config->text as $idx => $text) {
-                $config_text_num = 'config_text' . $idx;
-                $draftid_editor = file_get_submitted_draft_itemid($config_text_num);
+            $defaultTexts = ['text0', 'text1', 'text2'];
 
-                $config = array(
-                        'text' => file_prepare_draft_area($draftid_editor, $sitecontext->id, 'block_featured_tool', 'content' . $idx, 0, array('subdirs' => true), $text),
-                        'itemid' => $draftid_editor,
-                        'format' => FORMAT_HTML
-                );
-
-                $defaults->{$config_text_num} = $config;
-
-                // Remove the text from the config so that parent::set_data doesn't empty it.
-                unset($this->block->config->text[$idx]);
+            foreach ($defaultTexts as $index => $textKey) {
+                if (!empty($this->block->config->$textKey)) {
+                    $text = $this->block->config->$textKey;
+                    $draftIdEditor = file_get_submitted_draft_itemid('config_' . $textKey);
+                    $defaults->{'config_' . $textKey}['text'] =
+                            file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'content' . $index, 0,
+                                    array('subdirs' => true), $text);
+                    $defaults->{'config_' . $textKey}['itemid'] = $draftIdEditor;
+                    $defaults->{'config_' . $textKey}['format'] = FORMAT_HTML;
+                    // Remove the thumbnail from the config so that parent::set_data doesn't empty it.
+                    unset($this->block->config->$textKey);
+                }
             }
             // Loads any already added files to the first feature tool block's draft editor
             //if (!empty($this->block->config->text0)) {

@@ -108,6 +108,7 @@ class block_featured_tool_edit_form extends block_edit_form {
      */
     function set_data($defaults) {
 
+        print_object($defaults);
         $sitecontext = context_system::instance();
 
         $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');

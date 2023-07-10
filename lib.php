@@ -17,10 +17,6 @@
 /**
  * Form for editing featured tool block instances.
  *
- * @copyright 2023 Derek Wilson
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @package   block_featured_tool
- * @category  files
  * @param stdClass $course course object
  * @param stdClass $birecord_or_cm block instance record
  * @param stdClass $context context object
@@ -29,16 +25,22 @@
  * @param bool $forcedownload whether or not force download
  * @param array $options additional options affecting the file serving
  * @return bool
+ * @copyright 2023 Derek Wilson
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   block_featured_tool
+ * @category  files
  */
-function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $filearea, $args, $forcedownload,
+        array $options = array()) {
 
     $fs = get_file_storage();
 
     $filename = array_pop($args);
-    $filepath = $args ? '/'.implode('/', $args).'/' : '/';
+    $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
 
     $sitecontext = context_system::instance();
-    if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', $filearea, 0, $filepath, $filename) or $file->is_directory()) {
+    if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', $filearea, 0, $filepath, $filename) or
+            $file->is_directory()) {
         send_file_not_found();
     }
 

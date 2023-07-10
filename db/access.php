@@ -27,28 +27,28 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
 
-    'block/featured_tool:myaddinstance' => array(
-            'riskbitmask' => RISK_SPAM | RISK_XSS,
+        'block/featured_tool:myaddinstance' => array(
+                'riskbitmask' => RISK_SPAM | RISK_XSS,
 
-            'captype' => 'write',
-            'contextlevel' => CONTEXT_BLOCK,
-            'archetypes' => array(
-                    'editingteacher' => CAP_ALLOW,
-                    'manager' => CAP_ALLOW
-            ),
+                'captype' => 'write',
+                'contextlevel' => CONTEXT_BLOCK,
+                'archetypes' => array(
+                        'editingteacher' => CAP_ALLOW,
+                        'manager' => CAP_ALLOW
+                ),
 
-            'clonepermissionsfrom' => 'moodle/site:manageblocks'
-    ),
+                'clonepermissionsfrom' => 'moodle/site:manageblocks'
+        ),
 
-    'block/featured_tool:addinstance' => array(
-            'riskbitmask' => RISK_SPAM | RISK_XSS,
+        'block/featured_tool:addinstance' => array(
+                'riskbitmask' => RISK_SPAM | RISK_XSS,
 
-            'captype' => 'write',
-            'contextlevel' => CONTEXT_BLOCK,
-            'archetypes' => array(
-                    'manager' => CAP_ALLOW
-            ),
+                'captype' => 'write',
+                'contextlevel' => CONTEXT_BLOCK,
+                'archetypes' => array(
+                        'manager' => CAP_ALLOW
+                ),
 
-            'clonepermissionsfrom' => 'moodle/site:manageblocks'
-    ),
+                'clonepermissionsfrom' => 'moodle/site:manageblocks'
+        ),
 ];

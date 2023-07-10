@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+use core_form\filetypes_util;
 
 /**
  * Block featured_tool is defined here.
@@ -53,8 +54,7 @@ class block_featured_tool extends block_base {
         $sitecontext = context_system::instance();
         if (has_capability('moodle/site:manageblocks', $sitecontext)) {
             $isallowed = true;
-        }
-        // If user is not an admin/manager, checks if user is a teacher in a course
+        } // If user is not an admin/manager, checks if user is a teacher in a course
         else {
             $courses = enrol_get_all_users_courses($USER->id, true);
             foreach ($courses as $course) {
@@ -80,32 +80,36 @@ class block_featured_tool extends block_base {
             if (!empty($this->config->text)) {
                 // Only blocks with text in them should be in config->text at this point
                 $max = sizeof($this->config->text);
-                $randInt = random_int(0, $max-1);
+                $randInt = random_int(0, $max - 1);
                 // Selects a random block based on the random int
                 $selectedBlock = $this->config->text[$randInt]['content'];
                 // Grabs that block's subtitle
                 $selectedBlockSubtitle = $this->config->subtitle[$randInt]['content'];
 
-                $selectedBlock = file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool', ('content' . $randInt), null);
+                $selectedBlock =
+                        file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool',
+                                ('content' . $randInt), null);
                 // Stores the pluginfile link back into the respective config->text position
                 $format = $this->config->format;
 
                 $fs = get_file_storage();
-                $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', ('thumbnail'. $randInt), false, 'filename', false);
+                $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', ('thumbnail' . $randInt), false, 'filename',
+                        false);
                 // Tries to serve the thumbnail if it exists
                 if (count($files)) {
                     // There should only ever be one file in the filearea
                     $file = reset($files);
                     // Creates a pluginfile URL for the thumbnail, since it comes from a file picker
-                    $selectedBlockThumbnail = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
-                            null, $file->get_filepath(), $file->get_filename());
+                    $selectedBlockThumbnail =
+                            moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                                    null, $file->get_filepath(), $file->get_filename());
                 }
 
                 // Creates the data array expected by the featuredcontent template
                 $data = array(
-                    "subtitle" => $selectedBlockSubtitle,
-                    "thumbnail" => $selectedBlockThumbnail ?? '',
-                    "editorhtml" => format_text($selectedBlock, $format, $filteropt),
+                        "subtitle" => $selectedBlockSubtitle,
+                        "thumbnail" => $selectedBlockThumbnail ?? '',
+                        "editorhtml" => format_text($selectedBlock, $format, $filteropt),
 
                 );
                 $this->content->text = $OUTPUT->render_from_template('block_featured_tool/featuredcontent', $data);
@@ -128,7 +132,7 @@ class block_featured_tool extends block_base {
         $config = clone($data);
 
         $sitecontext = context_system::instance();
-        $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
+        $acceptedtypes = (new filetypes_util)->normalize_file_types('.jpg,.gif,.png');
         $thumbnailoptions = array(
                 'subdirs' => 0,
                 'maxbytes' => 104857600,
@@ -156,7 +160,7 @@ class block_featured_tool extends block_base {
                 // Move embedded files into a proper filearea and adjust HTML links to match
                 $config->text[$key] = array(
                         'content' => file_save_draft_area_files($text['itemid'], $sitecontext->id,
-                'block_featured_tool', ('content' . $key), 0, array('subdirs'=>true), $text['text']),
+                                'block_featured_tool', ('content' . $key), 0, array('subdirs' => true), $text['text']),
                         'idx' => $idx,
                 );
                 // If a subtitle exists for this block, store it in the same index of the subtitle array
@@ -169,7 +173,7 @@ class block_featured_tool extends block_base {
                 if (!empty($data->thumbnail[$idx])) {
                     $thumbnail = $data->thumbnail[$idx];
                     file_save_draft_area_files($thumbnail, $sitecontext->id,
-                    'block_featured_tool', ('thumbnail' . $key), 0, $thumbnailoptions);
+                            'block_featured_tool', ('thumbnail' . $key), 0, $thumbnailoptions);
                 }
             }
         }

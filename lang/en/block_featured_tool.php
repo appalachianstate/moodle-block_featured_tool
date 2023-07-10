@@ -25,6 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['featured_tool:header1'] = 'First Featured Tool';
+$string['featured_tool:header2'] = 'Second Featured Tool';
+$string['featured_tool:header3'] = 'Third Featured Tool';
 $string['featured_tool:subtitle1'] = 'First featured tool subtitle';
 $string['featured_tool:subtitle2'] = 'Second featured tool subtitle';
 $string['featured_tool:subtitle3'] = 'Third featured tool subtitle';

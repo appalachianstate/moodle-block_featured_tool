@@ -96,12 +96,13 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->setType('config_text2', PARAM_RAW);
     }
 
-    /** Loads in existing data as form defaults.
+    /**
+     * Loads in existing data as form defaults.
      * Usually new entry defaults are stored directly in form definition (new entry form);
      * this function is used to load in data where values already exist and data is being edited (edit entry form).
-     *
      * @param $defaults
      * @return void
+     * @throws dml_exception
      */
     public function set_data($defaults) {
 

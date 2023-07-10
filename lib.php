@@ -16,19 +16,21 @@
 
 /**
  * Form for editing featured tool block instances.
- *
- * @param stdClass $course course object
- * @param stdClass $birecord_or_cm block instance record
- * @param stdClass $context context object
- * @param string $filearea file area
- * @param array $args extra arguments
- * @param bool $forcedownload whether or not force download
- * @param array $options additional options affecting the file serving
- * @return bool
  * @copyright 2023 Derek Wilson
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   block_featured_tool
  * @category  files
+ * @param $course
+ * @param $birecordorcm
+ * @param $context
+ * @param $filearea
+ * @param $args
+ * @param $forcedownload
+ * @param array $options
+ * @return void
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws moodle_exception
  */
 function block_featured_tool_pluginfile($course, $birecordorcm, $context, $filearea, $args, $forcedownload,
         array $options = array()) {

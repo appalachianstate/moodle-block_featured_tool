@@ -125,6 +125,11 @@ class block_featured_tool extends block_base {
 
     /**
      * Serialize and store config data
+     * @param $data
+     * @param $nolongerused
+     * @return void
+     * @throws coding_exception
+     * @throws dml_exception
      */
     public function instance_config_save($data, $nolongerused = false) {
 

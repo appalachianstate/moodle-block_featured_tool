@@ -59,6 +59,7 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         $mform->addElement('text', 'config_subtitle0', get_string('featured_tool:subtitle1', 'block_featured_tool'));
         $mform->setType('config_subtitle0', PARAM_TEXT);
+        $mform->addHelpButton('config_subtitle0', 'featured_tool:subtitle1', 'block_featured_tool');
 
         $mform->addElement('filemanager', 'config_thumbnail0', get_string('featured_tool:thumbnail1', 'block_featured_tool'),
                 null, $thumbnailoptions);

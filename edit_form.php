@@ -71,7 +71,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->addHelpButton('config_text0', 'featured_tool:media1', 'block_featured_tool');
 
         // Parameters for second featured tool.
-        $headerstring = '<br/><h4>' . get_string('featured_tool:header2', 'block_featured_tool') . '</h4>';
+        $mform->addElement('html', '<hr/>');
+        $headerstring = '<h4>' . get_string('featured_tool:header2', 'block_featured_tool') . '</h4>';
         $mform->addElement('html', $headerstring);
 
         $mform->addElement('text', 'config_subtitle1', get_string('featured_tool:subtitle2', 'block_featured_tool'));
@@ -88,7 +89,8 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->addHelpButton('config_text1', 'featured_tool:media2', 'block_featured_tool');
 
         // Parameters for third featured tool.
-        $headerstring = '<br/><h4>' . get_string('featured_tool:header3', 'block_featured_tool') . '</h4>';
+        $mform->addElement('html', '<hr/>');
+        $headerstring = '<h4>' . get_string('featured_tool:header3', 'block_featured_tool') . '</h4>';
         $mform->addElement('html', $headerstring);
 
         $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle3', 'block_featured_tool'));

@@ -63,10 +63,12 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         $mform->addElement('filemanager', 'config_thumbnail0', get_string('featured_tool:thumbnail1', 'block_featured_tool'),
                 null, $thumbnailoptions);
+        $mform->addHelpButton('config_thumbnail0', 'featured_tool:thumbnail1', 'block_featured_tool');
 
         $mform->addElement('editor', 'config_text0', get_string('featured_tool:media1', 'block_featured_tool'), null,
                 $editoroptions);
         $mform->setType('config_text0', PARAM_RAW);
+        $mform->addHelpButton('config_text0', 'featured_tool:media1', 'block_featured_tool');
 
         // Parameters for second featured tool.
         $headerstring = '<br/><h4>' . get_string('featured_tool:header2', 'block_featured_tool') . '</h4>';
@@ -74,13 +76,16 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         $mform->addElement('text', 'config_subtitle1', get_string('featured_tool:subtitle2', 'block_featured_tool'));
         $mform->setType('config_subtitle1', PARAM_TEXT);
+        $mform->addHelpButton('config_subtitle1', 'featured_tool:subtitle2', 'block_featured_tool');
 
         $mform->addElement('filemanager', 'config_thumbnail1', get_string('featured_tool:thumbnail2', 'block_featured_tool'),
                 null, $thumbnailoptions);
+        $mform->addHelpButton('config_thumbnail1', 'featured_tool:thumbnail2', 'block_featured_tool');
 
         $mform->addElement('editor', 'config_text1', get_string('featured_tool:media2', 'block_featured_tool'), null,
                 $editoroptions);
         $mform->setType('config_text1', PARAM_RAW);
+        $mform->addHelpButton('config_text1', 'featured_tool:media2', 'block_featured_tool');
 
         // Parameters for third featured tool.
         $headerstring = '<br/><h4>' . get_string('featured_tool:header3', 'block_featured_tool') . '</h4>';
@@ -88,13 +93,16 @@ class block_featured_tool_edit_form extends block_edit_form {
 
         $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle3', 'block_featured_tool'));
         $mform->setType('config_subtitle2', PARAM_TEXT);
+        $mform->addHelpButton('config_subtitle2', 'featured_tool:subtitle3', 'block_featured_tool');
 
         $mform->addElement('filemanager', 'config_thumbnail2', get_string('featured_tool:thumbnail3', 'block_featured_tool'),
                 null, $thumbnailoptions);
+        $mform->addHelpButton('config_thumbnail2', 'featured_tool:thumbnail3', 'block_featured_tool');
 
         $mform->addElement('editor', 'config_text2', get_string('featured_tool:media3', 'block_featured_tool'), null,
                 $editoroptions);
         $mform->setType('config_text2', PARAM_RAW);
+        $mform->addHelpButton('config_text2', 'featured_tool:media3', 'block_featured_tool');
     }
 
     /**

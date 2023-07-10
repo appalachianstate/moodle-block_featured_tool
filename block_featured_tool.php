@@ -124,9 +124,10 @@ class block_featured_tool extends block_base {
     }
 
     /**
-     * Serialize and store config data
-     * @param $data
-     * @param $nolongerused
+     * Serialize and store config data.
+     *
+     * @param array|stdClass $data
+     * @param bool $nolongerused
      * @return void
      * @throws coding_exception
      * @throws dml_exception

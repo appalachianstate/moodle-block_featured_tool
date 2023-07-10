@@ -100,7 +100,8 @@ class block_featured_tool_edit_form extends block_edit_form {
      * Loads in existing data as form defaults.
      * Usually new entry defaults are stored directly in form definition (new entry form);
      * this function is used to load in data where values already exist and data is being edited (edit entry form).
-     * @param $defaults
+     *
+     * @param array|stdClass $defaults
      * @return void
      * @throws dml_exception
      */

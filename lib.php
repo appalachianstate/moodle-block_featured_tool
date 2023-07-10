@@ -16,17 +16,18 @@
 
 /**
  * Form for editing featured tool block instances.
+ *
  * @copyright 2023 Derek Wilson
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   block_featured_tool
  * @category  files
- * @param $course
- * @param $birecordorcm
- * @param $context
- * @param $filearea
- * @param $args
- * @param $forcedownload
- * @param array $options
+ * @param stdClass $course course object
+ * @param stdClass $birecordorcm block instance record
+ * @param stdClass $context context object
+ * @param string $filearea file area
+ * @param array $args extra arguments
+ * @param bool $forcedownload whether force download
+ * @param array $options additional options affecting the file serving
  * @return void
  * @throws coding_exception
  * @throws dml_exception

@@ -30,7 +30,7 @@
  * @package   block_featured_tool
  * @category  files
  */
-function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $filearea, $args, $forcedownload,
+function block_featured_tool_pluginfile($course, $birecordorcm, $context, $filearea, $args, $forcedownload,
         array $options = array()) {
 
     $fs = get_file_storage();
@@ -39,13 +39,13 @@ function block_featured_tool_pluginfile($course, $birecord_or_cm, $context, $fil
     $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
 
     $sitecontext = context_system::instance();
-    if (!$file = $fs->get_file($sitecontext->id, 'block_featured_tool', $filearea, 0, $filepath, $filename) or
-            $file->is_directory()) {
+    $file = $fs->get_file($sitecontext->id, 'block_featured_tool', $filearea, 0, $filepath, $filename);
+    if (!$file || $file->is_directory()) {
         send_file_not_found();
     }
 
     // NOTE: it would be nice to have file revisions here, for now rely on standard file lifetime,
-    //       do not lower it because the files are displayed very often.
+    // Do not lower it because the files are displayed very often.
     \core\session\manager::write_close();
     send_stored_file($file, null, 0, $forcedownload, $options);
 }

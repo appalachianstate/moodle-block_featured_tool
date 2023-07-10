@@ -53,40 +53,43 @@ class block_featured_tool_edit_form extends block_edit_form {
                 'context' => $sitecontext,
         );
 
-        // Parameters for first featured tool
-        $header_string = '<br/><h4>' . get_string('featured_tool:header1', 'block_featured_tool') . '</h4>';
-        $mform->addElement('html', $header_string);
+        // Parameters for first featured tool.
+        $headerstring = '<br/><h4>' . get_string('featured_tool:header1', 'block_featured_tool') . '</h4>';
+        $mform->addElement('html', $headerstring);
 
         $mform->addElement('text', 'config_subtitle0', get_string('featured_tool:subtitle1', 'block_featured_tool'));
         $mform->setType('config_subtitle0', PARAM_TEXT);
 
-        $mform->addElement('filemanager', 'config_thumbnail0', get_string('featured_tool:thumbnail1', 'block_featured_tool'), null, $thumbnailoptions);
+        $mform->addElement('filemanager', 'config_thumbnail0', get_string('featured_tool:thumbnail1', 'block_featured_tool'),
+                null, $thumbnailoptions);
 
         $mform->addElement('editor', 'config_text0', get_string('featured_tool:media1', 'block_featured_tool'), null,
                 $editoroptions);
         $mform->setType('config_text0', PARAM_RAW);
 
-        // Parameters for second featured tool
-        $header_string = '<br/><h4>' . get_string('featured_tool:header2', 'block_featured_tool') . '</h4>';
-        $mform->addElement('html', $header_string);
+        // Parameters for second featured tool.
+        $headerstring = '<br/><h4>' . get_string('featured_tool:header2', 'block_featured_tool') . '</h4>';
+        $mform->addElement('html', $headerstring);
 
         $mform->addElement('text', 'config_subtitle1', get_string('featured_tool:subtitle2', 'block_featured_tool'));
         $mform->setType('config_subtitle1', PARAM_TEXT);
 
-        $mform->addElement('filemanager', 'config_thumbnail1', get_string('featured_tool:thumbnail2', 'block_featured_tool'), null, $thumbnailoptions);
+        $mform->addElement('filemanager', 'config_thumbnail1', get_string('featured_tool:thumbnail2', 'block_featured_tool'),
+                null, $thumbnailoptions);
 
         $mform->addElement('editor', 'config_text1', get_string('featured_tool:media2', 'block_featured_tool'), null,
                 $editoroptions);
         $mform->setType('config_text1', PARAM_RAW);
 
-        // Parameters for third featured tool
-        $header_string = '<br/><h4>' . get_string('featured_tool:header3', 'block_featured_tool') . '</h4>';
-        $mform->addElement('html', $header_string);
+        // Parameters for third featured tool.
+        $headerstring = '<br/><h4>' . get_string('featured_tool:header3', 'block_featured_tool') . '</h4>';
+        $mform->addElement('html', $headerstring);
 
         $mform->addElement('text', 'config_subtitle2', get_string('featured_tool:subtitle3', 'block_featured_tool'));
         $mform->setType('config_subtitle2', PARAM_TEXT);
 
-        $mform->addElement('filemanager', 'config_thumbnail2', get_string('featured_tool:thumbnail3', 'block_featured_tool'), null, $thumbnailoptions);
+        $mform->addElement('filemanager', 'config_thumbnail2', get_string('featured_tool:thumbnail3', 'block_featured_tool'),
+                null, $thumbnailoptions);
 
         $mform->addElement('editor', 'config_text2', get_string('featured_tool:media3', 'block_featured_tool'), null,
                 $editoroptions);
@@ -100,57 +103,57 @@ class block_featured_tool_edit_form extends block_edit_form {
      * @param $defaults
      * @return void
      */
-    function set_data($defaults) {
+    public function set_data($defaults) {
 
         $sitecontext = context_system::instance();
 
-        // If there is text in the block's config_text, load it in the respective text variable
-        // If there are any subtitles set, load them into respective subtitle variables
+        // If there is text in the block's config_text, load it in the respective text variable.
+        // If there are any subtitles set, load them into respective subtitle variables.
         if (!empty($this->block->config)) {
-            // Loads any already added files to the respective feature tool block's draft editor
-            foreach ($this->block->config->text as $index => $textInfo) {
-                // Grabs the actual editor text
-                $text = $textInfo['content'];
-                // Grabs the canonical index set during saving
-                $canonIdx = $textInfo['idx'];
-                if (!empty($text) && $canonIdx === $index) {
-                    $textKey = 'text' . $index;
+            // Loads any already added files to the respective feature tool block's draft editor.
+            foreach ($this->block->config->text as $index => $textinfo) {
+                // Grabs the actual editor text.
+                $text = $textinfo['content'];
+                // Grabs the canonical index set during saving.
+                $canonidx = $textinfo['idx'];
+                if (!empty($text) && $canonidx === $index) {
+                    $textkey = 'text' . $index;
                     ${'text' . $index} = $text;
-                    $draftIdEditor = file_get_submitted_draft_itemid('config_' . $textKey);
+                    $draftideditor = file_get_submitted_draft_itemid('config_' . $textkey);
 
-                    $defaults->{'config_' . $textKey}['text'] =
-                            file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'content' . $index, 0,
+                    $defaults->{'config_' . $textkey}['text'] =
+                            file_prepare_draft_area($draftideditor, $sitecontext->id, 'block_featured_tool', 'content' . $index, 0,
                                     array('subdirs' => true), $text);
-                    $defaults->{'config_' . $textKey}['itemid'] = $draftIdEditor;
-                    $defaults->{'config_' . $textKey}['format'] = FORMAT_HTML;
+                    $defaults->{'config_' . $textkey}['itemid'] = $draftideditor;
+                    $defaults->{'config_' . $textkey}['format'] = FORMAT_HTML;
 
                     // Remove the text from the config so that parent::set_data doesn't empty it.
-                    unset($this->block->config->$textKey);
+                    unset($this->block->config->$textkey);
                 }
             }
-            // Loads the subtitle set for a respective featured tool block if it exists
-            foreach ($this->block->config->subtitle as $index => $subtitleInfo) {
-                // Grabs the actual subtitle text
-                $subtitle = $subtitleInfo['content'];
-                // Grabs the canonical index set during saving
-                $canonIdx = $textInfo['idx'];
-                if (!empty($subtitle) && $canonIdx === $index) {
-                    $subKey = 'subtitle' . $index;
+            // Loads the subtitle set for a respective featured tool block if it exists.
+            foreach ($this->block->config->subtitle as $index => $subtitleinfo) {
+                // Grabs the actual subtitle text.
+                $subtitle = $subtitleinfo['content'];
+                // Grabs the canonical index set during saving.
+                $canonidx = $subtitleinfo['idx'];
+                if (!empty($subtitle) && $canonidx === $index) {
+                    $subkey = 'subtitle' . $index;
                     ${'subtitle' . $index} = $subtitle;
-                    $defaults->{'config_' . $subKey} = format_string($subtitle, true, $this->page->context);
+                    $defaults->{'config_' . $subkey} = format_string($subtitle, true, $this->page->context);
                     // Remove the subtitle from the config so that parent::set_data doesn't set it.
-                    unset($this->block->config->$subKey);
+                    unset($this->block->config->$subkey);
                 }
             }
         }
 
         parent::set_data($defaults);
-        // Restore variables
+        // Restore variables.
         if (!isset($this->block->config)) {
             $this->block->config = new stdClass();
         }
 
-        // Resets the preserved editor text variables
+        // Resets the preserved editor text variables.
         if (isset($text0)) {
             $this->block->config->text0 = $text0;
             unset($text0);
@@ -164,7 +167,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             unset($text2);
         }
 
-        // Resets the preserved subtitles
+        // Resets the preserved subtitles.
         if (isset($subtitle1)) {
             $this->block->config->subtitle1 = $subtitle1;
         }
@@ -175,7 +178,7 @@ class block_featured_tool_edit_form extends block_edit_form {
             $this->block->config->subtitle3 = $subtitle3;
         }
 
-        // Resets the preserved thumbnails
+        // Resets the preserved thumbnails.
         if (isset($thumbnail1)) {
             $this->block->config->thumbnail1 = $thumbnail1;
         }

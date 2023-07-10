@@ -49,13 +49,12 @@ class block_featured_tool extends block_base {
             return $this->content;
         }
 
-        // Checks if user is an admin/manager
+        // Checks if user is an admin/manager.
         $isallowed = false;
         $sitecontext = context_system::instance();
         if (has_capability('moodle/site:manageblocks', $sitecontext)) {
             $isallowed = true;
-        } // If user is not an admin/manager, checks if user is a teacher in a course
-        else {
+        } else { // If user is not an admin/manager, checks if user is a teacher in a course.
             $courses = enrol_get_all_users_courses($USER->id, true);
             foreach ($courses as $course) {
                 $context = context_course::instance($course->id);
@@ -78,38 +77,38 @@ class block_featured_tool extends block_base {
             $filteropt->noclean = true;
 
             if (!empty($this->config->text)) {
-                // Only blocks with text in them should be in config->text at this point
-                $max = sizeof($this->config->text);
-                $randInt = random_int(0, $max - 1);
-                // Selects a random block based on the random int
-                $selectedBlock = $this->config->text[$randInt]['content'];
-                // Grabs that block's subtitle
-                $selectedBlockSubtitle = $this->config->subtitle[$randInt]['content'];
+                // Only blocks with text in them should be in config->text at this point.
+                $max = count($this->config->text);
+                $randint = random_int(0, $max - 1);
+                // Selects a random block based on the random int.
+                $selectedblock = $this->config->text[$randint]['content'];
+                // Grabs that block's subtitle.
+                $selectedblocksubtitle = $this->config->subtitle[$randint]['content'];
 
-                $selectedBlock =
-                        file_rewrite_pluginfile_urls($selectedBlock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool',
-                                ('content' . $randInt), null);
-                // Stores the pluginfile link back into the respective config->text position
+                $selectedblock =
+                        file_rewrite_pluginfile_urls($selectedblock, 'pluginfile.php', $sitecontext->id, 'block_featured_tool',
+                                ('content' . $randint), null);
+                // Stores the pluginfile link back into the respective config->text position.
                 $format = $this->config->format;
 
                 $fs = get_file_storage();
-                $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', ('thumbnail' . $randInt), false, 'filename',
+                $files = $fs->get_area_files($sitecontext->id, 'block_featured_tool', ('thumbnail' . $randint), false, 'filename',
                         false);
-                // Tries to serve the thumbnail if it exists
+                // Tries to serve the thumbnail if it exists.
                 if (count($files)) {
-                    // There should only ever be one file in the filearea
+                    // There should only ever be one file in the filearea.
                     $file = reset($files);
-                    // Creates a pluginfile URL for the thumbnail, since it comes from a file picker
-                    $selectedBlockThumbnail =
+                    // Creates a pluginfile URL for the thumbnail, since it comes from a file picker.
+                    $selectedblockthumbnail =
                             moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
                                     null, $file->get_filepath(), $file->get_filename());
                 }
 
-                // Creates the data array expected by the featuredcontent template
+                // Creates the data array expected by the featuredcontent template.
                 $data = array(
-                        "subtitle" => $selectedBlockSubtitle,
-                        "thumbnail" => $selectedBlockThumbnail ?? '',
-                        "editorhtml" => format_text($selectedBlock, $format, $filteropt),
+                        "subtitle" => $selectedblocksubtitle,
+                        "thumbnail" => $selectedblockthumbnail ?? '',
+                        "editorhtml" => format_text($selectedblock, $format, $filteropt),
 
                 );
                 $this->content->text = $OUTPUT->render_from_template('block_featured_tool/featuredcontent', $data);
@@ -127,7 +126,7 @@ class block_featured_tool extends block_base {
     /**
      * Serialize and store config data
      */
-    function instance_config_save($data, $nolongerused = false) {
+    public function instance_config_save($data, $nolongerused = false) {
 
         $config = clone($data);
 
@@ -143,33 +142,33 @@ class block_featured_tool extends block_base {
                 'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
         );
 
-        // Generates an array of the text fields
+        // Generates an array of the text fields.
         $data->text = array($data->text0, $data->text1, $data->text2);
-        // Generates an array of the subtitles
+        // Generates an array of the subtitles.
         $data->subtitle = array($data->subtitle0, $data->subtitle1, $data->subtitle2);
-        // Generates an array of thumbnails
+        // Generates an array of thumbnails.
         $data->thumbnail = array($data->thumbnail0, $data->thumbnail1, $data->thumbnail2);
 
-        // Save only area files that have something in them and store them
+        // Save only area files that have something in them and store them.
         $config->text = array();
         $config->subtitle = array();
         foreach ($data->text as $idx => $text) {
             if (!empty($text) && !empty($text['text'])) {
-                // Generates the key of where the text will be stored in the final text array
-                $key = sizeof($config->text);
-                // Move embedded files into a proper filearea and adjust HTML links to match
+                // Generates the key of where the text will be stored in the final text array.
+                $key = count($config->text);
+                // Move embedded files into a proper filearea and adjust HTML links to match.
                 $config->text[$key] = array(
                         'content' => file_save_draft_area_files($text['itemid'], $sitecontext->id,
                                 'block_featured_tool', ('content' . $key), 0, array('subdirs' => true), $text['text']),
                         'idx' => $idx,
                 );
-                // If a subtitle exists for this block, store it in the same index of the subtitle array
-                // Otherwise, it stores a default subtitle
+                // If a subtitle exists for this block, store it in the same index of the subtitle array.
+                // Otherwise, it stores a default subtitle.
                 $config->subtitle[$key] = array(
                         'content' => !empty($data->subtitle[$idx]) ? $data->subtitle[$idx] : "Announcement",
                         'idx' => $idx,
                 );
-                // If a thumbnail exists for this block, move the thumbnail into a proper filearea and adjust HTML link to match
+                // If a thumbnail exists for this block, move the thumbnail into a proper filearea and adjust HTML link to match.
                 if (!empty($data->thumbnail[$idx])) {
                     $thumbnail = $data->thumbnail[$idx];
                     file_save_draft_area_files($thumbnail, $sitecontext->id,

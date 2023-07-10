@@ -15,6 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Functions for featured_tool block instances.
+ *
+ * @package     block_featured_tool
+ * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/**
  * Form for editing featured tool block instances.
  *
  * @copyright 2023 Derek Wilson

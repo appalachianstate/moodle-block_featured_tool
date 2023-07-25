@@ -44,7 +44,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 'maxfiles' => 1,
                 'accepted_types' => $acceptedtypes,
                 'context' => $sitecontext,
-                'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
+                'return_types' => 2 | 1,
         );
         $editoroptions = array(
                 'maxfiles' => EDITOR_UNLIMITED_FILES,

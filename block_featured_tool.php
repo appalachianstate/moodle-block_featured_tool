@@ -194,6 +194,7 @@ class block_featured_tool extends block_base {
      */
     public function applicable_formats() {
         return array(
+                'all' => false,
                 'my' => true,
         );
     }

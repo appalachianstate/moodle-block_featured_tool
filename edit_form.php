@@ -117,8 +117,20 @@ class block_featured_tool_edit_form extends block_edit_form {
      * @throws dml_exception
      */
     public function set_data($defaults) {
+        global $DB;
 
         $sitecontext = context_system::instance();
+
+        $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
+        $thumbnailoptions = array(
+                'subdirs' => 0,
+                'maxbytes' => 104857600,
+                'areamaxbytes' => 104857600,
+                'maxfiles' => 1,
+                'accepted_types' => $acceptedtypes,
+                'context' => $sitecontext,
+                'return_types' => 2 | 1,
+        );
 
         // If there is text in the block's config_text, load it in the respective text variable.
         // If there are any subtitles set, load them into respective subtitle variables.
@@ -158,6 +170,23 @@ class block_featured_tool_edit_form extends block_edit_form {
                     unset($this->block->config->$subkey);
                 }
             }
+            // Loads the thumbnail set for a respective featured tool block if it exists.
+            foreach ($this->block->config->thumbnail as $index => $thumbnailinfo) {
+                // Grabs the actual thumbnail content.
+                $thumbnail = $thumbnailinfo['content'];
+                // Grabs the canonical index set during saving.
+                $canonidx = $thumbnailinfo['idx'];
+                if (!empty($thumbnail) && $canonidx === $index) {
+                    $thumbKey = 'thumbnail' . $index;
+                    ${$thumbKey} = $thumbnail;
+                    $draftIdEditor = file_get_submitted_draft_itemid('config_' . $thumbKey);
+
+                    file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'thumbnail' . $index, 0,
+                            $thumbnailoptions);
+
+                    $this->block->config->$thumbKey = $draftIdEditor;
+                }
+            }
         }
 
         parent::set_data($defaults);
@@ -181,25 +210,25 @@ class block_featured_tool_edit_form extends block_edit_form {
         }
 
         // Resets the preserved subtitles.
+        if (isset($subtitle0)) {
+            $this->block->config->subtitle0 = $subtitle0;
+        }
         if (isset($subtitle1)) {
             $this->block->config->subtitle1 = $subtitle1;
         }
         if (isset($subtitle2)) {
             $this->block->config->subtitle2 = $subtitle2;
         }
-        if (isset($subtitle3)) {
-            $this->block->config->subtitle3 = $subtitle3;
-        }
 
         // Resets the preserved thumbnails.
+        if (isset($thumbnail0)) {
+            $this->block->config->thumbnail0 = $thumbnail0;
+        }
         if (isset($thumbnail1)) {
             $this->block->config->thumbnail1 = $thumbnail1;
         }
         if (isset($thumbnail2)) {
             $this->block->config->thumbnail2 = $thumbnail2;
-        }
-        if (isset($thumbnail3)) {
-            $this->block->config->thumbnail3 = $thumbnail3;
         }
     }
 }

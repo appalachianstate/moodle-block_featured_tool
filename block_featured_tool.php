@@ -158,6 +158,7 @@ class block_featured_tool extends block_base {
         // Save only area files that have something in them and store them.
         $config->text = array();
         $config->subtitle = array();
+        $config->thumbnail = array();
         foreach ($data->text as $idx => $text) {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array.
@@ -177,6 +178,11 @@ class block_featured_tool extends block_base {
                 // If a thumbnail exists for this block, move the thumbnail into a proper filearea and adjust HTML link to match.
                 if (!empty($data->thumbnail[$idx])) {
                     $thumbnail = $data->thumbnail[$idx];
+                    // If a thumbnail exists for this block, store it in the same index of the thumbnail array.
+                    $config->thumbnail[$key] = array(
+                            'content' => $thumbnail,
+                            'idx' => $idx,
+                    );
                     file_save_draft_area_files($thumbnail, $sitecontext->id,
                             'block_featured_tool', ('thumbnail' . $key), 0, $thumbnailoptions);
                 }

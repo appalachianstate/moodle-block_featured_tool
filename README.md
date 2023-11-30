@@ -27,6 +27,16 @@ Alternatively, you can run
 
 to complete the installation from the command line.
 
+## Configuration ##
+
+In order to set up the featured tool to show on any teacher's dashboard, you can set up the tool in the Default Dashboard and set it for all users.
+
+The configuration to make sure every user is seeing the same instance of the block is:
+
+1. Original block location: System
+2. Display on page types: Dashboard page
+3. Select pages: Any page matching the above
+
 ## License ##
 
 2023 Derek Wilson <wilsondc5@appstate.edu>

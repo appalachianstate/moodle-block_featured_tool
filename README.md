@@ -2,7 +2,7 @@
 
 Featured tool is a Moodle block plugin that allows admins to easily display information/announcements to teachers.
 
-The featured tool can be configured to cycle between multiple sets of information. Admins can enter a subtitle, thumbnail, and the content to display to the users when they click on a button. There are currently three tools to hold this information, and the featured tool will decide which to show randomly any time the dashboard is loaded.
+The featured tool can be configured to cycle between multiple sets of information. Admins can enter a subtitle, thumbnail, and the content to display to the users when they click on a button. There are currently three tools to hold this information, and the featured tool will decide which to show randomly any time the dashboard is loaded. This information in the featured tool is configured only to show to users with a teacher role on the site.
 
 ## Installing via uploaded ZIP file ##
 

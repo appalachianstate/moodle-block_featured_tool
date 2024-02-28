@@ -50,3 +50,4 @@ $string['featured_tool:myaddinstance'] = 'Add a new featured tool block to Dashb
 $string['featured_tool:addinstance'] = 'Add a new featured tool block';
 $string['pluginname'] = 'Featured tool';
 $string['cardbutton'] = 'Read more';
+$string['closemodal'] = 'Close';

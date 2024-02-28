@@ -38,7 +38,10 @@ class block_featured_tool extends block_base {
      * @return stdClass The block contents.
      */
     public function get_content() {
-        global $USER, $OUTPUT;
+        global $USER;
+
+        // Set up renderer.
+        $output = $this->page->get_renderer('block_featured_tool');
 
         if ($this->content !== null) {
             return $this->content;
@@ -68,8 +71,8 @@ class block_featured_tool extends block_base {
         if ($isallowed) {
 
             $this->content = new stdClass();
-            $this->content->items = array();
-            $this->content->icons = array();
+            $this->content->items = [];
+            $this->content->icons = [];
             $this->content->footer = '';
 
             $filteropt = new stdClass;
@@ -105,13 +108,15 @@ class block_featured_tool extends block_base {
                 }
 
                 // Creates the data array expected by the featuredcontent template.
-                $data = array(
+                $data = [
                         "subtitle" => $selectedblocksubtitle,
                         "thumbnail" => $selectedblockthumbnail ?? '',
                         "editorhtml" => format_text($selectedblock, $format, $filteropt),
 
-                );
-                $this->content->text = $OUTPUT->render_from_template('block_featured_tool/featuredcontent', $data);
+                ];
+                $featuredblock = new \block_featured_tool\output\featured_block(
+                    $sitecontext->id, $data['thumbnail'], $data['subtitle'], $data['editorhtml']);
+                $this->content->text = $output->render($featuredblock);
             } else {
                 $text = '';
                 $this->content->text = $text;
@@ -138,7 +143,7 @@ class block_featured_tool extends block_base {
 
         $sitecontext = context_system::instance();
         $acceptedtypes = (new filetypes_util)->normalize_file_types('.jpg,.gif,.png');
-        $thumbnailoptions = array(
+        $thumbnailoptions = [
                 'subdirs' => 0,
                 'maxbytes' => 104857600,
                 'areamaxbytes' => 104857600,
@@ -146,43 +151,43 @@ class block_featured_tool extends block_base {
                 'accepted_types' => $acceptedtypes,
                 'context' => $sitecontext,
                 'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
-        );
+        ];
 
         // Generates an array of the text fields.
-        $data->text = array($data->text0, $data->text1, $data->text2);
+        $data->text = [$data->text0, $data->text1, $data->text2];
         // Generates an array of the subtitles.
-        $data->subtitle = array($data->subtitle0, $data->subtitle1, $data->subtitle2);
+        $data->subtitle = [$data->subtitle0, $data->subtitle1, $data->subtitle2];
         // Generates an array of thumbnails.
-        $data->thumbnail = array($data->thumbnail0, $data->thumbnail1, $data->thumbnail2);
+        $data->thumbnail = [$data->thumbnail0, $data->thumbnail1, $data->thumbnail2];
 
         // Save only area files that have something in them and store them.
-        $config->text = array();
-        $config->subtitle = array();
-        $config->thumbnail = array();
+        $config->text = [];
+        $config->subtitle = [];
+        $config->thumbnail = [];
         foreach ($data->text as $idx => $text) {
             if (!empty($text) && !empty($text['text'])) {
                 // Generates the key of where the text will be stored in the final text array.
                 $key = count($config->text);
                 // Move embedded files into a proper filearea and adjust HTML links to match.
-                $config->text[$key] = array(
+                $config->text[$key] = [
                         'content' => file_save_draft_area_files($text['itemid'], $sitecontext->id,
-                                'block_featured_tool', ('content' . $key), 0, array('subdirs' => true), $text['text']),
+                                'block_featured_tool', ('content' . $key), 0, ['subdirs' => true], $text['text']),
                         'idx' => $idx,
-                );
+                ];
                 // If a subtitle exists for this block, store it in the same index of the subtitle array.
                 // Otherwise, it stores a default subtitle.
-                $config->subtitle[$key] = array(
+                $config->subtitle[$key] = [
                         'content' => !empty($data->subtitle[$idx]) ? $data->subtitle[$idx] : "Announcement",
                         'idx' => $idx,
-                );
+                ];
                 // If a thumbnail exists for this block, move the thumbnail into a proper filearea and adjust HTML link to match.
                 if (!empty($data->thumbnail[$idx])) {
                     $thumbnail = $data->thumbnail[$idx];
                     // If a thumbnail exists for this block, store it in the same index of the thumbnail array.
-                    $config->thumbnail[$key] = array(
+                    $config->thumbnail[$key] = [
                             'content' => $thumbnail,
                             'idx' => $idx,
-                    );
+                    ];
                     file_save_draft_area_files($thumbnail, $sitecontext->id,
                             'block_featured_tool', ('thumbnail' . $key), 0, $thumbnailoptions);
                 }
@@ -199,9 +204,9 @@ class block_featured_tool extends block_base {
      * @return string[] Array of pages and permissions.
      */
     public function applicable_formats() {
-        return array(
+        return [
                 'all' => false,
                 'my' => true,
-        );
+        ];
     }
 }

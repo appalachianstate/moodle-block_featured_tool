@@ -42,7 +42,7 @@
  * @throws moodle_exception
  */
 function block_featured_tool_pluginfile($course, $birecordorcm, $context, $filearea, $args, $forcedownload,
-        array $options = array()) {
+        array $options = []) {
 
     $fs = get_file_storage();
 

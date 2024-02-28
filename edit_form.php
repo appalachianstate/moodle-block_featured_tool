@@ -37,7 +37,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
         $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
-        $thumbnailoptions = array(
+        $thumbnailoptions = [
                 'subdirs' => 0,
                 'maxbytes' => 104857600,
                 'areamaxbytes' => 104857600,
@@ -45,13 +45,13 @@ class block_featured_tool_edit_form extends block_edit_form {
                 'accepted_types' => $acceptedtypes,
                 'context' => $sitecontext,
                 'return_types' => 2 | 1,
-        );
-        $editoroptions = array(
+        ];
+        $editoroptions = [
                 'maxfiles' => EDITOR_UNLIMITED_FILES,
                 'noclean' => true,
                 'trusttext' => false,
                 'context' => $sitecontext,
-        );
+        ];
 
         // Parameters for first featured tool.
         $headerstring = '<br/><h4>' . get_string('featured_tool:header1', 'block_featured_tool') . '</h4>';
@@ -117,12 +117,11 @@ class block_featured_tool_edit_form extends block_edit_form {
      * @throws dml_exception
      */
     public function set_data($defaults) {
-        global $DB;
 
         $sitecontext = context_system::instance();
 
         $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types('.jpg,.gif,.png');
-        $thumbnailoptions = array(
+        $thumbnailoptions = [
                 'subdirs' => 0,
                 'maxbytes' => 104857600,
                 'areamaxbytes' => 104857600,
@@ -130,7 +129,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 'accepted_types' => $acceptedtypes,
                 'context' => $sitecontext,
                 'return_types' => 2 | 1,
-        );
+        ];
 
         // If there is text in the block's config_text, load it in the respective text variable.
         // If there are any subtitles set, load them into respective subtitle variables.
@@ -148,7 +147,7 @@ class block_featured_tool_edit_form extends block_edit_form {
 
                     $defaults->{'config_' . $textkey}['text'] =
                             file_prepare_draft_area($draftideditor, $sitecontext->id, 'block_featured_tool', 'content' . $index, 0,
-                                    array('subdirs' => true), $text);
+                                    ['subdirs' => true], $text);
                     $defaults->{'config_' . $textkey}['itemid'] = $draftideditor;
                     $defaults->{'config_' . $textkey}['format'] = FORMAT_HTML;
 
@@ -165,7 +164,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 if (!empty($subtitle) && $canonidx === $index) {
                     $subkey = 'subtitle' . $index;
                     ${'subtitle' . $index} = $subtitle;
-                    $defaults->{'config_' . $subkey} = format_string($subtitle, true, $this->page->context);
+                    $defaults->{'config_' . $subkey} = format_string($subtitle, true, ['context' => $this->page->context]);
                     // Remove the subtitle from the config so that parent::set_data doesn't set it.
                     unset($this->block->config->$subkey);
                 }
@@ -177,14 +176,14 @@ class block_featured_tool_edit_form extends block_edit_form {
                 // Grabs the canonical index set during saving.
                 $canonidx = $thumbnailinfo['idx'];
                 if (!empty($thumbnail) && $canonidx === $index) {
-                    $thumbKey = 'thumbnail' . $index;
-                    ${$thumbKey} = $thumbnail;
-                    $draftIdEditor = file_get_submitted_draft_itemid('config_' . $thumbKey);
+                    $thumbkey = 'thumbnail' . $index;
+                    ${$thumbkey} = $thumbnail;
+                    $draftideditor = file_get_submitted_draft_itemid('config_' . $thumbkey);
 
-                    file_prepare_draft_area($draftIdEditor, $sitecontext->id, 'block_featured_tool', 'thumbnail' . $index, 0,
+                    file_prepare_draft_area($draftideditor, $sitecontext->id, 'block_featured_tool', 'thumbnail' . $index, 0,
                             $thumbnailoptions);
 
-                    $this->block->config->$thumbKey = $draftIdEditor;
+                    $this->block->config->$thumbkey = $draftideditor;
                 }
             }
         }

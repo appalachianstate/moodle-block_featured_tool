@@ -17,43 +17,21 @@
 {{!
     @template block_featured_tool/modal
 
-    Template for Modal (Bootstrap 4) popup when user clicks on 'Info...' button
+    Template for Modal (Bootstrap 4) popup when user clicks on 'Read more...' button
 
     Example context (json):
     {
         "subtitle" : "Awesome title for a story",
         "thumbnail" : "<img src="..." alt="...">",
-        "editorhtml" : "<p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lacinia pretium nulla gravida interdum.</em></p>"
+        "button" : "<button><p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lacinia pretium nulla gravida interdum.</em></p></button>"
     }
 }}
-<div class="card-body text-left" style="padding: 4px 0 2px 0">
+<div class="card-body" style="padding: 4px 0 2px 0">
     <h6 class="card-subtitle mb-2 text-muted">{{subtitle}}</h6>
     {{#thumbnail}}
-        <img src="{{thumbnail}}" class="card-img" alt="{{subtitle}}">
+        <img src="{{thumbnail}}" class="card-img text-center" alt="{{subtitle}}">
     {{/thumbnail}}
     <div class="text-center" style="padding: 6px 0 0 0">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#featuredtoolModal">
-            {{#str}} cardbutton, block_featured_tool {{/str}}
-        </button>
-    </div>
-</div>
-
-
-<div class="modal fade" id="featuredtoolModal" tabindex="-1" aria-labelledby="featuredtoolModalLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="featuredtoolModalLabel">{{subtitle}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                {{{editorhtml}}}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+        {{{button}}}
     </div>
 </div>

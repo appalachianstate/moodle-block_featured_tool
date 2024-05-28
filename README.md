@@ -29,7 +29,15 @@ to complete the installation from the command line.
 
 ## Configuration ##
 
-In order to set up the featured tool to show on any teacher's dashboard, you can set up the tool in the Default Dashboard and set it for all users.
+In order to set up the featured tool to show on any teacher's dashboard, you can set up the tool in the Default Dashboard and set it for all users (Site administration > Appearance > Default Dashboard page).
+
+To add/edit featured tools in the block, enable Edit mode and Configure Featured tool block.
+
+* Enter the tool subtitle, upload a thumbnail image, and enter content for up to 3 featured tools.
+* Subtitles should be brief tool names, and thumbnails should be an attention-getting graphic legible at 0x0 in size.
+* Content should be a short, attention-getting summary of the tool/its benefits. Links to detailed documentation can be included here.
+* Subtitle and thumbnail will be displayed in the block with a Read more button link.
+* Content will be displayed in a modal when the Read more button is clicked.
 
 The configuration to make sure every user is seeing the same instance of the block is:
 

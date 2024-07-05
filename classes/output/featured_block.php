@@ -32,9 +32,9 @@ class featured_block implements renderable {
      */
     public int $contextid;
     /**
-     * @var \moodle_url $thumbnail The url to the thumbnail for the featured tool.
+     * @var \moodle_url|string $thumbnail The url to the thumbnail for the featured tool.
      */
-    private \moodle_url $thumbnail;
+    private \moodle_url|string $thumbnail;
     /**
      * @var string $subtitle The subtitle for the featured tool.
      */
@@ -48,11 +48,11 @@ class featured_block implements renderable {
      * Constructs renderable block.
      *
      * @param int $contextid
-     * @param \moodle_url $thumbnail
+     * @param \moodle_url|string $thumbnail
      * @param string $subtitle
      * @param string $editorhtml
      */
-    public function __construct(int $contextid, \moodle_url $thumbnail, string $subtitle, string $editorhtml) {
+    public function __construct(int $contextid, \moodle_url|string $thumbnail, string $subtitle, string $editorhtml) {
         $this->contextid = $contextid;
         $this->thumbnail = $thumbnail;
         $this->subtitle = $subtitle;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/featued_tool/db" VERSION="2024083096" COMMENT="XMLDB file for block blocks/featured_tool"
+<XMLDB PATH="blocks/featured_tool/db" VERSION="2024083096" COMMENT="XMLDB file for block blocks/featured_tool"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >

@@ -23,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
 $functions = array(
          'block_featured_tool_getclickedlink' => array(
                 'classname'   => 'block_featured_tool_external',
-                'methodname'  => 'getclickedlink',
+                'methodname'  => 'get_clicked_link',
                 'classpath'   => 'blocks/featured_tool/externallib.php',
                 'description' => 'Logs when a user has clicked on a featured tool link',
                 'type'        => 'write',

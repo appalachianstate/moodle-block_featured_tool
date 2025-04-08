@@ -29,7 +29,7 @@ class block_featured_tool_external extends \core_external\external_api {
      * Returns description of method parameters
      * @return external_function_parameters
      */
-    public static function getclickedlink_parameters(){
+    public static function get_clicked_link_parameters(){
         return new external_function_parameters(
             array(
                 'link_name'=> new external_value(PARAM_TEXT, 'Name of clicked link')
@@ -41,7 +41,7 @@ class block_featured_tool_external extends \core_external\external_api {
      * @param string  link_name is name of the clicked link from the data-name attribute
      * @return array success message
      */
-    public static function getclickedlink($link_name) {
+    public static function get_clicked_link($link_name) {
         global $DB, $USER;
         $link_name = trim($link_name);
         // Since we are storing link name in DB table, add extra check to make sure it's not a SQL statement
@@ -67,7 +67,7 @@ class block_featured_tool_external extends \core_external\external_api {
      * Returns description of method result value
      * @return external_single_structure 
      */
-    public static function getclickedlink_returns(): external_single_structure {
+    public static function get_clicked_link_returns(): external_single_structure {
         return new external_single_structure([
             'message' => new external_value(PARAM_TEXT, 'The message body'),
         ]);

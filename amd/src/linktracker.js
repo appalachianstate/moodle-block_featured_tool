@@ -27,7 +27,7 @@ define("block_featured_tool/linktracker", ["core/ajax"], function (ajax) {
     };
     const submitLinkData = (linkName) => {
         ajax.call([{
-            methodname: 'block_featured_tool_getclickedlink',
+            methodname: 'block_featured_tool_get_clicked_link',
             args: { link_name: linkName },
         }]);
     };

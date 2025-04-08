@@ -14,35 +14,62 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Open modal button AMD module.
  *
  * @module      block_featured_tool/linktracker
  * @author      2025 Lina Brown <brownli2@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
-define(['jquery', 'core/ajax'], function($, ajax) {
+// JS function to capture the name of the clicked link and send it off to get stored.
+define("block_featured_tool/linktracker", ["core/ajax"], function (ajax) {
+    const Selectors = {
+        trackableLink: '[data-action="trackable"]',
+    };
+    const submitLinkData = (linkName) => {
+        ajax.call([{
+            methodname: 'block_featured_tool_getclickedlink',
+            args: { link_name: linkName },
+        }]);
+    };
+    const getLinkName = () => {
+        document.addEventListener('click', e => {
+            if (e.target.matches(Selectors.trackableLink)) {
+                // e.preventDefault();
+                const linkName = e.target.getAttribute('data-name');
+                // window.alert(`Thank you for clicking on the ${linkName} link`);
+                submitLinkData(linkName);
+            };
+        })
+    };
     return {
-        init: function() {
-            // Capture link clicks in your block's DOM
-            $('a.trackable').on('click', function(event) {
-                // Send AJAX request to track the click
-                var linkname = $(this).data('name');
-                // Make the AJAX call
-                ajax.call([{
-                    methodname: 'track_link_clicks',
-                    args: {
-                        linkname: linkname,
-                        contextid: M.cfg.contextid  // Send context (e.g., course or block context)
-                    },
-                    success: function(response) {
-                        console.log('Link click logged successfully');
-                        // Optionally, redirect the user or perform other actions
-                        window.location.href = $(this).attr('href');  // Redirect to the link
-                    }
-                }]);
-            });
+        init: async () => {
+            getLinkName();
         }
     };
 });
+    
+/*   
+Leaving this here in case we need to switch it later .
+Moodle says to use ESM format but the plugin doesn't work unless it has minified AMD JS?
+    
+    import call from "core/ajax";
+    const Selectors = {
+        trackableLink: '[data-action="trackable"]',
+    };
+    const submitLinkData = (linkName) => ajax.call([{
+        methodname: 'block_featured_tool_getclickedlink',
+        args: {link_name: linkName,},
+    }])[0];
+    const getLinkName = () => {
+        document.addEventListener('click', e => {
+            if (e.target.matches(Selectors.trackableLink)) {
+                const linkName = e.target.getAttribute('data-name');
+                window.alert(`Thank you for clicking on the ${linkName} link`);
+                submitLinkData(linkName);
+            }
+        });
+    };
+    export const init = async() => {
+        getLinkName();
+    };
+*/

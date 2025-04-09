@@ -22,6 +22,7 @@
 
 // JS function to capture the name of the clicked link and send it off to get stored.
 define("block_featured_tool/linktracker", ["core/ajax"], function (ajax) {
+    let eventListenerAdded = false; // Flag to prevent one click from logging twice.
     const Selectors = {
         trackableLink: '[data-action="trackable"]',
     };
@@ -32,14 +33,18 @@ define("block_featured_tool/linktracker", ["core/ajax"], function (ajax) {
         }]);
     };
     const getLinkName = () => {
+        if (eventListenerAdded) {
+            return;
+        }
         document.addEventListener('click', e => {
             if (e.target.matches(Selectors.trackableLink)) {
-                // e.preventDefault();
+                e.preventDefault();
                 const linkName = e.target.getAttribute('data-name');
                 // window.alert(`Thank you for clicking on the ${linkName} link`);
                 submitLinkData(linkName);
             };
         })
+        eventListenerAdded = true;
     };
     return {
         init: async () => {
@@ -50,7 +55,7 @@ define("block_featured_tool/linktracker", ["core/ajax"], function (ajax) {
     
 /*   
 Leaving this here in case we need to switch it later .
-Moodle says to use ESM format but the plugin doesn't work unless it has minified AMD JS?
+Moodle says to use ESM format but already using amd
     
     import call from "core/ajax";
     const Selectors = {

@@ -21,7 +21,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $functions = array(
-         'block_featured_tool_getclickedlink' => array(
+         'block_featured_tool_get_clicked_link' => array(
                 'classname'   => 'block_featured_tool_external',
                 'methodname'  => 'get_clicked_link',
                 'classpath'   => 'blocks/featured_tool/externallib.php',

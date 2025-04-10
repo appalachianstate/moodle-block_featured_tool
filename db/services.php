@@ -32,3 +32,13 @@ $functions = array(
                 'capabilities' => '',
           )
 );
+
+$services = array(
+      'Featured Tool Link Click Tracking Service' => array(
+            'functions' => array(
+                  'block_featured_tool_get_clicked_link'
+            ),
+            'restrictedusers'=> 0,
+            'enabled'=> 1,
+      )
+);

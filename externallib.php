@@ -44,10 +44,6 @@ class block_featured_tool_external extends \core_external\external_api {
     public static function get_clicked_link($link_name) {
         global $DB, $USER;
         $link_name = trim($link_name);
-        // Since we are storing link name in DB table, add extra check to make sure it's not a SQL statement
-        if (strlen($link_name) > 50) {
-            throw new moodle_exception('invalidlink', 'block_featured_tool', 'Link name is too long!');
-        }
         try {
             $record = new stdClass();
             $record->user_id = $USER->id;

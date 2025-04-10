@@ -15,13 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    block_featured_tool
+ * Create DB table
+ * @package     block_featured_tool
+ * @copyright   2025 Appalachian State University
  * @copyright  2025 Lina Brown
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
+/**
+ * Create DB table
+ * @param int  oldversion version of the plugin that would not have the table
+ * @return boolean true
+ */
 function xmldb_block_featured_tool_upgrade($oldversion) {
     global $DB;
     $dbman = $DB->get_manager();

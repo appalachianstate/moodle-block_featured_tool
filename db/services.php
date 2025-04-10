@@ -1,5 +1,6 @@
 <?php
-
+// This file is part of Moodle - http://moodle.org/
+//
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -14,7 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * External web service function
+ * External web service functions
+ * @package     block_featured_tool
+ * @copyright   2025 Appalachian State University
  * @author      2025 Lina Brown <brownli2@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,15 +33,15 @@ $functions = array(
                 'ajax'        => true,
                 'loginrequired' => true,
                 'capabilities' => '',
-          )
+         ),
 );
 
 $services = array(
       'Featured Tool Link Click Tracking Service' => array(
             'functions' => array(
-                  'block_featured_tool_get_clicked_link'
+                  'block_featured_tool_get_clicked_link',
             ),
-            'restrictedusers'=> 0,
-            'enabled'=> 1,
-      )
+            'restrictedusers' => 0,
+            'enabled' => 1,
+      ),
 );

@@ -1,5 +1,6 @@
 <?php
-
+// This file is part of Moodle - http://moodle.org/
+//
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -14,45 +15,47 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * External Web Service Template
- *
- * @package    Externallib
+ * Featured Tool Block external API
+ * @package     block_featured_tool
+ * @copyright   2025 Appalachian State University
  * @author      2025 Lina Brown <brownli2@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
+defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . "/externallib.php");
 
+/**
+ * Class containing methods for sending click data to DB.
+ */
 class block_featured_tool_external extends \core_external\external_api {
     /**
      * Returns description of method parameters
      * @return external_function_parameters
      */
-    public static function get_clicked_link_parameters(){
+    public static function get_clicked_link_parameters() {
         return new external_function_parameters(
             array(
-                'link_name'=> new external_value(PARAM_TEXT, 'Name of clicked link')
+                'link_name' => new external_value(PARAM_TEXT, 'Name of clicked link'),
             )
         );
     }
     /**
      * Returns success or failutre message from the DB operation
-     * @param string  link_name is name of the clicked link from the data-name attribute
+     * @param string  linkname is name of the clicked link from the data-name attribute
      * @return array success message
      */
-    public static function get_clicked_link($link_name) {
+    public static function get_clicked_link($linkname) {
         global $DB, $USER;
-        $link_name = trim($link_name);
+        $linkname = trim($linkname);
         try {
             $record = new stdClass();
             $record->user_id = $USER->id;
-            $record->link_name = $link_name;
+            $record->link_name = $linkname;
             $record->time_clicked = time();
             $DB->insert_record('block_featured_tool_link_clicks', $record);
             $message = "Link click record added successfully!";
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $message = "Error: Link click record insertion failed. " . $e->getMessage();
         }
         return [
@@ -61,7 +64,7 @@ class block_featured_tool_external extends \core_external\external_api {
     }
     /**
      * Returns description of method result value
-     * @return external_single_structure 
+     * @return external_single_structure
      */
     public static function get_clicked_link_returns(): external_single_structure {
         return new external_single_structure([

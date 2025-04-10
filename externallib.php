@@ -31,7 +31,7 @@ require_once($CFG->libdir . "/externallib.php");
 class block_featured_tool_external extends \core_external\external_api {
     /**
      * Returns description of method parameters
-     * @return external_function_parameters
+     * @return external_function_parameters link_name
      */
     public static function get_clicked_link_parameters() {
         return new external_function_parameters(
@@ -41,7 +41,7 @@ class block_featured_tool_external extends \core_external\external_api {
         );
     }
     /**
-     * Returns success or failutre message from the DB operation
+     * Returns success or failure message from the DB operation
      * @param string  linkname is name of the clicked link from the data-name attribute
      * @return array success message
      */

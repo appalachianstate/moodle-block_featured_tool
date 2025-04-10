@@ -24,7 +24,7 @@
 
 /**
  * Create DB table
- * @param int  oldversion version of the plugin that would not have the table
+ * @param int  $oldversion version of the plugin that would not have the table
  * @return boolean true
  */
 function xmldb_block_featured_tool_upgrade($oldversion) {

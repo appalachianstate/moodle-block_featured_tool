@@ -39,7 +39,6 @@ class block_featured_tool extends block_base {
      */
     public function get_content() {
         global $USER;
-        global $PAGE;
 
         // Set up renderer.
         $output = $this->page->get_renderer('block_featured_tool');
@@ -125,8 +124,6 @@ class block_featured_tool extends block_base {
         } else {
             return '';
         }
-        // Load the link clicker javascript.
-        $PAGE->requires->js_call_amd('block_featured_tool/linktracker', 'init');
 
         return $this->content->text;
     }

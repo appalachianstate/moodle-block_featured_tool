@@ -16,9 +16,8 @@
 
 /**
  * Create DB table
- * @package     block_featured_tool
- * @copyright   2025 Appalachian State University
- * @copyright  2025 Lina Brown
+ * @package    block_featured_tool
+ * @copyright  2025 Lina Brown <brownli2@appstate.edu>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

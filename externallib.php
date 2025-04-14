@@ -17,8 +17,7 @@
 /**
  * Featured Tool Block external API
  * @package     block_featured_tool
- * @copyright   2025 Appalachian State University
- * @author      2025 Lina Brown <brownli2@appstate.edu>
+ * @copyright   2025 Lina Brown <brownli2@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

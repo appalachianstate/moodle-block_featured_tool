@@ -51,3 +51,7 @@ $string['featured_tool:addinstance'] = 'Add a new featured tool block';
 $string['pluginname'] = 'Featured tool';
 $string['cardbutton'] = 'Read more';
 $string['closemodal'] = 'Close';
+$string['lengtherror'] = 'data-name must be between 1 and 255 characters';
+$string['missingdataattributeerror'] = 'Trackable links must have both data-name and data-action';
+$string['nottrackableerror'] = 'data-action attribute must be set to "trackable"';
+$string['notrackableandmissingerror'] = 'data-action must be set to "trackable" and must a have data-name';

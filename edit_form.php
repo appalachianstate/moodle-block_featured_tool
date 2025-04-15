@@ -107,6 +107,80 @@ class block_featured_tool_edit_form extends block_edit_form {
         $mform->addHelpButton('config_text2', 'featured_tool:media3', 'block_featured_tool');
     }
 
+   /**
+    * Check the data name attribute if the user is hoping to track links.
+    * Use cases for errors that would make tracking not work:
+    * 1. Data-action but no Data-name
+    * 2. Data-action but Data-name too long or short
+    * 3. Data-action is something other than "trackable"
+    * 3. Data-name but no data-action
+    * @param string $text
+    * @return $text
+    * @throws InvalidArgumentException
+    */
+    public function check_tags($text) {
+        libxml_use_internal_errors(true);
+        $dd = new DOMDocument();
+        $dd->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'));
+        // Get link tags - could be tracking multiple links clicks within a featured tool.
+        $links = $dd->getElementsByTagName('a');
+        foreach ($links as $link) {
+            $dataaction = $link->getAttribute('data-action');
+            $dataname = $link->getAttribute('data-name');
+            // If we don't want to track this link, need to skip checking the datas
+            if (empty($dataaction) && empty($dataname)) {
+                continue;
+            }
+           // Check if we have data action first then check if data-name is correct
+            if ($dataaction){
+               if ($dataaction === 'trackable') {
+                   if (!$dataname){
+                    throw new Exception(get_string('missingdataattributeerror', 'block_featured_tool'));
+                   }
+                   else if ((mb_strlen($dataname, 'UTF-8')) < 1 || (mb_strlen($dataname, 'UTF-8')) > 255) {
+                    throw new Exception(get_string('lengtherror', 'block_featured_tool'));
+                   }
+                }
+                else {
+                    if (!$dataname) {
+                        throw new Exception(get_string('notrackableandmissingerror', 'block_featured_tool'));
+                    }
+                    else {
+                        throw new Exception(get_string('nottrackableerror', 'block_featured_tool'));
+                    }
+                }
+           }
+           else {
+                throw new Exception(get_string('missingdataattributeerror', 'block_featured_tool'));
+           }
+        }
+        // Restore libxml error handling to default
+        libxml_clear_errors();
+        libxml_use_internal_errors(false);
+        return $text;
+    }
+
+   /**
+    * Custom validation to check for data- attributes for link tracking
+    * @param array $data - data submitted to form
+    * @return array $errors - return array of errors
+    * @throws InvalidArgumentException
+    */
+    public function validation($data, $files) {
+        $errors = parent::validation($data, $files); // Overriding so need to perform one call to parent method in order to avoid missing various checks?
+        for ($i = 0; $i <= 2; $i++) {
+            $currenttext = "config_text{$i}"; // Fields added earlier, have 3. 
+            if (!empty($data[$currenttext]['text'])) {
+                try {
+                    $this->check_tags($data[$currenttext]['text']);
+                } catch (Exception $e) {
+                    $errors[$currenttext] = $e->getMessage();
+                }
+            }
+        }
+        return $errors;
+    }
+    
     /**
      * Loads in existing data as form defaults.
      * Usually new entry defaults are stored directly in form definition (new entry form);
@@ -141,10 +215,10 @@ class block_featured_tool_edit_form extends block_edit_form {
                 // Grabs the canonical index set during saving.
                 $canonidx = $textinfo['idx'];
                 if (!empty($text) && $canonidx === $index) {
+                    //self::validate_content($text);   
                     $textkey = 'text' . $index;
                     ${'text' . $index} = $text;
                     $draftideditor = file_get_submitted_draft_itemid('config_' . $textkey);
-
                     $defaults->{'config_' . $textkey}['text'] =
                             file_prepare_draft_area($draftideditor, $sitecontext->id, 'block_featured_tool', 'content' . $index, 0,
                                     ['subdirs' => true], $text);

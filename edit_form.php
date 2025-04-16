@@ -109,14 +109,17 @@ class block_featured_tool_edit_form extends block_edit_form {
 
    /**
     * Check the data name attribute if the user is hoping to track links.
-    * Use cases for errors that would make tracking not work:
-    * 1. Data-action but no Data-name
-    * 2. Data-action but Data-name too long or short
-    * 3. Data-action is something other than "trackable"
-    * 3. Data-name but no data-action
+    * Use cases:
+    * 1. No data-action, no data-name = no errors
+    * 2. No data-action, has data-name = missing attribute error
+    * 3. Data-action != trackable, has data-name = not trackable error
+    * 4. Data-action != trackable, no data-name = not rackable andmissing error
+    * 5. Data-action = trackable, no data-name = missing attribute error
+    * 6. Data-action = trackable, data-name is too long or short = length error
+    * 7. Data-action = trackable, data-name is correct length = no errors
     * @param string $text
     * @return $text
-    * @throws InvalidArgumentException
+    * @throws Exception
     */
     public function check_tags($text) {
         libxml_use_internal_errors(true);
@@ -127,7 +130,7 @@ class block_featured_tool_edit_form extends block_edit_form {
         foreach ($links as $link) {
             $dataaction = $link->getAttribute('data-action');
             $dataname = $link->getAttribute('data-name');
-            // If we don't want to track this link, need to skip checking the datas
+            // If we don't want to track this link, need to skip checking the data- attributes.
             if (empty($dataaction) && empty($dataname)) {
                 continue;
             }

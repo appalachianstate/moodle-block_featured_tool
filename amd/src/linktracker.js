@@ -38,10 +38,12 @@ define("block_featured_tool/linktracker", ["core/ajax"], function (ajax) {
         }
         document.addEventListener('click', e => {
             if (e.target.matches(Selectors.trackableLink)) {
-                e.preventDefault();
+                //e.preventDefault();
                 const linkName = e.target.getAttribute('data-name');
-                // window.alert(`Thank you for clicking on the ${linkName} link`);
                 submitLinkData(linkName);
+                setTimeout(() => {
+                    window.location.href = link.href;
+                }, 200)
             };
         })
         eventListenerAdded = true;

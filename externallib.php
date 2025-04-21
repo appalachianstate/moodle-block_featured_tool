@@ -41,8 +41,8 @@ class block_featured_tool_external extends \core_external\external_api {
     }
     /**
      * Returns success or failure message from the DB operation
-     * @param string  linkname is name of the clicked link from the data-name attribute
-     * @return array success message
+     * @param string  $linkname is name of the clicked link from the data-name attribute
+     * @return array $message
      */
     public static function get_clicked_link($linkname) {
         global $DB, $USER;

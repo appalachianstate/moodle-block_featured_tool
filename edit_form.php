@@ -153,7 +153,7 @@ class block_featured_tool_edit_form extends block_edit_form {
                 throw new Exception(get_string('missingdataattributeerror', 'block_featured_tool'));
             }
         }
-        // Restore libxml error handling to default
+        // Restore libxml error handling to default.
         libxml_clear_errors();
         libxml_use_internal_errors(false);
         return $text;

@@ -34,9 +34,7 @@ class block_featured_tool_external extends \core_external\external_api {
      */
     public static function get_clicked_link_parameters() {
         return new external_function_parameters(
-            array(
-                'link_name' => new external_value(PARAM_TEXT, 'Name of clicked link'),
-            )
+            ['link_name' => new external_value(PARAM_TEXT, 'Name of clicked link'),]
         );
     }
     /**

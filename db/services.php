@@ -23,8 +23,8 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$functions = array(
-         'block_featured_tool_get_clicked_link' => array(
+$functions = [
+         'block_featured_tool_get_clicked_link' => [
                 'classname'   => 'block_featured_tool_external',
                 'methodname'  => 'get_clicked_link',
                 'classpath'   => 'blocks/featured_tool/externallib.php',
@@ -33,15 +33,15 @@ $functions = array(
                 'ajax'        => true,
                 'loginrequired' => true,
                 'capabilities' => '',
-         ),
-);
+         ],
+      ];
 
-$services = array(
-      'Featured Tool Link Click Tracking Service' => array(
-            'functions' => array(
+$services = [
+      'Featured Tool Link Click Tracking Service' => [
+            'functions' => [
                   'block_featured_tool_get_clicked_link',
-            ),
+            ],
             'restrictedusers' => 0,
             'enabled' => 1,
-      ),
-);
+      ],
+];

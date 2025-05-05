@@ -41,14 +41,11 @@ $string['featured_tool:thumbnail2_help'] = 'A descriptive image for the second f
 $string['featured_tool:thumbnail3'] = 'Third featured tool thumbnail';
 $string['featured_tool:thumbnail3_help'] = 'A descriptive image for the third featured tool. The thumbnail appears below the subtitle in the card for third featured tool.';
 $string['featured_tool:media1'] = 'First featured tool content';
-$string['featured_tool:media1_help'] = 'Full content to show to the user in the first featured tool. Displayed when user clicks on the first featured tool\'s button. Admins can enable link click tracking on
-featured tool links by adding the following HTML attributes to the anchor tag of the link: data-action="trackable" and data-name="name of link" through Tools > Source Code.';
+$string['featured_tool:media1_help'] = 'Full content to show to the user in the first featured tool. Displayed when user clicks on the first featured tool\'s button. Admins can enable link click tracking on featured tool links by adding the following HTML attributes to the anchor tag of the link: data-action="trackable" and data-name="name of link" through Tools > Source Code.';
 $string['featured_tool:media2'] = 'Second featured tool content';
-$string['featured_tool:media2_help'] = 'Full content to show to the user in the second featured tool. Displayed when user clicks on the second featured tool\'s button. Admins can enable link click tracking on
-featured tool links by adding the following HTML attributes to the anchor tag of the link: data-action="trackable" and data-name="name of link" through Tools > Source Code.';
+$string['featured_tool:media2_help'] = 'Full content to show to the user in the second featured tool. Displayed when user clicks on the second featured tool\'s button. Admins can enable link click tracking on featured tool links by adding the following HTML attributes to the anchor tag of the link: data-action="trackable" and data-name="name of link" through Tools > Source Code.';
 $string['featured_tool:media3'] = 'Third featured tool content';
-$string['featured_tool:media3_help'] = 'Full content to show to the user in the third featured tool. Displayed when user clicks on the third featured tool\'s button. Admins can enable link click tracking on
-featured tool links by adding the following HTML attributes to the anchor tag of the link: data-action="trackable" and data-name="name of link" through Tools > Source Code.';
+$string['featured_tool:media3_help'] = 'Full content to show to the user in the third featured tool. Displayed when user clicks on the third featured tool\'s button. Admins can enable link click tracking on featured tool links by adding the following HTML attributes to the anchor tag of the link: data-action="trackable" and data-name="name of link" through Tools > Source Code.';
 $string['featured_tool:myaddinstance'] = 'Add a new featured tool block to Dashboard';
 $string['featured_tool:addinstance'] = 'Add a new featured tool block';
 $string['pluginname'] = 'Featured tool';

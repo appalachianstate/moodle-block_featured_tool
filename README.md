@@ -2,7 +2,7 @@
 
 Featured tool is a Moodle block plugin that allows admins to easily display information/announcements to teachers.
 
-The featured tool can be configured to cycle between multiple sets of information. Admins can enter a subtitle, thumbnail, and the content to display to the users when they click on a button. There are currently three tools to hold this information, and the featured tool will decide which to show randomly any time the dashboard is loaded. This information in the featured tool is configured only to show to users with a teacher role on the site. The featured tool also has the ability to keep track of clicks on the links provided as part of the featured tool information. In order for links to be trackable, they must be tagged with the html attributes data-action="trackable" and data-name which should be shortened but meaningful version of the link name such as "Confluence Kaltura Link" that is logged when the link is clicked.
+The featured tool can be configured to cycle between multiple sets of information. Admins can enter a subtitle, thumbnail, and the content to display to the users when they click on a button. There are currently three tools to hold this information, and the featured tool will decide which to show randomly any time the dashboard is loaded. This information in the featured tool is configured only to show to users with a teacher role on the site.
 
 ## Installing via uploaded ZIP file ##
 
@@ -38,12 +38,14 @@ To add/edit featured tools in the block, enable Edit mode and Configure Featured
 * Content should be a short, attention-getting summary of the tool/its benefits. Links to detailed documentation can be included here.
 * Subtitle and thumbnail will be displayed in the block with a Read more button link.
 * Content will be displayed in a modal when the Read more button is clicked.
+* The featured tool also has the ability to keep track of clicks on the links provided as part of the featured tool information. In order for links to be trackable, they must be tagged with the html attributes data-action="trackable" and data-name which should be shortened but meaningful version of the link name such as "Confluence Kaltura Link" that is logged when the link is clicked.
 
 The configuration to make sure every user is seeing the same instance of the block is:
 
 1. Original block location: System
 2. Display on page types: Dashboard page
 3. Select pages: Any page matching the above
+
 
 ## License ##
 

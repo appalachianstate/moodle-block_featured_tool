@@ -32,26 +32,23 @@ define("block_featured_tool/linktracker", ["core/ajax"], function (ajax) {
             args: { link_name: linkName },
         }]);
     };
-    const getLinkName = () => {
-        if (eventListenerAdded) {
-            return;
-        }
+    const init = () => {
         document.addEventListener('click', e => {
             if (e.target.matches(Selectors.trackableLink)) {
-                //e.preventDefault();
+                e.preventDefault();
                 const linkName = e.target.getAttribute('data-name');
-                submitLinkData(linkName);
-                setTimeout(() => {
-                    window.location.href = link.href;
-                }, 200)
-            };
+                const linkHref = e.target.getAttribute('href');
+                if (linkName && linkHref) {
+					submitLinkData(linkName);
+					setTimeout(() => {
+	                    window.location.href = linkHref;
+	                }, 200);
+				}
+            }
         })
-        eventListenerAdded = true;
     };
     return {
-        init: async () => {
-            getLinkName();
-        }
+        init: init
     };
 });
     

@@ -22,7 +22,6 @@
 
 // JS function to capture the name of the clicked link and send it off to get stored.
 define("block_featured_tool/linktracker", ["core/ajax"], function (ajax) {
-    let eventListenerAdded = false; // Flag to prevent one click from logging twice.
     const Selectors = {
         trackableLink: '[data-action="trackable"]',
     };
@@ -35,20 +34,13 @@ define("block_featured_tool/linktracker", ["core/ajax"], function (ajax) {
     const init = () => {
         document.addEventListener('click', e => {
             if (e.target.matches(Selectors.trackableLink)) {
-                e.preventDefault();
                 const linkName = e.target.getAttribute('data-name');
-                const linkHref = e.target.getAttribute('href');
-                if (linkName && linkHref) {
-					submitLinkData(linkName);
-					setTimeout(() => {
-	                    window.location.href = linkHref;
-	                }, 200);
-				}
-            }
-        })
+                submitLinkData(linkName);
+            };
+        }, true);
     };
     return {
-        init: init
+        init:init
     };
 });
     

@@ -39,6 +39,8 @@ To add/edit featured tools in the block, enable Edit mode and Configure Featured
 * Subtitle and thumbnail will be displayed in the block with a Read more button link.
 * Content will be displayed in a modal when the Read more button is clicked.
 * The featured tool also has the ability to keep track of clicks on the links provided as part of the featured tool information. In order for links to be trackable, they must be tagged with the html attributes data-action="trackable" and data-name which should be shortened but meaningful version of the link name such as "Confluence Kaltura Link" that is logged when the link is clicked.
+* In order to enable link tracking, in Moodle 4.5+, admins will need to update the configuration for the Tiny MCE editor under Site Administration > Plugins > Text Editor > Tiny MCE > Extedned Valid Elements > update extended valid elements and add the data- attributes: script[],p[class],i[],a[href|data-action|data-name|rel|target]
+* Without the extended valid element, by default, the TinyMCE editor will not save the new data attributes.
 
 The configuration to make sure every user is seeing the same instance of the block is:
 

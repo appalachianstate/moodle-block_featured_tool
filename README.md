@@ -38,9 +38,11 @@ To add/edit featured tools in the block, enable Edit mode and Configure Featured
 * Content should be a short, attention-getting summary of the tool/its benefits. Links to detailed documentation can be included here.
 * Subtitle and thumbnail will be displayed in the block with a Read more button link.
 * Content will be displayed in a modal when the Read more button is clicked.
-* The featured tool also has the ability to keep track of clicks on the links provided as part of the featured tool information. In order for links to be trackable, they must be tagged with the html attributes data-action="trackable" and data-name which should be shortened but meaningful version of the link name such as "Confluence Kaltura Link" that is logged when the link is clicked.
-* In order to enable link tracking, in Moodle 4.5+, admins will need to update the configuration for the Tiny MCE editor under Site Administration > Plugins > Text Editor > Tiny MCE > Extedned Valid Elements > update extended valid elements and add the data- attributes: script[],p[class],i[],a[href|data-action|data-name|rel|target]
-* Without the extended valid element, by default, the TinyMCE editor will not save the new data attributes.
+* The featured tool block also has the ability to keep track of clicks on the links provided as part of the featured tool information. 
+* In order for links to be trackable, they must be tagged with the HTML attributes data-action="trackable" and data-name which should be a shortened but meaningful version of the link name such as data-name="Confluence Kaltura Link", this is the string that will be logged in the database when the link is clicked.
+* By default, the Tiny Editor does not allow the use of data attributes. In Moodle 4.5+, admins will need to update the configuration for the Tiny MCE editor under Site Administration > Plugins > Text Editor > Tiny MCE > Extended Valid Elements. Update extended valid elements and add the data attributes to the existing accepted tags: script[], p[class], i[], a[href|data-action|data-name|rel|target].
+* Without the data attributes listed as extended valid elements, the TinyMCE editor will not save the data attributes when they are added to the HTML.
+* Existing trackable links must be edited directly in the HTML through Tools > Source Code, rather than the editor toolbar. If a trackable link is updated via the toolbar, the Tiny Editor will remove the data attributes.
 
 The configuration to make sure every user is seeing the same instance of the block is:
 

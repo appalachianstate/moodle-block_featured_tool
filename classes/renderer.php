@@ -70,6 +70,8 @@ class block_featured_tool_renderer extends plugin_renderer_base {
             ],
         ];
         $this->page->requires->js_call_amd('block_featured_tool/openmodal', 'init', [$arguments]);
+        // Load the link clicker javascript.
+        $this->page->requires->js_call_amd('block_featured_tool/linktracker', 'init');
 
         // First create button.
         $buttonhtml = html_writer::tag('button', $button->label, $attributes);

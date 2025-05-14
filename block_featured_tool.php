@@ -13,7 +13,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
-use core_form\filetypes_util;
 
 /**
  * Block featured_tool is defined here.
@@ -21,6 +20,11 @@ use core_form\filetypes_util;
  * @package     block_featured_tool
  * @copyright   2023 Derek Wilson <wilsondc5@appstate.edu>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+use core_form\filetypes_util;
+/**
+ * Class for featured tool block.
  */
 class block_featured_tool extends block_base {
 

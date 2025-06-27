@@ -40,7 +40,7 @@ To add/edit featured tools in the block, enable Edit mode and Configure Featured
 * Content will be displayed in a modal when the Read more button is clicked.
 * The featured tool block also has the ability to keep track of clicks on the links provided as part of the featured tool information. 
 * In order for links to be trackable, they must be tagged with the HTML attributes data-action="trackable" and data-name which should be a shortened but meaningful version of the link name such as data-name="Confluence Kaltura Link", this is the string that will be logged in the database when the link is clicked.
-* By default, the Tiny Editor does not allow the use of data attributes. In Moodle 4.5+, admins will need to update the configuration for the Tiny MCE editor under Site Administration > Plugins > Text Editor > Tiny MCE > Extended Valid Elements. Update extended valid elements and add the data attributes to the existing accepted tags: script[], p[class], i[], a[href|data-action|data-name|rel|target].
+* By default, the Tiny Editor does not allow the use of data attributes. In Moodle 4.5+, admins will need to update the configuration for the Tiny MCE editor under Site Administration > Plugins > Text Editor > Tiny MCE > Extended Valid Elements. Update extended valid elements and add the data attributes to the existing accepted anchor tags in this format: data-action|data-name.
 * Without the data attributes listed as extended valid elements, the TinyMCE editor will not save the data attributes when they are added to the HTML.
 * Existing trackable links must be edited directly in the HTML through Tools > Source Code, rather than the editor toolbar. If a trackable link is updated via the toolbar, the Tiny Editor will remove the data attributes.
 

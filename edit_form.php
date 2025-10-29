@@ -124,7 +124,7 @@ class block_featured_tool_edit_form extends block_edit_form {
     public function check_tags($text) {
         libxml_use_internal_errors(true);
         $dd = new DOMDocument();
-        $dd->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'));
+        $dd->loadHTML(htmlentities($text, ENT_QUOTES, 'UTF-8'));
         // Get link tags - could be tracking multiple links clicks within a featured tool.
         $links = $dd->getElementsByTagName('a');
         foreach ($links as $link) {
